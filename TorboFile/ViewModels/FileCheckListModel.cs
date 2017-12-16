@@ -32,15 +32,17 @@ namespace TorboFile.ViewModels {
 
 					App.Instance.OpenExternalAsync( this.SelectedItem.Item.path );
 
-				}, this.HasSelectedItems
+				}, this.HasSelectedItems )
 
-			  ) );
+			  );
 			}
 
 			set {
 
 				this.SetProperty( ref this._cmdOpenSelected, value );
 			}
+
+		} // CmdOpenSelected
 
 
 		private RelayCommand _cmdOpenChecked;

@@ -28,9 +28,9 @@
 
             <Button DockPanel.Dock="Bottom" x:Name="BtnOpen" Style="{StaticResource StdButton}"
                 MinHeight="32" MinWidth="32" Margin="2,0,2,2"
-                ToolTip="Open in Explorer" Command="{Binding CmdOpen}"
+                ToolTip="Open in Explorer" Command="{Binding CmdOpenChecked}"
                 VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                <Image Source="/TorboFile;component/assets/images/document-preview.png" MaxHeight="28" MaxWidth="28" OpacityMask="{x:Null}" />
+                <Image Source="/TorboFile;component/assets/images/document-preview.png" MaxHeight="28" MaxWidth="28" />
             </Button>
             <Button DockPanel.Dock="Bottom" x:Name="BtnShow" Style="{StaticResource StdButton}"
                 MinHeight="32" MinWidth="32" Margin="2,0,2,2"
