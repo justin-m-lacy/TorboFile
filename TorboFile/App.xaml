@@ -1,0 +1,230 @@
+﻿<Application x:Class= "TorboFile.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:TorboFile"
+             xmlns:categories="clr-namespace:TorboFile.Categories"
+             xmlns:lerptext="clr-namespace:LerpingLemur.Windows.Text"
+             xmlns:convert="clr-namespace:LerpingLemur.Windows.Converters"
+             xmlns:controls="clr-namespace:TorboFile.Controls"
+             xmlns:models="clr-namespace:TorboFile.ViewModels"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException" Startup="Application_Startup" Exit="Application_Exit">
+
+    <Application.Resources>
+
+        <convert:BoolToVisible x:Key="BoolVisibility" />
+        <convert:NonNullToVisible x:Key="NonNullToVisible" />
+
+        <SolidColorBrush x:Key="BackgroundColor" Color="#FFF0F0F0" />
+
+        <!-- BRUSHES -->
+        <SolidColorBrush x:Key="BackLightBrush" Color="#fff1da"/>
+        <SolidColorBrush x:Key="BackMediumBrush" Color="#e9d282" />
+        <SolidColorBrush x:Key="BackDarkBrush" Color="#b04a33"/>
+        <SolidColorBrush x:Key="ForeDark" Color="#4b473c" />
+        <SolidColorBrush x:Key="ForeMedium" Color="#4f6469"/>
+        <SolidColorBrush x:Key="BrightHilightBrush" Color="#ffeb01" />
+
+        <SolidColorBrush x:Key="UIBorderBrush" Color="#4b473c" />
+
+        <SolidColorBrush x:Key="ErrorBrush" Color="Red" />
+        <SolidColorBrush x:Key="SuccessBrush" Color="Green" />
+
+        <Thickness x:Key="UIBorderThickness">1</Thickness>
+
+
+        <!--<Style x:Key="AppWindow" TargetType="{x:Type Window}">
+            <Setter Property="WindowStyle" Value="None"/>
+            <Setter Property="AllowsTransparency" Value="True"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="MinHeight" Value="48"/>
+            - CaptionHeight + ResizeBorderThickness*2 + 2(by me for better number)-
+
+        </Style>-->
+        
+        <Style x:Key="AppWindow" TargetType="{x:Type Window}">
+            <Setter Property="Background" Value="{StaticResource BackMediumBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource ForeDark}"/>
+        </Style>
+
+        <!-- Settings Dialog Styles -->
+        <Style x:Key="TextSettingHeader" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,4,0,4" />
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style x:Key="SettingHeader" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style x:Key="SettingControl" TargetType="FrameworkElement">
+            <Setter Property="Margin" Value="8,2,0,0"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="SettingsTab" TargetType="TabItem">
+            <Setter Property="Background" Value="{StaticResource BackMediumBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BackMediumBrush}"/>
+        </Style>
+        <Style x:Key="SettingsContent" TargetType="StackPanel">
+            <Setter Property="Background" Value="{StaticResource BackLightBrush }" />
+        </Style>
+        <Style x:Key="SettingsDock" TargetType="DockPanel">
+            <Setter Property="Background" Value="{StaticResource BackLightBrush}" />
+        </Style>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+
+        <Style x:Key="StdButton" TargetType="{x:Type Button}">
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{x:Null}"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource BackLightBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{x:Null}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.7"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="IconButton">
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="MinHeight" Value="24"/>
+            <Setter Property="MinWidth" Value="24"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- DATA TEMPLATES -->
+
+        <!-- FILE PREVIEW TEMPLATES -->
+        <DataTemplate x:Key="ViewImageTemplate" DataType="{x:Type models:FilePreviewModel}">
+            <controls:ViewImageControl Source="{Binding FilePath, Mode=OneWay}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewFailed">
+                        <i:InvokeCommandAction Command="{Binding CmdPreviewFailed}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </controls:ViewImageControl>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ViewMediaTemplate" DataType="{x:Type models:FilePreviewModel}">
+            <controls:MediaKitPreview>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewFailed">
+                        <i:InvokeCommandAction Command="{Binding CmdPreviewFailed}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </controls:MediaKitPreview>
+        </DataTemplate>
+
+        <!--<DataTemplate x:Key="ViewPdfTemplate" DataType="{x:Type models:FilePreviewModel}">
+            <controls:PdfPreview />
+        </DataTemplate>-->
+        
+        <DataTemplate x:Key="ViewTextTemplate" DataType="{x:Type models:FilePreviewModel}">
+            <controls:ViewTextControl/>
+        </DataTemplate>
+        <DataTemplate x:Key="ViewUnknownTemplate" DataType="{x:Type models:FilePreviewModel}">
+            <controls:ViewUnknownControl HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+        </DataTemplate>
+
+        <Style x:Key="PreviewSelector" TargetType="{x:Type ContentControl}">
+            <Setter Property="Content" Value="{Binding}"/>
+            <Setter Property="ContentTemplate" Value="{StaticResource ViewUnknownTemplate}" />
+            <Style.Triggers>
+
+                <!--<DataTrigger Binding="{Binding MimeStem}" Value="pdf" >
+                    <Setter Property="ContentTemplate" Value="{StaticResource ViewPdfTemplate}" />
+                </DataTrigger>-->
+                <DataTrigger Binding="{Binding MimeRoot}" Value="image">
+                    <Setter Property="ContentTemplate" Value="{StaticResource ViewImageTemplate}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding MimeRoot}" Value="audio">
+                    <Setter Property="ContentTemplate" Value="{StaticResource ViewMediaTemplate}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding MimeRoot}" Value="video">
+                    <Setter Property="ContentTemplate" Value="{StaticResource ViewMediaTemplate}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding MimeRoot}" Value="text">
+                    <Setter Property="ContentTemplate" Value="{StaticResource ViewTextTemplate}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- MessageString Coloring Using Style -->
+        <DataTemplate x:Key="MessageString" DataType="{x:Type lerptext:TextString}">
+            <TextBlock Text="{Binding Text}" FontSize="10" HorizontalAlignment="Left">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="{StaticResource ErrorBrush}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Type}" Value="success">
+                                <Setter Property="Foreground" Value="{StaticResource SuccessBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </DataTemplate>
+
+        <ControlTemplate x:Key="ErrorTemplate">
+            <StackPanel>
+                <AdornedElementPlaceholder />
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" />
+            </StackPanel>
+        </ControlTemplate>
+
+        
+    </Application.Resources>
+    
+</Application>

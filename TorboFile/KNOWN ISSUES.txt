@@ -1,0 +1,48 @@
+﻿*************************************
+*
+*			  TORBOFILE
+*			KNOWN ISSUES
+*
+*************************************
+
+***
+* Animated GIF previews do not play at the speeds encoded by the GIF.
+***
+
+I have not yet looked into querying the meta-data within a GIF in order
+to play an animated GIF at the intended speeds.
+
+This should be addressed in a future release.
+
+
+***
+* Systems running .NET framework versions lower than 4.6.2 ignore file paths
+* whose total character length is greater than 259.
+***
+
+This is a limitation of older versions of the .NET Framework, and is not worth
+my time to fix. Upgrading your installed .NET Framework to version 4.6.2 or
+higher should fix the issue. Fewer and fewer applications will support the older
+frameworks as time goes on, so unless you're having unrelated compatibility
+issues, there's no reason not to upgrade.
+
+
+***
+* File Previews are choppy / Lack View options.
+***
+
+TorboFile is a File Organizer and not intended to function as a general text or
+media viewer. File previews are only provided to give a general idea of the
+contents of a given file, and I do not anticipate they will ever be fully featured
+components.
+
+That being said, I will to continue to improve these aspects of the program in
+future versions, so long as users express interest in my doing so.
+Expect improvements to be incremental, and not monumental.
+
+
+***
+* I have no game, no life, no money
+***
+
+Issue is not expected to be addressed in any foreseeable update.

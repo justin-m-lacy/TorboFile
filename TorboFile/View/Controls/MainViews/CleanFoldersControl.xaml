@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="TorboFile.Controls.CleanFoldersControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TorboFile.Controls"
+             xmlns:lerp="clr-namespace:LerpingLemur.Windows.Controls"
+             mc:Ignorable="d" 
+             xmlns:prefs="clr-namespace:TorboFile.Properties"
+             xmlns:convert="clr-namespace:LerpingLemur.Windows.Converters"
+             d:DesignHeight="300" d:DesignWidth="500">
+    <!-- Use CleanFoldersModel -->
+    <DockPanel>
+        <TextBlock x:Name="LblInstructions" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="10,10,0,12" VerticalAlignment="Top" TextWrapping="Wrap" Background="Transparent" Text="Select a folder to delete all empty sub-folders.&#xA;If recursive is checked, folders containing only other folders, or unwanted files, are also removed." />
+
+        <!-- increased bottom margin for validation message. -->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="4,0,4,12" HorizontalAlignment="Stretch">
+            <Button x:Name="BtnDirectory" Style="{StaticResource StdButton}" MaxHeight="28" Command="{Binding CmdPickFolder}">
+                <Image Source="/TorboFile;component/assets/images/folder-yellow_open.png"/>
+            </Button>
+            <TextBox x:Name="FldDirectory" Text="{Binding SearchDirectory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnExceptions=True}"
+                    Validation.ErrorTemplate="{StaticResource ErrorTemplate}" MaxHeight="22" MinWidth="420"/>
+        </StackPanel>
+
+        <!-- SIZE RANGES -->
+        <StackPanel DockPanel.Dock="Top" Margin="16,4,0,8">
+        <CheckBox x:Name="ChkUseSizeRange" Content="Delete files of size:" HorizontalAlignment="Left" VerticalAlignment="Top"
+                 ToolTip="Check to delete any files found within the specified size range." IsChecked="{Binding UseSizeRange}" />
+
+        <StackPanel x:Name="ContentSizeRange" Orientation="Horizontal" Margin="16,4,0,8"
+                    Visibility="{Binding ElementName=ChkUseSizeRange, Path=IsChecked, Converter={StaticResource BoolVisibility}}">
+                <StackPanel x:Name="MinSizePanel">
+
+                    <TextBlock x:Name="LblMinSize" Text="Min Size:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
+                    <TextBox x:Name="FldMinSize"
+                         Text="{Binding MinSize, ValidatesOnExceptions=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"
+                         HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" MaxLines="1" MaxLength="0" IsUndoEnabled="True" UndoLimit="3"/>
+
+                </StackPanel>
+                <StackPanel Margin="32,0,0,0">
+                
+                <TextBlock x:Name="LblMaxSize" Text="Max Size:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
+                <TextBox x:Name="FldMaxSize"
+                     Text="{Binding MaxSize, ValidatesOnExceptions=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"
+                     HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLines="1" />
+
+            </StackPanel>
+
+        </StackPanel>
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,4,4,4">
+            <Button x:Name="BtnDeleteEmpty" Style="{StaticResource StdButton}" Command="{Binding CmdBeginSearch}"
+                    HorizontalAlignment="Left" VerticalAlignment="Top" MaxHeight="72" Margin="12,0,0,0" >
+                <DockPanel>
+                    <Image DockPanel.Dock="Top" Source="/TorboFile;component/assets/images/system-search-4.png" MaxHeight="42">
+                    </Image>
+                    <TextBlock DockPanel.Dock="Bottom" Text="Begin Clean"/>
+                </DockPanel>
+            </Button>
+            <CheckBox x:Name="ChkRecursiveEmpty" IsChecked="{Binding Source={x:Static prefs:FolderCleanSettings.Default }, Path=recursive}"
+                      ToolTip="Include all subfolders of the chosen folder in the search."
+                      Content="Recursive Clean" Margin="24,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="24" Width="193"/>
+            <CheckBox x:Name="ChkDeleteEmpty" IsChecked="{Binding DeleteEmptyFiles}"
+                      ToolTip="Remove any files of Size 0. (No data within file)"
+                      Content="Remove Empty Files" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center"/>
+        </StackPanel>
+        
+        <ScrollViewer DockPanel.Dock="Bottom" Margin="8,4,8,4" VerticalScrollBarVisibility="Auto">
+
+            <ItemsControl x:Name="ItemsOutput" ItemsSource="{Binding Output}" ItemTemplate="{StaticResource MessageString}"/>
+
+        </ScrollViewer>
+
+
+    </DockPanel>
+</UserControl>

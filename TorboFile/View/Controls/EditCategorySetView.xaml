@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="TorboFile.Controls.EditCategorySetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TorboFile.Controls"
+             xmlns:model="clr-namespace:TorboFile.ViewModels"
+             xmlns:v="clr-namespace:LerpingLemur.Windows.Validation"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+
+        <model:EditCategorySetVM x:Key="ViewModel" />
+
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <StaticResource ResourceKey="ViewModel"></StaticResource>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"  />
+            <RowDefinition Height="48" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="8,12">
+            <TextBlock x:Name="LblName" DockPanel.Dock="Left"
+                       Text="Set Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59"/>
+
+            <TextBox x:Name="FldName" DockPanel.Dock="Left" Height="24" Validation.ErrorTemplate="{StaticResource ErrorTemplate}" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Top" MinWidth="100" ToolTip="Name of the Category Set." TabIndex="1">
+                <Binding Path="NewName" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <v:FileNameRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox>
+
+        </DockPanel>
+
+        <DockPanel Grid.Row="1" Margin="8,0,0,0" HorizontalAlignment="Stretch" LastChildFill="False">
+
+            <Button x:Name="BtnAccept" Style="{StaticResource StdButton}" Command="{Binding CmdSubmit}" ToolTip="It's a confirm button."
+                    DockPanel.Dock="Right" MinWidth="42" MinHeight="42" IsDefault="True">
+
+                    <Image Stretch="Uniform" Source="/TorboFile;component/assets/images/dialog-yes.png"/>
+
+            </Button>
+            <Button Style="{StaticResource StdButton}" x:Name="BtnCancel" MinHeight="40" MinWidth="40" DockPanel.Dock="Right" Click="BtnCancel_Click">
+
+                    <Image Source="/TorboFile;component/assets/images/dialog-close.png" Stretch="Uniform"/>
+
+            </Button>
+        </DockPanel>
+
+    </Grid>
+</UserControl>

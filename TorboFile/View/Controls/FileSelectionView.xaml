@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="TorboFile.Controls.FileSelectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TorboFile.Controls"
+             xmlns:base="clr-namespace:TorboFile"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             xmlns:convert="clr-namespace:LerpingLemur.Windows.Converters"
+             xmlns:models="clr-namespace:TorboFile.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <Control.Resources>
+
+        <convert:LongToDataString x:Key="DataConverter" />
+        
+        <DataTemplate x:Key="TemplateCheckbox">
+            <CheckBox IsChecked="{Binding Path=IsChecked}"></CheckBox>
+        </DataTemplate>
+        
+    </Control.Resources>
+
+    <!-- Use FileCheckListModel -->
+
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+
+            <Button DockPanel.Dock="Bottom" x:Name="BtnOpen" Style="{StaticResource StdButton}"
+                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
+                ToolTip="Open in Explorer" Command="{Binding CmdOpen}"
+                VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <Image Source="/TorboFile;component/assets/images/document-preview.png" MaxHeight="28" MaxWidth="28" OpacityMask="{x:Null}" />
+            </Button>
+            <Button DockPanel.Dock="Bottom" x:Name="BtnShow" Style="{StaticResource StdButton}"
+                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
+                ToolTip="Show in Explorer" Command="{Binding CmdShowExternal}"
+                VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <Image Source="/TorboFile;component/assets/images/large/folder.png" MaxHeight="28" MaxWidth="28"  />
+            </Button>
+            <Button DockPanel.Dock="Bottom" x:Name="BtnDelete" Style="{StaticResource StdButton}"
+                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
+                ToolTip="Delete Selected" Command="{Binding CmdDelete}"
+                VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <Image Source="/TorboFile;component/assets/images/dialog-close.png" MaxHeight="28" MaxWidth="28" />
+            </Button>
+        </StackPanel>
+
+        <ListView DockPanel.Dock="Top" x:Name="ListResults" ItemsSource="{Binding Items, diag:PresentationTraceSources.TraceLevel=Low}"
+                  GridViewColumnHeader.Click="ListResults_Click"
+                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedItem}">
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="Auto" CellTemplate="{StaticResource TemplateCheckbox}"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Item.Path}" Header="File" Width="Auto"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Item.Size, Converter={StaticResource DataConverter}}" Header="Size" Width="Auto"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </DockPanel>
+
+</UserControl>

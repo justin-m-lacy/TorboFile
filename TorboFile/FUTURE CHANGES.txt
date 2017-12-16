@@ -1,0 +1,24 @@
+﻿FUTURE REVISIONS
+
+Not everything here may be implemented. Additional features are be added according
+to my available time, and the difficulty of the feature. However, everything listed
+here is marked for a possible future change or update.
+
+
+* Show previews of pdf files.
+
+* New Folder Clean Options
+	- by file name filters
+	- by file type
+	- combination filters.
+
+* Vector Graphic button images.
+
+* File Sort opens to last file viewed.
+	- Within caching limitations.
+
+* KeyBindings for UI elements.
+	- Gradual rollouts.
+
+* Improved error reporting.
+	- Ongoing.

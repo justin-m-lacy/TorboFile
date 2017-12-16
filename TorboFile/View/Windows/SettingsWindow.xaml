@@ -1,0 +1,102 @@
+﻿<Window x:Class="TorboFile.Windows.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TorboFile"
+        xmlns:settings="clr-namespace:TorboFile.Properties"
+        xmlns:controls="clr-namespace:TorboFile.Controls"
+        xmlns:convert="clr-namespace:LerpingLemur.Windows.Converters"
+
+        mc:Ignorable="d" Background="{StaticResource BackDarkBrush}"
+        Title="Settings" Height="400" MinHeight="128" MinWidth="128" Width="512">
+    
+    <Window.Resources>
+        <convert:InvertBoolConverter x:Key="InverseBool" />
+    </Window.Resources>
+    
+    <TabControl x:Name="TabSettings" Height="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" TabStripPlacement="left">
+        <TabItem x:Name="GeneralSettings" DataContext="{Binding Source={x:Static settings:Settings.Default}}" Header="General" Style="{StaticResource SettingsTab}">
+            <StackPanel Style="{StaticResource SettingsContent}">
+                <Label Style="{StaticResource SettingHeader}">View Options:</Label>
+                <CheckBox x:Name="ChkRememberView" Content="Restore Last Tab" Style="{StaticResource SettingControl}" IsChecked="{Binding saveLastView}" ToolTip="Open previous tab on program load." />
+            </StackPanel>
+        </TabItem>
+        
+        <!-- SORTING SETTINGS -->
+        <TabItem x:Name="SortingSettings" DataContext="{x:Static settings:SortingSettings.Default}" Header="Sorting" Style="{StaticResource SettingsTab}">
+            
+            <DockPanel Style="{StaticResource SettingsDock}">
+
+                <Label Style="{StaticResource SettingHeader}" DockPanel.Dock="Top">Deleted Files:</Label>
+                <RadioButton x:Name="RadioSortingRecycle" DockPanel.Dock="Top" Content="Move To Recycle Bin" Style="{StaticResource SettingControl}" IsChecked="{Binding moveToTrash}" />
+                <RadioButton x:Name="RadioSortingDelete" DockPanel.Dock="Top" Content="Remove From Disk" Style="{StaticResource SettingControl}"
+                             IsChecked="{Binding moveToTrash, Converter={StaticResource InverseBool}, Mode=OneWay}" />
+
+                <TextBlock Style="{StaticResource TextSettingHeader}" DockPanel.Dock="Top" Text="Restore Last Directory"/>
+                <CheckBox x:Name="ChkSaveSortDirectory" DockPanel.Dock="Top" Style="{StaticResource SettingControl}" Content="Remember Directory" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember last folder between program runs."/>
+                
+                <TextBlock Style="{StaticResource TextSettingHeader}" DockPanel.Dock="Top" Text="Sorting Sets"/>
+                <controls:CategoryManagerView VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" x:Name="CategoryManagerView"/>
+           
+            </DockPanel>
+            
+        </TabItem>
+
+        <TabItem x:Name="FindCopiesTab"  Style="{StaticResource SettingsTab}" DataContext="{x:Static settings:FindCopiesSettings.Default}" Header="Find Duplicates">
+            <StackPanel Style="{StaticResource SettingsContent}">
+                <Label Style="{StaticResource SettingHeader}">Deleted Files:</Label>
+                    <RadioButton x:Name="RadioDuplicateRecycle" Content="Move To Recycle Bin" Style="{StaticResource SettingControl}" IsChecked="{Binding moveToTrash}" />
+                    <RadioButton x:Name="RadioDuplicateDelete" Content="Remove From Disk" Style="{StaticResource SettingControl}"
+                                 IsChecked="{Binding moveToTrash, Converter={StaticResource InverseBool}, Mode=OneWay}"/>
+                <Label Style="{StaticResource SettingHeader}">Recursive Search:</Label>
+                <CheckBox x:Name="ChkDuplicateRecursive" Content="Search All Subfolders" Style="{StaticResource SettingControl}" IsChecked="{Binding recursive}" />
+                <Label Style="{StaticResource SettingHeader}">Search File Extensions:</Label>
+                <CheckBox x:Name="ChkDuplicateSaveExtensions" Style="{StaticResource SettingControl}" IsChecked="{Binding rememberExtensions}">Save Search File Extensions</CheckBox>
+                </StackPanel>
+            </TabItem>
+        
+        <TabItem x:Name="CleanFoldersTab" DataContext="{x:Static settings:FolderCleanSettings.Default}" Header="Clean Folders" Style="{StaticResource SettingsTab}">
+            <StackPanel Style="{StaticResource SettingsContent}">
+                
+                <Label Style="{StaticResource SettingHeader}">Deleted Files:</Label>
+                <RadioButton x:Name="RadioCleanRecycle" Content="Move To Recycle Bin" Style="{StaticResource SettingControl}" IsChecked="{Binding moveToTrash}"/>
+                <RadioButton x:Name="RadioCleanDelete" Content="Remove From Disk" Style="{StaticResource SettingControl}"
+                             IsChecked="{Binding moveToTrash, Converter={StaticResource InverseBool}, Mode=OneWay}"/>
+                
+                <Label Style="{StaticResource SettingHeader}">Recursive Search:</Label>
+                <CheckBox x:Name="ChkEmptyFoldersRecursive" Content="Search All Subfolders" Style="{StaticResource SettingControl}" IsChecked="{Binding recursive}" />
+                <TextBlock Style="{StaticResource TextSettingHeader}" Text="Remember Last Directory"/>
+                <CheckBox x:Name="ChkSaveLastDirectory" Style="{StaticResource SettingControl}" Content="Remember Directory" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember search directory between program runs."/>
+            </StackPanel>
+        </TabItem>
+        <TabItem x:Name="AboutTab" Style="{StaticResource SettingsTab}" Header="About">
+            <StackPanel Style="{StaticResource SettingsContent}">
+                <RichTextBox Margin="4" Background="{x:Null}" BorderBrush="{x:Null}" IsDocumentEnabled="True" BorderThickness="0" IsReadOnly="True" HorizontalAlignment="Center">
+                    <FlowDocument>
+                        <Paragraph TextAlignment="Center" FontWeight="Bold" Margin="8">
+                           About</Paragraph>
+                        <Paragraph TextAlignment="Justify">
+                    I made this program to help clean up file duplicates and sort disorganized files. I really despise complicated legal notices
+                    that no one reads and no one understands so I'll take a chance and just write a simple one:
+                </Paragraph>
+                        <Paragraph TextAlignment="Justify">
+                            TorboFile is free to use and redistribute as long as you don't sell it or modify it. I test the program
+                    as well as I can but I can't guarantee it will work the same way on all systems and you use at your own risk. You
+                    can't decompile the program and alter or sell the source code.
+                        </Paragraph>
+                        <Paragraph>If there is any interest I'll get a regular site; for now you can contact me at
+                            <Hyperlink Name="emailLink" NavigateUri="mailto:lerping.lemur@gmail.com">lerping.lemur@gmail.com</Hyperlink>
+                        </Paragraph>
+                        <Paragraph>You can also send me money at:
+                            <Hyperlink Name="payLink" NavigateUri="https://www.paypal.me/lerpinglemur" RequestNavigate="visit_hyperlink">paypal.me/lerpinglemur</Hyperlink>
+                            <LineBreak/>
+                            But you won't.
+                        </Paragraph>
+                    </FlowDocument>
+                  </RichTextBox>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+
+</Window>

@@ -1,0 +1,21 @@
+﻿<Window x:Class="TorboFile.ProgressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TorboFile"
+        mc:Ignorable="d"
+                Style="{StaticResource AppWindow}"
+        Title="ProgressWindow" Height="112" Width="472" WindowStyle="None">
+    <!-- CURRENTLY UNUSED -->
+    <Grid>
+
+        <ProgressBar x:Name="ProgressControl" HorizontalAlignment="Left" Height="16" Margin="16,39,0,0" VerticalAlignment="Top" Width="440"/>
+        <Button x:Name="BtnCancel" HorizontalAlignment="Left" Margin="424,62,0,0" ToolTip="Stop Operation" MinWidth="32" MinHeight="32" Click="BtnCancel_Click" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="/TorboFile;component/assets/images/process-stop-5.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+
+    </Grid>
+</Window>

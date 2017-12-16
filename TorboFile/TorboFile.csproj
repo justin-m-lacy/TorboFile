@@ -1,0 +1,604 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C3ABCDA1-646A-496D-8897-614F3D4008FB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>TorboFile</RootNamespace>
+    <AssemblyName>TorboFile</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>0.8.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>56DF28666CED65CC2A2E58A58D5D1C33900091C8</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>FileUtilities_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.WPF.1.0.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFMediaKit, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFMediaKit.2.2.0\lib\WPFMediaKit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Categories\CategoryManager.cs" />
+    <Compile Include="Categories\ICategorySource.cs" />
+    <Compile Include="ColorEffect.cs" />
+    <Compile Include="Properties\FolderCleanSettings.cs" />
+    <Compile Include="Properties\PreviewSettings.cs" />
+    <Compile Include="Properties\PreviewSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>PreviewSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Services\CustomMessageBox.cs" />
+    <Compile Include="Services\FileDeleteService.cs" />
+    <Compile Include="Services\FileDialogService.cs" />
+    <Compile Include="Services\IMessageBox.cs" />
+    <Compile Include="Services\InputBinder.cs" />
+    <Compile Include="Services\SystemMessageBox.cs" />
+    <Compile Include="ViewModels\CategoryManagerVM.cs" />
+    <Compile Include="ViewModels\EditCategorySetVM.cs" />
+    <Compile Include="ViewModels\CleanFoldersModel.cs" />
+    <Compile Include="ViewModels\FileDetailsModel.cs" />
+    <Compile Include="ViewModels\FileCheckListModel.cs" />
+    <Compile Include="ViewModels\FileMatchVM.cs" />
+    <Compile Include="ViewModels\FindDuplicatesModel.cs" />
+    <Compile Include="ViewModels\EditCategoryModel.cs" />
+    <Compile Include="ViewModels\FileTestVM.cs" />
+    <Compile Include="ViewModels\TagFileModel.cs" />
+    <Compile Include="View\Controls\FileMatchView.xaml.cs">
+      <DependentUpon>FileMatchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PreviewViews\MediaKitPreview.xaml.cs">
+      <DependentUpon>MediaKitPreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PreviewViews\PdfPreview.xaml.cs">
+      <DependentUpon>PdfPreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\FileDetailsWindow.xaml.cs">
+      <DependentUpon>FileDetailsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\MessageBoxWindow.xaml.cs">
+      <DependentUpon>MessageBoxWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ModelTrigger.cs" />
+    <Compile Include="ViewModels\ProgressModel.cs" />
+    <Compile Include="View\Controls\EditCategorySetView.xaml.cs">
+      <DependentUpon>EditCategorySetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\MainViews\CleanFoldersControl.xaml.cs">
+      <DependentUpon>CleanFoldersControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\MainViews\FileSortControl.xaml.cs">
+      <DependentUpon>FileSortControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\MainViews\FindDuplicatesControl.xaml.cs">
+      <DependentUpon>FindDuplicatesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\MessageBox.xaml.cs">
+      <DependentUpon>MessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\MessageLabel.xaml.cs">
+      <DependentUpon>MessageLabel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PreviewViews\PreviewControl.cs" />
+    <Compile Include="View\Controls\PreviewViews\ViewImageControl.xaml.cs">
+      <DependentUpon>ViewImageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PreviewViews\ViewMediaControl.xaml.cs">
+      <DependentUpon>ViewMediaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PreviewViews\ViewTextControl.xaml.cs">
+      <DependentUpon>ViewTextControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PreviewViews\ViewUnknownControl.xaml.cs">
+      <DependentUpon>ViewUnknownControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\FindCopiesSettings.cs" />
+    <Compile Include="Properties\FindCopiesSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>FindCopiesSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Categories\FileCategory.cs" />
+    <Compile Include="Categories\CategorySet.cs" />
+    <Compile Include="View\Controls\CategoryManagerView.xaml.cs">
+      <DependentUpon>CategoryManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\FileListItem.cs" />
+    <Compile Include="View\Controls\FileSelectionView.xaml.cs">
+      <DependentUpon>FileSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DirectoryVisitor.cs" />
+    <Compile Include="FileDataList.cs" />
+    <Compile Include="Properties\FolderCleanSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>FolderCleanSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\SortingSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>SortingSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\SortingSettings.cs" />
+    <Compile Include="ViewModels\FilePreviewModel.cs" />
+    <Compile Include="ViewModels\FileSortModel.cs" />
+    <Compile Include="View\Controls\ProgressControl.xaml.cs">
+      <DependentUpon>ProgressControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewTrigger.cs" />
+    <Compile Include="View\Windows\CategoryManagerWindow.xaml.cs">
+      <DependentUpon>CategoryManagerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\EditCategorySetWindow.xaml.cs">
+      <DependentUpon>EditCategorySetWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\FileResultsWindow.xaml.cs">
+      <DependentUpon>FileResultsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\EditCategoryWindow.xaml.cs">
+      <DependentUpon>EditCategoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\ProgressWindow.xaml.cs">
+      <DependentUpon>ProgressWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.cs" />
+    <Page Include="View\Controls\FileMatchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\PreviewViews\MediaKitPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\PreviewViews\PdfPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\FileDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\MessageBoxWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\CategoryManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\EditCategorySetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\MainViews\CleanFoldersControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\FileSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\MainViews\FileSortControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\MainViews\FindDuplicatesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\MessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\PreviewViews\ViewImageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\PreviewViews\ViewMediaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\PreviewViews\ViewTextControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\PreviewViews\ViewUnknownControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\MessageLabel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Controls\ProgressControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\CategoryManagerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\EditCategorySetWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\FileResultsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\MainMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\Windows\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="View\Windows\EditCategoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\ProgressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="assets\shaders\ForegroundShader.fx">
+      <EnableDebuggingInfo>False</EnableDebuggingInfo>
+      <EnableUnboundedDescriptorTable>False</EnableUnboundedDescriptorTable>
+      <CompileDirect2DCustomEffect>False</CompileDirect2DCustomEffect>
+      <ShaderModel>3_0</ShaderModel>
+      <AllResourcesBound>False</AllResourcesBound>
+    </None>
+    <None Include="Properties\FindCopiesSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>FindCopiesSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\FolderCleanSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>FolderCleanSettings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PreviewSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>PreviewSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\SortingSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>SortingSettings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\audio-x-generic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\image-x-generic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\text-x-generic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\video-x-generic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\folder-yellow_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\go-next-5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\go-previous-5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\list-add-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\dialog-close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\go-first-3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\go-last-3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\configure-5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\system-settings-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\large\folder-yellow_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\document-preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\large\system-search-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\large\utilities-find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\list-remove-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\system-search-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\edit-6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\media-playback-pause-8.png" />
+    <Resource Include="assets\images\media-playback-start-8.png" />
+    <Resource Include="assets\images\media-playback-stop-8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\help-about-3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\dialog-yes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\process-stop-5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\image_start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\system-search-3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Collections\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\images\flat\png\Add-128.png" />
+    <None Include="assets\images\flat\png\Arrowhead-Down-01-128.png" />
+    <None Include="assets\images\flat\png\Arrowhead-Left-01-128.png" />
+    <None Include="assets\images\flat\png\Bullets-128.png" />
+    <None Include="assets\images\flat\png\Camera-01-128.png" />
+    <None Include="assets\images\flat\png\Camera-128.png" />
+    <None Include="assets\images\flat\png\Cancel-128.png" />
+    <None Include="assets\images\flat\png\Check-128.png" />
+    <None Include="assets\images\flat\png\Close-128.png" />
+    <None Include="assets\images\flat\png\Copy-128.png" />
+    <None Include="assets\images\flat\png\Customize-02-128.png" />
+    <None Include="assets\images\flat\png\Data-Export-128.png" />
+    <None Include="assets\images\flat\png\Document-Delete-02-128.png" />
+    <None Include="assets\images\flat\png\Document-Error-01-128.png" />
+    <None Include="assets\images\flat\png\Document-Warning-02-128.png" />
+    <None Include="assets\images\flat\png\Document-Zoom-In-02-128.png" />
+    <None Include="assets\images\flat\png\Documents-01-128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\images\flat\png\Expand-02-128.png" />
+    <None Include="assets\images\flat\png\File-Format-BitMap-128.png" />
+    <None Include="assets\images\flat\png\File-Format-JPEG-128.png" />
+    <None Include="assets\images\flat\png\File-Format-PNG-128.png" />
+    <None Include="assets\images\flat\png\File-Format-TIFF-128.png" />
+    <None Include="assets\images\flat\png\File-Format-ZIP-128.png" />
+    <None Include="assets\images\flat\png\Files-128.png" />
+    <None Include="assets\images\flat\png\Find-Replace-01-128.png" />
+    <None Include="assets\images\flat\png\Folder-Add-128.png" />
+    <None Include="assets\images\flat\png\Folder-New-01-128.png" />
+    <None Include="assets\images\flat\png\Garbage-Closed-128.png" />
+    <None Include="assets\images\flat\png\Garbage-Full-128.png" />
+    <None Include="assets\images\flat\png\Images-128.png" />
+    <None Include="assets\images\flat\png\Left-Arrow-128.png" />
+    <None Include="assets\images\flat\png\makefg.png" />
+    <None Include="assets\images\flat\png\Media-Back-128.png" />
+    <None Include="assets\images\flat\png\Media-Fast-Forward-128%281%29.png" />
+    <None Include="assets\images\flat\png\Media-Fast-Forward-128.png" />
+    <None Include="assets\images\flat\png\Media-Pause-128.png" />
+    <None Include="assets\images\flat\png\Media-Play-128.png" />
+    <None Include="assets\images\flat\png\Media-Rewind-128.png" />
+    <None Include="assets\images\flat\png\Media-Stop-128.png" />
+    <None Include="assets\images\flat\png\Message-Warning-128.png" />
+    <None Include="assets\images\flat\png\Navigation-Right-128.png" />
+    <None Include="assets\images\flat\png\Next-128.png" />
+    <None Include="assets\images\flat\png\Notification-128.png" />
+    <None Include="assets\images\flat\png\Open-128.png" />
+    <None Include="assets\images\flat\png\Paging-128.png" />
+    <None Include="assets\images\flat\png\Pencil-128.png" />
+    <None Include="assets\images\flat\png\Previous-128.png" />
+    <None Include="assets\images\flat\png\Range-Slider-128.png" />
+    <None Include="assets\images\flat\png\Recycle-Bin-128.png" />
+    <None Include="assets\images\flat\png\Row-128.png" />
+    <None Include="assets\images\flat\png\Save-128.png" />
+    <None Include="assets\images\flat\png\Settings-02-128.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="assets\images\flat\png\Tab-128.png" />
+    <None Include="assets\images\flat\png\Table-of-Contents-128.png" />
+    <None Include="assets\images\flat\png\Text-Document-128.png" />
+    <None Include="assets\images\flat\png\Torb.png" />
+    <None Include="assets\images\flat\png\Video-128.png" />
+    <None Include="assets\images\flat\png\Video-Camera-128.png" />
+    <None Include="assets\images\flat\png\View-Incident-128.png" />
+    <None Include="assets\images\flat\png\Warning-Message-128.png" />
+    <None Include="assets\images\flat\png\Zoom-In-128.png" />
+    <None Include="assets\images\flat\png\Zoom-Out-128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FUTURE CHANGES.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KNOWN ISSUES.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="assets\svg\AddDocument.svg" />
+    <None Include="assets\svg\ArrowLeft.svg" />
+    <None Include="assets\svg\ArrowRight.svg" />
+    <None Include="assets\svg\Close.svg" />
+    <None Include="assets\svg\ComplexDocument.svg" />
+    <None Include="assets\svg\Config.svg" />
+    <None Include="assets\svg\Document.svg" />
+    <None Include="assets\svg\Download.svg" />
+    <None Include="assets\svg\EditPencil.svg" />
+    <None Include="assets\svg\Files.svg" />
+    <None Include="assets\svg\folder.svg" />
+    <None Include="assets\svg\FolderDark.svg" />
+    <None Include="assets\svg\GoSite.svg" />
+    <None Include="assets\svg\Home.svg" />
+    <None Include="assets\svg\MagnifierGlassMinimal.svg" />
+    <None Include="assets\svg\MinimalFolder.svg" />
+    <None Include="assets\svg\PencilEdit.svg" />
+    <None Include="assets\svg\Picture.svg" />
+    <None Include="assets\svg\PictureDark.svg" />
+    <None Include="assets\svg\Play.svg" />
+    <None Include="assets\svg\Plus.svg" />
+    <None Include="assets\svg\PlusSimple.svg" />
+    <None Include="assets\svg\Settings.svg" />
+    <None Include="assets\svg\TabOutline.svg" />
+    <None Include="assets\svg\Trash.svg" />
+    <None Include="assets\svg\Upload.svg" />
+    <None Include="assets\svg\UploadDark.svg" />
+    <None Include="assets\svg\Video.svg" />
+    <Resource Include="assets\images\large\folder.png" />
+  </ItemGroup>
+  <Import Project="..\..\LerpingLemur\LerpingLemur\LerpingLemur.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.HLSL.CSharpVB.1.0.1\build\Microsoft.HLSL.CSharpVB.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.HLSL.CSharpVB.1.0.1\build\Microsoft.HLSL.CSharpVB.targets'))" />
+    <Error Condition="!Exists('..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.HLSL.CSharpVB.1.0.1\build\Microsoft.HLSL.CSharpVB.targets" Condition="Exists('..\packages\Microsoft.HLSL.CSharpVB.1.0.1\build\Microsoft.HLSL.CSharpVB.targets')" />
+  <Import Project="..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets" Condition="Exists('..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets')" />
+</Project>

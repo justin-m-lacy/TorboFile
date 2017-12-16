@@ -1,0 +1,83 @@
+﻿<Window x:Class="TorboFile.Windows.EditCategoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TorboFile.Windows"
+        xmlns:lemur="clr-namespace:LerpingLemur.Windows.Controls"
+        xmlns:v="clr-namespace:LerpingLemur.Windows.Validation"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+                Style="{StaticResource AppWindow}"
+        Title="Edit Category" Height="214" Width="545">
+   
+    <!-- Use with EditCategoryModel -->
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="10*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="8,12">
+        <TextBlock x:Name="LblName" Grid.Row="0" Text="Category Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="97"/>
+        <TextBox x:Name="FldName" Grid.Row="0" HorizontalAlignment="Left" Height="24" Validation.ErrorTemplate="{StaticResource ErrorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="415" ToolTip="Name of the category." TabIndex="1">
+                <Binding Path="NewName" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <v:FileNameRule />
+                    </Binding.ValidationRules>
+                </Binding>
+        </TextBox>
+        </StackPanel>
+
+        <!-- CATEGORY DIRECTORY -->
+        <DockPanel Grid.Row="1" Margin="8,0">
+            <TextBlock x:Name="LblFolder" DockPanel.Dock="Top" Text="Category Folder:"
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Width="140"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource StdButton}" x:Name="BtnDirectory" ToolTip="Folder Browser" HorizontalAlignment="Left"
+                       Margin="0,0,4,0" Height="32" VerticalAlignment="Center" Width="32" Click="BtnDirectory_Click">
+
+                        <Image Source="/TorboFile;component/assets/images/folder-yellow_open.png" Stretch="Uniform"/>
+
+                </Button>
+                <TextBox x:Name="FldDirectory" HorizontalAlignment="Left"
+                 Height="24" TextWrapping="Wrap" VerticalAlignment="Center" Width="471" TabIndex="2">
+                    <Binding Path="NewPath" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <v:FilePathRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
+
+            </StackPanel>
+            
+        </DockPanel>
+
+        <DockPanel Grid.Row="2" Margin="8,0,0,0" HorizontalAlignment="Stretch" LastChildFill="False">
+
+            <TextBlock x:Name="LblKey" VerticalAlignment="Center" Text="Key Binding:"/>
+
+            <lemur:KeyGestureBox x:Name="FldKey" KeyGesture="{Binding KeyGesture, ValidatesOnExceptions=true}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MinWidth="100" Height="28" Margin="8,0,12,0">
+                <!--<i:Interaction.Triggers>
+                    <i:EventTrigger EventName="LostKeyboardFocus" >
+                        <i:InvokeCommandAction Command="{Binding CmdUpdateKey}" CommandParameter="{Binding RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type TextBox}}, Path=Text}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>-->
+            </lemur:KeyGestureBox>
+
+            <Button x:Name="BtnAccept" Style="{StaticResource StdButton}" Command="{Binding CmdSubmit}" DockPanel.Dock="Right" MinWidth="42" MinHeight="42" IsDefault="True">
+
+                    <Image Stretch="Uniform" Source="/TorboFile;component/assets/images/dialog-yes.png"/>
+
+            </Button>
+            <Button x:Name="BtnCancel" Style="{StaticResource StdButton}" MinHeight="40" MinWidth="40" DockPanel.Dock="Right" Click="BtnCancel_Click">
+
+                    <Image Source="/TorboFile;component/assets/images/dialog-close.png" Stretch="Uniform"/>
+
+            </Button>
+        </DockPanel>
+
+    </Grid>
+</Window>

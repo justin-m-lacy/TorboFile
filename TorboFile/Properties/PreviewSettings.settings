@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TorboFile.Properties" GeneratedClassName="PreviewSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="imageViewMode" Type="TorboFile.Properties.ViewMode" Scope="User">
+      <Value Profile="(Default)">Default</Value>
+    </Setting>
+    <Setting Name="mediaViewMode" Type="TorboFile.Properties.ViewMode" Scope="User">
+      <Value Profile="(Default)">Default</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

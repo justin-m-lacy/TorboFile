@@ -1,0 +1,46 @@
+﻿<local:PreviewControl x:Class="TorboFile.Controls.ViewMediaControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TorboFile.Controls"
+       
+             mc:Ignorable="d"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Center" Orientation="Horizontal" MaxHeight="32" HorizontalAlignment="Center">
+            <Button x:Name="BtnPause"  Style="{StaticResource StdButton}" Click="BtnPause_Click" Margin="4,0,4,0" ToolTip="Pause Media" MinWidth="32" MinHeight="32" BorderBrush="{x:Null}">
+
+                    <Image Source="/TorboFile;component/assets/images/media-playback-pause-8.png" Stretch="Uniform"/>
+
+            </Button>
+            <Button x:Name="BtnPlay" Style="{StaticResource StdButton}" Click="BtnPlay_Click" ToolTip="Play Media"
+                    Margin="4,0,4,0" BorderBrush="{x:Null}">
+
+                    <Image Source="/TorboFile;component/assets/images/media-playback-start-8.png" Stretch="Uniform"/>
+
+            </Button>
+            <Button x:Name="BtnStop"  Style="{StaticResource StdButton}" Margin="4,0,4,0" ToolTip="Stop Media" Click="BtnStop_Click">
+
+                    <Image Source="/TorboFile;component/assets/images/media-playback-stop-8.png" Stretch="Uniform"/>
+ 
+            </Button>
+        </StackPanel>
+        <Slider x:Name="scrubbingBar" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" ValueChanged="Slider_ValueChanged">
+            <!-- " Maximum="{Binding ElementName=mediaElement, Path=NaturalDuration.TimeSpan.Seconds}" -->
+        </Slider>
+        <!--Placed last so it fills remaining space -->
+        <MediaElement x:Name="mediaElement" DockPanel.Dock="Top" VerticalAlignment="Stretch" 
+                      LoadedBehavior="Manual" UnloadedBehavior="Close" HorizontalAlignment="Stretch"
+        Source="{Binding Path=FilePath}" MediaFailed="mediaElement_MediaFailed"
+                      MediaOpened="mediaElement_MediaOpened"
+                      Loaded="mediaElement_Loaded"
+                      Unloaded="mediaElement_Unloaded"
+                      SourceUpdated="mediaElement_SourceUpdated"
+                      TargetUpdated="mediaElement_TargetUpdated"/>
+        
+    </DockPanel>
+</local:PreviewControl>

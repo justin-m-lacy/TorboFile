@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/TorboFile/v15/Server/sqlite3
+/.vs/TorboFile/v15/sqlite3
+/.vs
+/packages
+/TorboFile/assets
+/TorboFile/bin
+/TorboFile/obj

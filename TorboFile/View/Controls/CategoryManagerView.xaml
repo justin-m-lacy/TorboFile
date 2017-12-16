@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="TorboFile.Controls.CategoryManagerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TorboFile.Controls"
+             xmlns:categories="clr-namespace:TorboFile.Categories"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:convert="clr-namespace:LerpingLemur.Windows.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" Height="Auto">
+
+    <!-- DataBinding: CategoryManagerVM-->
+
+    <Control.Resources>
+
+        <!--<DataTemplate x:Key="CategorySetTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource StdButton}" Content="Load"
+                    Command="{Binding Path=DataContext.CmdChangeActiveSet,
+                RelativeSource={RelativeSource AncestorType={x:Type local:CategoryManagerView}, Mode=FindAncestor} }"
+                    CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+            <TextBlock HorizontalAlignment="Stretch" Text="{Binding}"/>
+            </StackPanel>
+            </DataTemplate> -->
+
+    </Control.Resources>
+
+    <Grid Background="{StaticResource BackDarkBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90*"></RowDefinition>
+            <RowDefinition Height="24"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="80*"/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource BackDarkBrush}">
+            <TextBlock DockPanel.Dock="Top" MaxHeight="24" Margin="0,2,0,2" Text="Sets:" FontSize="10" Foreground="{StaticResource BackLightBrush}" />
+
+            <ListView x:Name="SetListBox" SelectionMode="Single"
+                         SelectedItem="{Binding FocusedSet, Mode=TwoWay}"
+                         ItemsSource="{Binding CategoryManager}">
+                <ListView.Resources>
+                    <convert:BoolToVisible Invert="True" x:Key="InvertBool" />
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn>
+
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type categories:CategorySetInfo}">
+
+                                    <Button Style="{StaticResource StdButton}" Content="Activate"
+                                     Visibility="{Binding IsLoaded, Converter={StaticResource InvertBool}}"
+                                            
+                                Command="{Binding Path=DataContext.CmdChangeActiveSet,
+                                Source={x:Reference SetListBox} }"
+                                CommandParameter="{Binding Path=Name}"/>
+
+                                </DataTemplate>
+
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Set Name" DisplayMemberBinding="{Binding Name}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="center">
+
+            <Button x:Name="BtnEditSet" Style="{StaticResource StdButton}" Margin="2,0" ToolTip="Edit Category"
+                Command="{Binding CmdEditSet}">
+                <Image Source="/TorboFile;component/assets/images/edit-6.png"/>
+
+            </Button>
+
+            <Button x:Name="BtnRemoveSet" Margin="2,0" ToolTip="Remove Category Set"
+                    Command="{Binding CmdRemoveSet}" Style="{StaticResource StdButton}">
+                <Image Source="/TorboFile;component/assets/images/list-remove-4.png"/>
+            </Button>
+            <Button x:Name="BtnNewSet" Style="{StaticResource StdButton}" Margin="2,0" ToolTip="Add Category Set"
+                    Command="{Binding CmdNewSet}">
+                <Image Source="/TorboFile;component/assets/images/list-add-4.png"/>
+            </Button>
+
+        </StackPanel>
+
+        <DockPanel Grid.Row="0" Grid.Column="1" Background="{StaticResource BackDarkBrush}">
+            <TextBlock DockPanel.Dock="Top" MaxHeight="24" Margin="0,2,0,2" Foreground="{StaticResource BackLightBrush}" 
+                       VerticalAlignment="Top" Text="Categories:" FontSize="10"/>
+
+            <ListView x:Name="CategoryListBox" HorizontalContentAlignment="Stretch"
+                         ItemsSource="{Binding CategoryManager.Current}"
+                         SelectedItem="{Binding FocusedCategory, Mode=TwoWay}"
+                         SelectionMode="Single">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Category Name" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Category Path" DisplayMemberBinding="{Binding DirectoryPath}"/>
+                        <GridViewColumn Header="Key Binding" DisplayMemberBinding="{Binding Gesture}" />
+                    </GridView>
+                </ListView.View>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding CmdEditCategory}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+            </ListView>
+        </DockPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" FlowDirection="LeftToRight">
+            <Button x:Name="BtnEdit" Style="{StaticResource StdButton}" Margin="2,0" Padding="2" ToolTip="Edit Category"
+                Command="{Binding CmdEditCategory}">
+                <Image Source="/TorboFile;component/assets/images/edit-6.png"/>
+                <!--<Button.Background>
+                    <ImageBrush Stretch="Uniform" ImageSource="/TorboFile;component/assets/images/edit-6.png"/>
+                </Button.Background>-->
+            </Button>
+            <Button x:Name="BtnDelete" Padding="2"  Margin="2,0" ToolTip="Remove Category"
+                Command="{Binding CmdDeleteCategory}" Style="{StaticResource StdButton}">
+                <Image Source="/TorboFile;component/assets/images/list-remove-4.png"/>
+                <!--<Button.Background>
+                    <ImageBrush Stretch="Uniform" ImageSource="/TorboFile;component/assets/images/list-remove-4.png"/>
+                </Button.Background>-->
+            </Button>
+            <Button x:Name="BtnNew" Style="{StaticResource StdButton}" Margin="2,0" Padding="2" ToolTip="Add Category"
+                    Command="{Binding CmdNewCategory}">
+                <Image Source="/TorboFile;component/assets/images/list-add-4.png"/>
+                <!--<Button.Background>
+                    <ImageBrush ImageSource="/TorboFile;component/assets/images/list-add-4.png" Stretch="Uniform"/>
+                </Button.Background>-->
+            </Button>
+
+        </StackPanel>
+    </Grid>
+
+</UserControl>
