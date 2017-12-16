@@ -19,6 +19,32 @@ namespace TorboFile.ViewModels {
 
 		#region COMMANDS
 
+		private RelayCommand _cmdOpenChecked;
+		public RelayCommand CmdOpen {
+
+			get {
+				return this._cmdOpenChecked ?? ( this._cmdOpenChecked = new RelayCommand(
+
+				() => {
+
+					string[] paths = this.Items.Where( ( item ) => { return item.IsChecked; } ).Select( ( item ) => { return item.Item.Path; } ).ToArray();
+					App.Instance.OpenExternalAsync( paths );
+
+				}, this.HasCheckedItems
+
+			  ) );
+			}
+
+			set {
+
+				if( this._cmdOpenChecked != value ) {
+					this._cmdOpenChecked = value;
+					this.NotifyPropertyChanged();
+				}
+			} //
+
+		} // CmdOpen
+
 		private RelayCommand _cmdShowExternal;
 		public RelayCommand CmdShowExternal {
 
@@ -70,23 +96,13 @@ namespace TorboFile.ViewModels {
 
 					this.DeleteChecked,
 					this.HasCheckedItems
-
-				);
-
-			this.CmdOpen = new RelayCommand( () => {
-
-				string[] paths = this.Items.Where( ( item ) => { return item.IsChecked; } ).Select( ( item ) => { return item.Item.Path; } ).ToArray();
-				App.Instance.OpenExternalAsync( paths );
-
-			}, this.HasCheckedItems );
-
-
+			);
 
 			this.CheckedItems.CollectionChanged += this.CheckedItems_CollectionChanged;
 		}
 
 		/// <summary>
-		/// Set of checked FileData objects has changed.
+		/// Set of Checked FileData objects has changed.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -110,6 +126,9 @@ namespace TorboFile.ViewModels {
 			}
 
 			this.CheckedSize = curSize;
+
+			this.CmdOpen.RaiseCanExecuteChanged();
+			this.CmdShowExternal.RaiseCanExecuteChanged();
 
 		} //
 

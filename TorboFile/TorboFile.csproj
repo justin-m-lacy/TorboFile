@@ -590,7 +590,7 @@
     <None Include="assets\svg\Video.svg" />
     <Resource Include="assets\images\large\folder.png" />
   </ItemGroup>
-  <Import Project="..\..\LerpingLemur\LerpingLemur\LerpingLemur.projitems" Label="Shared" />
+  <Import Project="..\..\Lemur\Lemur\Lemur.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
