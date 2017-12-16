@@ -19,8 +19,35 @@ namespace TorboFile.ViewModels {
 
 		#region COMMANDS
 
+		private RelayCommand _cmdOpenSelected;
+		/// <summary>
+		/// Use the System to open selected files ( not checked. )
+		/// </summary>
+		public RelayCommand CmdOpenSelected {
+
+			get {
+				return this._cmdOpenSelected ?? ( this._cmdOpenSelected = new RelayCommand(
+
+				() => {
+
+					App.Instance.OpenExternalAsync( this.SelectedItem.Item.path );
+
+				}, this.HasSelectedItems
+
+			  ) );
+			}
+
+			set {
+
+				this.SetProperty( ref this._cmdOpenSelected, value );
+			}
+
+
 		private RelayCommand _cmdOpenChecked;
-		public RelayCommand CmdOpen {
+		/// <summary>
+		/// Open all checked files.
+		/// </summary>
+		public RelayCommand CmdOpenChecked {
 
 			get {
 				return this._cmdOpenChecked ?? ( this._cmdOpenChecked = new RelayCommand(
@@ -37,10 +64,8 @@ namespace TorboFile.ViewModels {
 
 			set {
 
-				if( this._cmdOpenChecked != value ) {
-					this._cmdOpenChecked = value;
-					this.NotifyPropertyChanged();
-				}
+				this.SetProperty( ref this._cmdOpenChecked, value );
+
 			} //
 
 		} // CmdOpen
@@ -127,7 +152,7 @@ namespace TorboFile.ViewModels {
 
 			this.CheckedSize = curSize;
 
-			this.CmdOpen.RaiseCanExecuteChanged();
+			this.CmdOpenChecked.RaiseCanExecuteChanged();
 			this.CmdShowExternal.RaiseCanExecuteChanged();
 
 		} //
