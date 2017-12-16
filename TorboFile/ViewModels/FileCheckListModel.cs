@@ -1,6 +1,6 @@
-﻿using LerpingLemur.Types;
-using LerpingLemur.Windows;
-using LerpingLemur.Windows.MVVM;
+﻿using Lemur.Types;
+using Lemur.Windows;
+using Lemur.Windows.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

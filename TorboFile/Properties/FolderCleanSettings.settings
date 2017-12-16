@@ -23,10 +23,10 @@
     <Setting Name="hasPreserveRange" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="deleteRange" Type="LerpingLemur.Types.DataRange" Scope="User">
+    <Setting Name="deleteRange" Type="Lemur.Types.DataRange" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="preserveRange" Type="LerpingLemur.Types.DataRange" Scope="User">
+    <Setting Name="preserveRange" Type="Lemur.Types.DataRange" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="deleteEmptyFiles" Type="System.Boolean" Scope="User">

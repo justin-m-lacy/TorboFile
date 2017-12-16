@@ -1,10 +1,10 @@
 ﻿
 using TorboFile.Properties;
 using TorboFile.Services;
-using LerpingLemur.Types;
-using LerpingLemur.Windows;
-using LerpingLemur.Windows.MVVM;
-using LerpingLemur.Windows.Text;
+using Lemur.Types;
+using Lemur.Windows;
+using Lemur.Windows.MVVM;
+using Lemur.Windows.Text;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
-using LerpingLemur.Operations.FileMatching;
+using Lemur.Operations.FileMatching;
 
 namespace TorboFile.ViewModels {
 

@@ -5,19 +5,19 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using LerpingLemur.Utils;
+using Lemur.Utils;
 using System.ComponentModel.Design;
 using TorboFile.Windows;
 using TorboFile.Services;
-using LerpingLemur.Tasks;
+using Lemur.Tasks;
 using System.IO;
 
-using static LerpingLemur.Debug.DebugUtils;
-using LerpingLemur.Windows.MVVM;
+using static Lemur.Debug.DebugUtils;
+using Lemur.Windows.MVVM;
 using TorboFile.Categories;
 using TorboFile.ViewModels;
 using TorboFile.Properties;
-using LerpingLemur.Windows;
+using Lemur.Windows;
 
 namespace TorboFile {
 

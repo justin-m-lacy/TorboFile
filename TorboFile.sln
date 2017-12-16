@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TorboFile", "TorboFile\TorboFile.csproj", "{C3ABCDA1-646A-496D-8897-614F3D4008FB}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LerpingLemur", "..\LerpingLemur\LerpingLemur\LerpingLemur.shproj", "{619C683E-54C5-4361-A568-AD207E52174E}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Lemur", "..\LerpingLemur\LerpingLemur\Lemur.shproj", "{619C683E-54C5-4361-A568-AD207E52174E}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-using LerpingLemur.Utils;
-using LerpingLemur.Tasks;
+using Lemur.Utils;
+using Lemur.Tasks;
 using System.Threading;
-using static LerpingLemur.Debug.DebugUtils;
+using static Lemur.Debug.DebugUtils;
 using TorboFile.Windows;
-using LerpingLemur.Windows.Converters;
+using Lemur.Windows.Converters;
 using System.ComponentModel;
 using System.Windows.Controls;
 

@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LerpingLemur.Windows.Controls {
+namespace Lemur.Windows.Controls {
 
 	/// <summary>
 	/// A label that displays a feedback message with optional timer/icon.

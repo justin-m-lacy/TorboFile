@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using LerpingLemur.Utils;
-using static LerpingLemur.Debug.DebugUtils;
+using Lemur.Utils;
+using static Lemur.Debug.DebugUtils;
 
 namespace TorboFile {
 

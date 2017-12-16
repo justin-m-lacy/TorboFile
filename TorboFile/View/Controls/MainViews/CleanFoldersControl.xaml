@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TorboFile.Controls"
-             xmlns:lerp="clr-namespace:LerpingLemur.Windows.Controls"
+             xmlns:lerp="clr-namespace:Lemur.Windows.Controls"
              mc:Ignorable="d" 
              xmlns:prefs="clr-namespace:TorboFile.Properties"
-             xmlns:convert="clr-namespace:LerpingLemur.Windows.Converters"
+             xmlns:convert="clr-namespace:Lemur.Windows.Converters"
              d:DesignHeight="300" d:DesignWidth="500">
     <!-- Use CleanFoldersModel -->
     <DockPanel>

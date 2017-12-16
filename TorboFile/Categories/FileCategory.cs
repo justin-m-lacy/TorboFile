@@ -1,5 +1,5 @@
-﻿using LerpingLemur.Windows.Input;
-using LerpingLemur.Windows.MVVM;
+﻿using Lemur.Windows.Input;
+using Lemur.Windows.MVVM;
 using System;
 using System.Collections.Generic;
 using System.IO;

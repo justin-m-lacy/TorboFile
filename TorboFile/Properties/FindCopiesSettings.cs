@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using LerpingLemur.Utils;
+using Lemur.Utils;
 namespace TorboFile.Properties {
 
 	/// <summary>

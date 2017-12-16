@@ -109,9 +109,9 @@ namespace TorboFile.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::LerpingLemur.Types.DataRange deleteRange {
+        public global::Lemur.Types.DataRange deleteRange {
             get {
-                return ((global::LerpingLemur.Types.DataRange)(this["deleteRange"]));
+                return ((global::Lemur.Types.DataRange)(this["deleteRange"]));
             }
             set {
                 this["deleteRange"] = value;
@@ -120,9 +120,9 @@ namespace TorboFile.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::LerpingLemur.Types.DataRange preserveRange {
+        public global::Lemur.Types.DataRange preserveRange {
             get {
-                return ((global::LerpingLemur.Types.DataRange)(this["preserveRange"]));
+                return ((global::Lemur.Types.DataRange)(this["preserveRange"]));
             }
             set {
                 this["preserveRange"] = value;

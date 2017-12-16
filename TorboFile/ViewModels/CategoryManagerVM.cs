@@ -1,11 +1,11 @@
-﻿using LerpingLemur.Windows.MVVM;
+﻿using Lemur.Windows.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TorboFile.Categories;
-using LerpingLemur.Windows;
+using Lemur.Windows;
 using TorboFile.Services;
 using System.ComponentModel;
 

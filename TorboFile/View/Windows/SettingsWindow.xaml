@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TorboFile"
         xmlns:settings="clr-namespace:TorboFile.Properties"
         xmlns:controls="clr-namespace:TorboFile.Controls"
-        xmlns:convert="clr-namespace:LerpingLemur.Windows.Converters"
+        xmlns:convert="clr-namespace:Lemur.Windows.Converters"
 
         mc:Ignorable="d" Background="{StaticResource BackDarkBrush}"
         Title="Settings" Height="400" MinHeight="128" MinWidth="128" Width="512">
@@ -89,7 +89,7 @@
                             <Hyperlink Name="emailLink" NavigateUri="mailto:lerping.lemur@gmail.com">lerping.lemur@gmail.com</Hyperlink>
                         </Paragraph>
                         <Paragraph>You can also send me money at:
-                            <Hyperlink Name="payLink" NavigateUri="https://www.paypal.me/lerpinglemur" RequestNavigate="visit_hyperlink">paypal.me/lerpinglemur</Hyperlink>
+                            <Hyperlink Name="payLink" NavigateUri="https://www.paypal.me/Lemur" RequestNavigate="visit_hyperlink">paypal.me/Lemur</Hyperlink>
                             <LineBreak/>
                             But you won't.
                         </Paragraph>

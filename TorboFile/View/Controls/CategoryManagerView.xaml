@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:TorboFile.Controls"
              xmlns:categories="clr-namespace:TorboFile.Categories"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:convert="clr-namespace:LerpingLemur.Windows.Converters"
+             xmlns:convert="clr-namespace:Lemur.Windows.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="200" Height="Auto">
 

@@ -1,6 +1,6 @@
-﻿using LerpingLemur.Operations.FileMatching;
-using LerpingLemur.Windows;
-using LerpingLemur.Windows.MVVM;
+﻿using Lemur.Operations.FileMatching;
+using Lemur.Windows;
+using Lemur.Windows.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

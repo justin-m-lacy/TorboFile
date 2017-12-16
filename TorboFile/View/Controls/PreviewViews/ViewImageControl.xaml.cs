@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
-using static LerpingLemur.Debug.DebugUtils;
+using static Lemur.Debug.DebugUtils;
 using TorboFile.Controls;
 
 namespace TorboFile.Controls {

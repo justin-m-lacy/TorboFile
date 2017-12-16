@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:TorboFile.Controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:gif="http://wpfanimatedgif.codeplex.com"
-             xmlns:lemur="clr-namespace:LerpingLemur.Windows.Images"
+             xmlns:lemur="clr-namespace:Lemur.Windows.Images"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 

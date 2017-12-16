@@ -1,4 +1,4 @@
-﻿using LerpingLemur.Windows.MVVM;
+﻿using Lemur.Windows.MVVM;
 using System;
 using System.Collections;
 using System.Collections.Generic;

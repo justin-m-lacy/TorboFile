@@ -9,7 +9,7 @@
              xmlns:models="clr-namespace:TorboFile.ViewModels"
              xmlns:controls="clr-namespace:TorboFile.Controls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:mime="clr-namespace:LerpingLemur.Windows"
+             xmlns:mime="clr-namespace:Lemur.Windows"
              xmlns:effects="clr-namespace:TorboFile"
              xmlns:categories="clr-namespace:TorboFile.Categories"
              d:DesignHeight="340" d:DesignWidth="677" Loaded="UserControl_Loaded" Focusable="True">

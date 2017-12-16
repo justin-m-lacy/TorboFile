@@ -15,8 +15,8 @@ using System.IO;
 using System.Windows.Media.Animation;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using TorboFile.Services;
-using LerpingLemur.Windows.MVVM;
-using LerpingLemur.Windows.Input;
+using Lemur.Windows.MVVM;
+using Lemur.Windows.Input;
 
 namespace TorboFile.Windows {
 

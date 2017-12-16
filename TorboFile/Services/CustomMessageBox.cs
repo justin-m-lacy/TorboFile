@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LerpingLemur.Windows;
+using Lemur.Windows;
 using TorboFile.Windows;
 using TorboFile.Controls;
 using System.Windows;
-using LerpingLemur.Windows.MVVM;
+using Lemur.Windows.MVVM;
 
 namespace TorboFile.Services {
 

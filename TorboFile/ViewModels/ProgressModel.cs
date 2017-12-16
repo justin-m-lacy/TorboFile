@@ -1,6 +1,6 @@
-﻿using LerpingLemur.Tasks;
-using LerpingLemur.Windows;
-using LerpingLemur.Windows.MVVM;
+﻿using Lemur.Tasks;
+using Lemur.Windows;
+using Lemur.Windows.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;

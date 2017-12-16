@@ -1,4 +1,4 @@
-﻿using LerpingLemur.Types;
+﻿using Lemur.Types;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;

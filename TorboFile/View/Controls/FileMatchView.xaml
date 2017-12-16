@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:TorboFile.View.Controls"
-             xmlns:mvvm="clr-namespace:LerpingLemur.Windows.MVVM"
-             xmlns:match="clr-namespace:LerpingLemur.Operations.FileMatching"
+             xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
+             xmlns:match="clr-namespace:Lemur.Operations.FileMatching"
              xmlns:model="clr-namespace:TorboFile.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" Width="976">
