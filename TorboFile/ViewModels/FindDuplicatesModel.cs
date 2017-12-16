@@ -31,6 +31,8 @@ namespace TorboFile.ViewModels {
 
 		}
 
+		#region PROPERTIES
+
 		private FilePreviewModel _filePreview;
 		/// <summary>
 		/// Current file being previewed.
@@ -70,8 +72,7 @@ namespace TorboFile.ViewModels {
 			get { return this._resultsList; }
 
 			private set {
-				this._resultsList = value;
-				this.NotifyPropertyChanged();
+				this.SetProperty( ref this._resultsList, value );
 			}
 
 		}
@@ -94,11 +95,9 @@ namespace TorboFile.ViewModels {
 			}
 		}
 
-		public FindDuplicatesModel() {
+		#endregion
 
-			//Properties.FindDuplicates.Default.PropertyChanged += Default_PropertyChanged;
-
-		} //
+		public FindDuplicatesModel() {} //
 
 		private void PickFolder() {
 
@@ -159,6 +158,10 @@ namespace TorboFile.ViewModels {
 					Task.Run( () => { matchFinder.Run( groupLock ); } );
 			} catch( Exception e ) {
 				Console.WriteLine( "ERROR: " + e.ToString() );
+			}
+
+			if( this.ResultsList.Items.Count == 0 ) {
+				// report no results found.
 			}
 
 			matchGroups.CollectionChanged -= this.Matches_CollectionChanged;

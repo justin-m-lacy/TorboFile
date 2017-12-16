@@ -20,51 +20,84 @@
         <convert:NonNullToVisible x:Key="NonNullConverter"/>
         <convert:CollectionToVisible x:Key="CollectionConverter"/>
         <convert:DataSizeToString x:Key="DataConverter"/>
+        <convert:InvertBoolConverter x:Key="InvertBool"/>
+
+        <Style x:Key="ResultsContent" TargetType="ContentControl">
+            <!-- NOTE: Using ContentControl here captures the DataContext, whereas ContentPresenter does not. -->
+            
+            <Setter Property="Content">
+                <Setter.Value>
+                    <DockPanel Name="ResultSizePanel" DockPanel.Dock="Bottom">
+
+                        <controls:FileSelectionView DockPanel.Dock="Top" />
+                        
+                        <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Total Selected Size: " />
+                        <TextBlock Text="{Binding CheckedSize, Converter={StaticResource DataConverter}}" />
+                        </StackPanel>
+
+
+                </DockPanel>
+                </Setter.Value>
+
+            </Setter>
+
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Items.Count}" Value="0">
+                    <Setter Property="Content">
+                        <Setter.Value>
+                            <TextBlock Visibility="{Binding ElementName=ResultSizePanel, Path=IsVisible, Converter={StaticResource InvertBool}}"
+                          Text="No duplicate files found." />
+                        </Setter.Value>
+                    </Setter>
+
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
 
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch" Margin="8,8,8,8">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="4"/>
             <!--GridSplitter -->
             <ColumnDefinition Name="ColumnPreview" Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <!-- SETTINGS -->
-        <StackPanel Grid.Column="0" Grid.Row="0" DataContext="{x:Static settings:FindCopiesSettings.Default}" Margin="0,0,0,8">
-            <Label x:Name="LblOptions" Content="Search Options:" FontSize="16" />
-            <CheckBox x:Name="ChkUseSizeRange" Content="Use Size Range" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110"
+        <!-- GRID LEFT SIDE -->
+        <DockPanel Name="GridLeftPanel" Grid.Column="0" Grid.Row="0" Margin="0,0,0,8">
+
+            <TextBlock x:Name="LblOptions" Text="Search Options:" FontSize="16" DockPanel.Dock="Top" />
+
+            <DockPanel Name="SettingsPanel" DataContext="{x:Static settings:FindCopiesSettings.Default}"
+                      DockPanel.Dock="Top" Margin="0,4,0,4" >
+
+                <CheckBox x:Name="ChkUseSizeRange" Content="Use Size Range" DockPanel.Dock="Top"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Width="110"
                   IsChecked="{Binding useSizeRange}" />
 
-            <StackPanel x:Name="ContentSizeRange" Orientation="Horizontal" Margin="16,4,0,8"
+                <StackPanel x:Name="ContentSizeRange" Orientation="Horizontal"
+                            Margin="16,4,0,8" DockPanel.Dock="Top"
                     Visibility="{Binding ElementName=ChkUseSizeRange, Path=IsChecked, Converter={StaticResource BoolVisibility}}">
-                <StackPanel x:Name="MinSizePanel">
-                    <Label x:Name="LblMinSize" Content="Min Size (bytes):" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
-                    <lerp:ByteTextBox x:Name="FldMinSize" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" MaxLength="0" IsUndoEnabled="True" UndoLimit="3"/>
-                </StackPanel>
-                <StackPanel Margin="32,0,0,0">
-                    <Label x:Name="LblMaxSize" Content="Max Size (bytes):" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
-                    <lerp:ByteTextBox x:Name="FldMaxSize" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" />
+                    <StackPanel x:Name="MinSizePanel">
+                        <Label x:Name="LblMinSize" Content="Min Size (bytes):" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
+                        <lerp:ByteTextBox x:Name="FldMinSize" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" MaxLength="0" IsUndoEnabled="True" UndoLimit="3"/>
+                    </StackPanel>
+                    <StackPanel Margin="32,0,0,0">
+                        <Label x:Name="LblMaxSize" Content="Max Size (bytes):" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
+                        <lerp:ByteTextBox x:Name="FldMaxSize" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" />
+                    </StackPanel>
+
                 </StackPanel>
 
-            </StackPanel>
-
-            <DockPanel Margin="0,4,0,4">
                 <StackPanel DockPanel.Dock="Top" Margin="0,4,0,4">
-                    <Label x:Name="LblInclude" Content="Only Include these file types: (separate file extensions with ';')" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332"/>
+
+                    <TextBlock x:Name="LblInclude" Text="Only Include these file types: (separate file extensions with ';')" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332"/>
                     <TextBox x:Name="FldInclude" Height="23" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"
                          Text="{Binding IncludeExtensions}"
                          TextWrapping="NoWrap" Width="332" ToolTip="Separate each file extension with &quot;;&quot;">
                     </TextBox>
-                </StackPanel>
-                <StackPanel DockPanel.Dock="Bottom">
 
                     <Label x:Name="LblExclude" Content="Exclude these file types: (separate file extensions with ';')" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332"/>
                     <TextBox x:Name="FldExclude" Height="23" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"
@@ -73,48 +106,44 @@
                     </TextBox>
 
                 </StackPanel>
-            </DockPanel>
 
-
-            <CheckBox x:Name="ChkRecursiveMatch"
+                <CheckBox x:Name="ChkRecursiveMatch" DockPanel.Dock="Left"
                   IsChecked="{Binding recursive}"
                   Content="Recursive Search" HorizontalAlignment="Left" Height="21" Width="121"/>
 
-        </StackPanel>
-        <!-- END SETTINGS -->
+                <!-- Button is in the SettingsPanel for Layout reason -->
+                <Button x:Name="BtnFindDuplicates" Style="{StaticResource StdButton}"
+                        DockPanel.Dock="Right" MaxWidth="72" MaxHeight="92"
+            Command="{Binding Path=DataContext.CmdBeginSearch, ElementName=GridLeftPanel}" ToolTip="Begin Search">
+                    <DockPanel>
+                        <Image Source="/TorboFile;component/assets/images/system-search-4.png" DockPanel.Dock="Top" Width="42" Height="42" />
+                        <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center">Search</TextBlock>
+                    </DockPanel>
+                </Button>
 
-        <Button x:Name="BtnFindDuplicates" Grid.Column="1" Style="{StaticResource StdButton}" HorizontalAlignment="right" VerticalAlignment="Bottom" 
-            Command="{Binding CmdBeginSearch}" ToolTip="Begin Search">
-            <DockPanel>
-                <Image Source="/TorboFile;component/assets/images/system-search-4.png" DockPanel.Dock="Top" Width="42" Height="42" />
-                <Label DockPanel.Dock="Bottom" HorizontalAlignment="Center">Search</Label>
             </DockPanel>
-        </Button>
 
-        <controls:ProgressControl Grid.ColumnSpan="2"  Grid.Row="2" Margin="4,0,4,0"
+            <controls:ProgressControl Margin="4,0,4,0" DockPanel.Dock="Top"
                                   DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.CurrentSearch}"
                                   Visibility="{Binding Converter={StaticResource NonNullConverter}}" />
 
-        <DockPanel x:Name="ResultsDock" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
-                   DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ResultsList}" Visibility="{Binding Converter={StaticResource NonNullConverter}}">
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-                <TextBlock Text="Total Selected Size: " />
-                <TextBlock Text="{Binding CheckedSize, Converter={StaticResource DataConverter}}" />
-            </StackPanel>
-            <controls:FileSelectionView />
-       
+            <ContentControl DockPanel.Dock="Top"
+                            DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}, Path=DataContext.ResultsList}"
+                                 Style="{StaticResource ResultsContent}" Visibility="{Binding Converter={StaticResource NonNullConverter}}"/>
 
         </DockPanel>
+        <!-- END GRID LEFT -->
 
-        <GridSplitter Grid.Column="2" Grid.RowSpan="3" Width="12" Opacity="0"
-                      
-                      HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
-        <ContentControl x:Name="SelectionPreview" Grid.Column="3" Grid.RowSpan="3" Margin="4,4,4,4" VerticalAlignment="Center"
+        <GridSplitter Grid.Column="1" Width="12" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+        <!-- PREVIEW PANE -->
+        <ContentControl x:Name="SelectionPreview" Grid.Column="2" Margin="4,4,4,4" VerticalAlignment="Center"
                     HorizontalAlignment="Center"  HorizontalContentAlignment="Center"
                     Visibility="{Binding Path=FilePath, Converter={StaticResource NonNullConverter}}"
-                    DataContext="{Binding DataContext.FilePreview, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}"
+                    DataContext="{Binding Path=DataContext.FilePreview, RelativeSource={RelativeSource AncestorType=Control, Mode=FindAncestor}}"
                     Style="{StaticResource PreviewSelector}"/>
 
     </Grid>
+    
 </UserControl>

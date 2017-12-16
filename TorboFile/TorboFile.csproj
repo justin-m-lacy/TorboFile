@@ -186,12 +186,10 @@
     <Compile Include="View\Controls\CategoryManagerView.xaml.cs">
       <DependentUpon>CategoryManagerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\FileListItem.cs" />
     <Compile Include="View\Controls\FileSelectionView.xaml.cs">
       <DependentUpon>FileSelectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DirectoryVisitor.cs" />
-    <Compile Include="FileDataList.cs" />
     <Compile Include="Properties\FolderCleanSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

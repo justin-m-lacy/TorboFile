@@ -73,6 +73,10 @@ namespace TorboFile.ViewModels {
 		} // CmdOpen
 
 		private RelayCommand _cmdShowExternal;
+
+		/// <summary>
+		/// Command to open the directory of the checked files in the system explorer.
+		/// </summary>
 		public RelayCommand CmdShowExternal {
 
 			get {
