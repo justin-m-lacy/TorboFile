@@ -27,15 +27,14 @@
             
             <Setter Property="Content">
                 <Setter.Value>
-                    <DockPanel Name="ResultSizePanel" DockPanel.Dock="Bottom">
+                    <DockPanel>
 
-                        <controls:FileSelectionView DockPanel.Dock="Top" />
-                        
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
                         <TextBlock Text="Total Selected Size: " />
                         <TextBlock Text="{Binding CheckedSize, Converter={StaticResource DataConverter}}" />
                         </StackPanel>
 
+                        <controls:FileSelectionView />
 
                 </DockPanel>
                 </Setter.Value>
@@ -112,8 +111,8 @@
                   Content="Recursive Search" HorizontalAlignment="Left" Height="21" Width="121"/>
 
                 <!-- Button is in the SettingsPanel for Layout reason -->
-                <Button x:Name="BtnFindDuplicates" Style="{StaticResource StdButton}"
-                        DockPanel.Dock="Right" MaxWidth="72" MaxHeight="92"
+                <Button x:Name="BtnFindDuplicates" Style="{StaticResource StdButton}" Margin="24,0,0,0"
+                        DockPanel.Dock="Right" MaxWidth="72" MaxHeight="92" HorizontalAlignment="Left"
             Command="{Binding Path=DataContext.CmdBeginSearch, ElementName=GridLeftPanel}" ToolTip="Begin Search">
                     <DockPanel>
                         <Image Source="/TorboFile;component/assets/images/system-search-4.png" DockPanel.Dock="Top" Width="42" Height="42" />
@@ -127,12 +126,11 @@
                                   DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.CurrentSearch}"
                                   Visibility="{Binding Converter={StaticResource NonNullConverter}}" />
 
-            <ContentControl DockPanel.Dock="Top"
+            <ContentControl
                             DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}, Path=DataContext.ResultsList}"
                                  Style="{StaticResource ResultsContent}" Visibility="{Binding Converter={StaticResource NonNullConverter}}"/>
 
         </DockPanel>
-        <!-- END GRID LEFT -->
 
 
         <GridSplitter Grid.Column="1" Width="12" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
