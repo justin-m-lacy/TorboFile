@@ -58,10 +58,10 @@
 
     <Grid HorizontalAlignment="Stretch" Margin="8,8,8,8">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="50*" />
             <ColumnDefinition Width="4"/>
             <!--GridSplitter -->
-            <ColumnDefinition Name="ColumnPreview" Width="Auto" />
+            <ColumnDefinition Name="ColumnPreview" Width="40*" />
         </Grid.ColumnDefinitions>
 
         <!-- GRID LEFT SIDE -->

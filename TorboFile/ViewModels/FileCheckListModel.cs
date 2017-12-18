@@ -1,4 +1,5 @@
-﻿using Lemur.Types;
+﻿using Lemur;
+using Lemur.Types;
 using Lemur.Windows;
 using Lemur.Windows.MVVM;
 using System;

@@ -1,4 +1,6 @@
-﻿using Lemur.Tasks;
+﻿using Lemur;
+using Lemur.Tasks;
+using Lemur.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;

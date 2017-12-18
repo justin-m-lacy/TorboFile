@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using TorboFile.Properties;
 using System.Windows.Data;
 using System.Collections.Specialized;
+using Lemur;
 
 namespace TorboFile.ViewModels {
 

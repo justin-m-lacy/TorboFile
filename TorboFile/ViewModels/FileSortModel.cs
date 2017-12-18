@@ -16,8 +16,8 @@ using static Lemur.Debug.DebugUtils;
 using System.Windows;
 using System.Threading;
 using System.Windows.Input;
-using TorboFile.Operations;
 using System.Collections.Specialized;
+using Lemur.Operations;
 
 namespace TorboFile.ViewModels {
 

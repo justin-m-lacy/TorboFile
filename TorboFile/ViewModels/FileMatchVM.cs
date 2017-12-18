@@ -67,6 +67,10 @@ namespace TorboFile.ViewModels {
 		#region PROPERTIES
 
 		private FileMatchSettings _settings;
+
+		/// <summary>
+		/// Settings used during file matching.
+		/// </summary>
 		public FileMatchSettings Settings {
 			get {
 				return this._settings;

@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using Lemur.Operations.FileMatching;
+using Lemur.Operations;
 
 namespace TorboFile.ViewModels {
 
