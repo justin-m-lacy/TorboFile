@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TorboFile.Controls {
+namespace TorboFile.View.Controls {
 
 	public class MessageResultArgs : RoutedEventArgs {
 

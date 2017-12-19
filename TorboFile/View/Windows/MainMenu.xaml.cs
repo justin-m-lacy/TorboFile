@@ -10,12 +10,12 @@ using Lemur.Utils;
 using Lemur.Tasks;
 using System.Threading;
 using static Lemur.Debug.DebugUtils;
-using TorboFile.Windows;
+using TorboFile.View.Windows;
 using Lemur.Windows.Converters;
 using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace TorboFile.Windows {
+namespace TorboFile.View.Windows {
 
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml

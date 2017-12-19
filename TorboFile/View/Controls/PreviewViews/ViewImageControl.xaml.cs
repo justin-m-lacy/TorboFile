@@ -15,9 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using static Lemur.Debug.DebugUtils;
-using TorboFile.Controls;
+using TorboFile.View.Controls;
 
-namespace TorboFile.Controls {
+namespace TorboFile.View.Controls {
 
 	/// <summary>
 	/// Interaction logic for ViewImageControl.xaml

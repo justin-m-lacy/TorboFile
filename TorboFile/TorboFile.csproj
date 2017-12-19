@@ -206,7 +206,6 @@
     <Compile Include="View\Controls\ProgressControl.xaml.cs">
       <DependentUpon>ProgressControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ViewTrigger.cs" />
     <Compile Include="View\Windows\CategoryManagerWindow.xaml.cs">
       <DependentUpon>CategoryManagerWindow.xaml</DependentUpon>
     </Compile>

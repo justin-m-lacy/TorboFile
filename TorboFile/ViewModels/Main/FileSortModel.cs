@@ -11,7 +11,7 @@ using System.ComponentModel;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Lemur.Utils;
 using TorboFile.Services;
-using TorboFile.Windows;
+using TorboFile.View.Windows;
 using static Lemur.Debug.DebugUtils;
 using System.Windows;
 using System.Threading;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace TorboFile.Controls {
+namespace TorboFile.View.Controls {
 
 	public class PreviewControl : UserControl {
 

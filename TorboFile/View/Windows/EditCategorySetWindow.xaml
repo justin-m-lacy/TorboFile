@@ -1,10 +1,10 @@
-﻿<Window x:Class="TorboFile.Windows.EditCategorySetWindow"
+﻿<Window x:Class="TorboFile.View.Windows.EditCategorySetWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TorboFile.Windows"
-        xmlns:controls="clr-namespace:TorboFile.Controls"
+        xmlns:local="clr-namespace:TorboFile.View.Windows"
+        xmlns:controls="clr-namespace:TorboFile.View.Controls"
         mc:Ignorable="d"
         Style="{StaticResource AppWindow}"
         Title="Edit Category Set" Height="144.162" Width="377.162">

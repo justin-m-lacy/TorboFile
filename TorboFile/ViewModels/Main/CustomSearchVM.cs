@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
-namespace TorboFile.View {
+namespace TorboFile.ViewModels {
 
-	public class ViewTrigger : DependencyObject {
+	public class CustomSearchVM {
 
 	} // class
 

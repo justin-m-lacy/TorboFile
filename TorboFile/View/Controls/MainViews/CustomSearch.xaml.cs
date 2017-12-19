@@ -13,13 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TorboFile.View.Controls {
+namespace TorboFile.View.Controls.MainViews {
+
 	/// <summary>
-	/// Interaction logic for ViewUnknownControl.xaml
+	/// Interaction logic for CustomSearch.xaml
 	/// </summary>
-	public partial class ViewUnknownControl : UserControl {
-		public ViewUnknownControl() {
+	public partial class CustomSearch : UserControl {
+
+		public CustomSearch() {
+
 			InitializeComponent();
+
 		}
-	}
-}
+
+	} // class
+
+} // namespace

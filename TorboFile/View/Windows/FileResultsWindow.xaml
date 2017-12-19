@@ -5,7 +5,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TorboFile"
-        xmlns:controls="clr-namespace:TorboFile.Controls"
+        xmlns:controls="clr-namespace:TorboFile.View.Controls"
         mc:Ignorable="d"
         Style="{StaticResource AppWindow}"
         Title="File Results" Height="357.557" Width="454.426">

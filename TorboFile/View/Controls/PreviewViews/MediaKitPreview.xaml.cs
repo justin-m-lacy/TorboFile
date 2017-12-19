@@ -16,7 +16,7 @@ using System.Windows.Threading;
 using WPFMediaKit;
 using WPFMediaKit.DirectShow.MediaPlayers;
 
-namespace TorboFile.Controls {
+namespace TorboFile.View.Controls {
     /// <summary>
     /// Interaction logic for MediaKitPreview.xaml
     /// </summary>

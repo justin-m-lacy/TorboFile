@@ -8,7 +8,7 @@
              xmlns:categories="clr-namespace:TorboFile.Categories"
              xmlns:lerptext="clr-namespace:Lemur.Windows.Text"
              xmlns:convert="clr-namespace:Lemur.Windows.Converters"
-             xmlns:controls="clr-namespace:TorboFile.Controls"
+             xmlns:controls="clr-namespace:TorboFile.View.Controls"
              xmlns:models="clr-namespace:TorboFile.ViewModels"
              DispatcherUnhandledException="Application_DispatcherUnhandledException" Startup="Application_Startup" Exit="Application_Exit">
 

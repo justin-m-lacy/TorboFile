@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lemur.Windows;
-using TorboFile.Windows;
-using TorboFile.Controls;
+using TorboFile.View.Windows;
+using TorboFile.View.Controls;
 using System.Windows;
 using Lemur.Windows.MVVM;
 

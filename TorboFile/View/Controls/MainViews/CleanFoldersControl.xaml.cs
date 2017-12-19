@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TorboFile.Controls {
+namespace TorboFile.View.Controls {
 	/// <summary>
 	/// Interaction logic for CleanFoldersControl.xaml
 	/// </summary>

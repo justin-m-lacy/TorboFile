@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static Lemur.Debug.DebugUtils;
 
-namespace TorboFile.Controls {
+namespace TorboFile.View.Controls {
 
 	/// <summary>
 	/// Interaction logic for ViewMediaControl.xaml

@@ -18,7 +18,7 @@ using TorboFile.Services;
 using Lemur.Windows.MVVM;
 using Lemur.Windows.Input;
 
-namespace TorboFile.Windows {
+namespace TorboFile.View.Windows {
 
     /// <summary>
     /// Interaction logic for NewCategoryWindow.xaml
