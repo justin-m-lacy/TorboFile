@@ -1,17 +1,98 @@
-﻿<UserControl x:Class="TorboFile.View.Controls.MainViews.CustomSearch"
+﻿<UserControl x:Class="TorboFile.View.Controls.CustomSearch"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TorboFile.View.Controls.MainViews"
+			 xmlns:matchmodel="clr-namespace:Lemur.Operations.FileMatching.Models"
+             xmlns:local="clr-namespace:TorboFile.View.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
+	<UserControl.Resources>
+
+		<ResourceDictionary>
+
+			<ResourceDictionary.MergedDictionaries>
+				<!--<ResourceDictionary
+					Source="ConditionsDictionary.xaml"/>-->
+				<ResourceDictionary
+					Source="/TorboFile;component/assets/ConditionsDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+
+			<DataTemplate x:Key="pickerTemplate" DataType="{x:Type matchmodel:ConditionPickerVM}">
+
+				<StackPanel Orientation="Horizontal">
+				<ComboBox ItemsSource="{Binding ConditionTypes}" SelectedItem="{Binding CreateType}"/>
+				
+				<Button Name="btnCreate" Style="{StaticResource StdButton}" Content="CREATE"
+						Command="{Binding CmdCreateCondition}">
+				</Button>
+				</StackPanel>
+			</DataTemplate>
+
+			<!-- MATCH BUILDER -->
+			<DataTemplate x:Key="builderTemplate" DataType="{x:Type matchmodel:FileMatchBuilderVM}">
+
+				<DockPanel >
+					<ContentControl DockPanel.Dock="Top"
+									Content="{Binding ConditionPicker}" ContentTemplate="{StaticResource pickerTemplate}"/>
+					
+					<TextBlock DockPanel.Dock="Top" Text="Conditions:"/>
+					<TextBlock DockPanel.Dock="Top" Text="EndList"/>
+					<ListView x:Name="conditionsList" ItemsSource="{Binding ConditionModels}" DockPanel.Dock="Bottom">
+
+						<ListView.ItemTemplate>
+
+							<DataTemplate DataType="{x:Type matchmodel:FileTestVM}">
+
+								<Grid>
+									<ContentPresenter ContentTemplate="{StaticResource fileTestTemplate}" />
+
+									<Button Name="btnRemove" Style="{StaticResource StdButton}" Grid.Row="0"
+											HorizontalAlignment="Right" VerticalAlignment="Top"
+									Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type ListView}},
+										Path=DataContext.CmdRemoveCondition}"
+										CommandParameter="{Binding}">
+										<Image Source="pack://siteoforigin:,,,/assets/images/flat/png/Close-128.png"/>
+									</Button>
+
+								</Grid>
+
+							</DataTemplate>
+
+						</ListView.ItemTemplate>
+
+					</ListView>
+
+				</DockPanel>
+				
+			</DataTemplate>
+
+		
+		</ResourceDictionary>
+
+		
+	</UserControl.Resources>
+	
 	<!-- Use with CustomSearchVM -->
 	<Grid>
 
-		<Button Name="btnAdd" Style="{StaticResource StdButton}"/>
-		<Button Name="btnSave" Style="{StaticResource StdButton}"/>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="90*"/>
+			<RowDefinition Height="10*"/>
+		</Grid.RowDefinitions>
+
+		<ContentPresenter Content="{Binding MatchBuilder}" ContentTemplate="{StaticResource builderTemplate}"/>
+
+		<StackPanel Name="buttonPanel" Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
+		<Button Name="btnAdd" Style="{StaticResource StdButton}" Content="Add" />
+		<Button Name="btnSave" Style="{StaticResource StdButton}" Content="Save Search"
+				Command="{Binding CmdSaveSearch}"/>
+			<Button Name="btnLoad" Style="{StaticResource StdButton}" Content="Load Search"
+					Command="{Binding CmdLoadSearch}">
+			
+			</Button>
+		</StackPanel>
 
 	</Grid>
 

@@ -141,7 +141,9 @@
             <TabItem Style="{StaticResource TabStyle}" x:Name="CleanFoldersTab" Header="Clean Folders">
                 <controls:CleanFoldersControl x:Name="CleanFoldersView"></controls:CleanFoldersControl>
             </TabItem>
-
+			<TabItem Style="{StaticResource TabStyle}" x:Name="CustomSearchTab" Header="Custom Search">
+				<controls:CustomSearch x:Name="CustomSearchView"></controls:CustomSearch>
+			</TabItem>
         </TabControl>
 
         <Button x:Name="BtnSettings" Style="{StaticResource StdButton}"

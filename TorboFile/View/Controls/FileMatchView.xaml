@@ -7,11 +7,12 @@
              xmlns:local="clr-namespace:TorboFile.View.Controls"
              xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
              xmlns:match="clr-namespace:Lemur.Operations.FileMatching"
-             xmlns:model="clr-namespace:TorboFile.ViewModels"
+             xmlns:model="clr-namespace:Lemur.Operations.FileMatching.Models"
              mc:Ignorable="d" 
              d:DesignHeight="300" Width="976">
 
     <!-- View for Creating FileMatchOperations -->
+	<!-- CURRENTLY UNUSED -->
 
     <UserControl.Resources>
 

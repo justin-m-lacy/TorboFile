@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TorboFile.View.Controls.MainViews {
+namespace TorboFile.View.Controls {
 
 	/// <summary>
 	/// Interaction logic for CustomSearch.xaml

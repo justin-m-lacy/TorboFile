@@ -175,6 +175,7 @@ namespace TorboFile {
 			this.InitView( main.FindDuplicatesView, new FindDuplicatesModel() );
 			this.InitView( main.SortFilesView, new FileSortModel( this.services, this.CategoryManager ) );
 			this.InitView( main.CleanFoldersView, new CleanFoldersModel() );
+			this.InitView( main.CustomSearchView, new CustomSearchVM() );
 
 			this.MainWindow = main;
 

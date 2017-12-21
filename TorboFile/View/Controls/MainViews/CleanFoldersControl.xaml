@@ -3,15 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TorboFile.View.Controls"
-             xmlns:lerp="clr-namespace:Lemur.Windows.Controls"
              mc:Ignorable="d" 
              xmlns:prefs="clr-namespace:TorboFile.Properties"
              xmlns:convert="clr-namespace:Lemur.Windows.Converters"
              d:DesignHeight="300" d:DesignWidth="500">
     <!-- Use CleanFoldersModel -->
     <DockPanel>
-        <TextBlock x:Name="LblInstructions" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="10,10,0,12" VerticalAlignment="Top" TextWrapping="Wrap" Background="Transparent" Text="Select a folder to delete all empty sub-folders.&#xA;If recursive is checked, folders containing only other folders, or unwanted files, are also removed." />
+        <TextBlock x:Name="LblInstructions" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="10,10,0,12" VerticalAlignment="Top"
+				   TextWrapping="Wrap" Background="Transparent" Text="Select a folder to delete all empty sub-folders.&#xA;If recursive is checked, folders containing only other folders, or unwanted files, are also removed." />
 
         <!-- increased bottom margin for validation message. -->
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="4,0,4,12" HorizontalAlignment="Stretch">
