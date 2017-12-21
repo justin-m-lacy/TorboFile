@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:matchmodel="clr-namespace:Lemur.Operations.FileMatching.Models"
+			 xmlns:types="clr-namespace:Lemur.Types"
              xmlns:local="clr-namespace:TorboFile.View.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -22,9 +23,18 @@
 			<DataTemplate x:Key="pickerTemplate" DataType="{x:Type matchmodel:ConditionPickerVM}">
 
 				<StackPanel Orientation="Horizontal">
-				<ComboBox ItemsSource="{Binding ConditionTypes}" SelectedItem="{Binding CreateType}"/>
+					<ComboBox Name="matchTypesDropDown" MinWidth="64" Margin="2"
+						ItemsSource="{Binding ConditionTypes}" SelectedItem="{Binding CreateType}">
+						<ComboBox.ItemTemplate>
+							<DataTemplate DataType="{x:Type types:TypeDescription}">
+
+									<TextBlock Text="{Binding Name}" ToolTip="{Binding Desc}"/>
+
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
 				
-				<Button Name="btnCreate" Style="{StaticResource StdButton}" Content="CREATE"
+				<Button Name="btnCreate" Style="{StaticResource StdButton}" Content="CREATE" Margin="2"
 						Command="{Binding CmdCreateCondition}">
 				</Button>
 				</StackPanel>
@@ -36,9 +46,8 @@
 				<DockPanel >
 					<ContentControl DockPanel.Dock="Top"
 									Content="{Binding ConditionPicker}" ContentTemplate="{StaticResource pickerTemplate}"/>
-					
+
 					<TextBlock DockPanel.Dock="Top" Text="Conditions:"/>
-					<TextBlock DockPanel.Dock="Top" Text="EndList"/>
 					<ListView x:Name="conditionsList" ItemsSource="{Binding ConditionModels}" DockPanel.Dock="Bottom">
 
 						<ListView.ItemTemplate>

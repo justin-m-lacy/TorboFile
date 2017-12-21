@@ -47,11 +47,11 @@
         <CheckBox x:Name="ChkRecursiveSearch" DockPanel.Dock="Top"
                   IsChecked="{Binding Settings.Recursive}"
                   Content="Recursive File Search"/>
-        
-        <ComboBox DockPanel.Dock="Top" Text="Search Type" MaxWidth="100"
-                  SelectedItem="{Binding Path=Settings.MatchType}"
-                  ItemsSource="{mvvm:EnumSourceExtension EnumType={x:Type match:MatchType}}">
-        </ComboBox>
+
+		<ComboBox DockPanel.Dock="Top" Text="Search Type" MaxWidth="100"
+                  SelectedItem="{Binding Path=Settings.MatchType}">
+
+		</ComboBox>
 
         <ListBox DockPanel.Dock="Top" x:Name="ListConditions" ItemsSource="{Binding MatchConditions}">
             <ListBox.ItemTemplate>
