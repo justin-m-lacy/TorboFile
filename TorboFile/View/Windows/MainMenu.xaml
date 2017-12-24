@@ -5,155 +5,164 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:TorboFile"
         xmlns:lerp="clr-namespace:Lemur.Windows.Controls"
         xmlns:controls="clr-namespace:TorboFile.View.Controls"
         xmlns:converters="clr-namespace:Lemur.Windows.Converters"
         xmlns:svg="http://sharpvectors.codeplex.com/svgc/"
+		xmlns:models="clr-namespace:TorboFile.ViewModels"
         mc:Ignorable="d"
         Style="{StaticResource AppWindow}"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="TorboFile" Height="550" Width="860" SizeChanged="mainWindow_SizeChanged">
+        Title="TorboFile" MinHeight="400" MinWidth="400" Height="{Binding Height, Mode=TwoWay}" Width="{Binding Width, Mode=TwoWay}">
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="SizeChanged">
+			<i:InvokeCommandAction Command="{Binding CmdSizeChanged}" />
+		</i:EventTrigger>
+		<i:EventTrigger EventName="Closed">
+			<i:InvokeCommandAction Command="{Binding CmdExit}" />
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
 
-    <Window.Resources>
+	<!-- Use MainVM -->
 
-        <ControlTemplate x:Key="TabItemTemplate" TargetType="{x:Type TabItem}">
+	<Window.Resources>
 
-            <Grid x:Name="templateRoot" SnapsToDevicePixels="true" Margin="0">
+		<ControlTemplate x:Key="TabItemTemplate" TargetType="{x:Type TabItem}">
 
-                <Border x:Name="mainBorder" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" Background="{TemplateBinding Background}" Margin="0">
-                    <!-- Used for Opacity overlay -->
-                    <Border x:Name="innerBorder" BorderBrush="#FFACACAC" BorderThickness="0" Background="White" Opacity="0"/>
-                </Border>
-                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}"
+			<Grid x:Name="templateRoot" SnapsToDevicePixels="true" Margin="0">
+
+				<Border x:Name="mainBorder" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" Background="{TemplateBinding Background}" Margin="0">
+					<!-- Used for Opacity overlay -->
+					<Border x:Name="innerBorder" BorderBrush="#FFACACAC" BorderThickness="0" Background="White" Opacity="0"/>
+				</Border>
+				<ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}"
                                   ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" Focusable="False"
                                   HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"
                                   Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                   VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
-            </Grid>
-            <ControlTemplate.Triggers>
+			</Grid>
+			<ControlTemplate.Triggers>
 
-                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true">
-                </DataTrigger>
+				<DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true">
+				</DataTrigger>
 
-                <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false">
+				<DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false">
 
-                    <Setter Property="Opacity" TargetName="contentPresenter" Value="0.5"/>
-                    <Setter Property="BorderBrush" TargetName="mainBorder" Value="#FFD9D9D9"/>
-                </DataTrigger>
+					<Setter Property="Opacity" TargetName="contentPresenter" Value="0.5"/>
+					<Setter Property="BorderBrush" TargetName="mainBorder" Value="#FFD9D9D9"/>
+				</DataTrigger>
 
-                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true">
+				<DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true">
 
-                    <DataTrigger.Setters>
-                        <Setter Property="Panel.ZIndex" Value="1"/>
-                        <Setter Property="Opacity" TargetName="innerBorder" Value="0.25"/>
-                    </DataTrigger.Setters>
-                </DataTrigger>
+					<DataTrigger.Setters>
+						<Setter Property="Panel.ZIndex" Value="1"/>
+						<Setter Property="Opacity" TargetName="innerBorder" Value="0.25"/>
+					</DataTrigger.Setters>
+				</DataTrigger>
 
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
+			</ControlTemplate.Triggers>
+		</ControlTemplate>
 
-        <Style x:Key="TabControlStyle" TargetType="{x:Type TabControl}">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
+		<Style x:Key="TabControlStyle" TargetType="{x:Type TabControl}">
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
 
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabControl}">
-                        <Grid x:Name="templateRoot" ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="ColumnDefinition0"/>
-                                <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
-                                <RowDefinition x:Name="RowDefinition1" Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TabPanel x:Name="headerPanel" Background="Transparent" Grid.Column="0" IsItemsHost="true" Margin="0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
-                            <Border x:Name="contentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
-                                <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="TabStripPlacement" Value="Bottom">
-                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="1"/>
-                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
-                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
-                                <Setter Property="Height" TargetName="RowDefinition1" Value="Auto"/>
-                            </Trigger>
-                            <Trigger Property="TabStripPlacement" Value="Left">
-                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
-                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
-                                <Setter Property="Grid.Column" TargetName="headerPanel" Value="0"/>
-                                <Setter Property="Grid.Column" TargetName="contentPanel" Value="1"/>
-                                <Setter Property="Width" TargetName="ColumnDefinition0" Value="Auto"/>
-                                <Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
-                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
-                                <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
-                            </Trigger>
-                            <Trigger Property="TabStripPlacement" Value="Right">
-                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
-                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
-                                <Setter Property="Grid.Column" TargetName="headerPanel" Value="1"/>
-                                <Setter Property="Grid.Column" TargetName="contentPanel" Value="0"/>
-                                <Setter Property="Width" TargetName="ColumnDefinition0" Value="*"/>
-                                <Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto"/>
-                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
-                                <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type TabControl}">
+						<Grid x:Name="templateRoot" ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition x:Name="ColumnDefinition0"/>
+								<ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+								<RowDefinition x:Name="RowDefinition1" Height="*"/>
+							</Grid.RowDefinitions>
+							<TabPanel x:Name="headerPanel" Background="Transparent" Grid.Column="0" IsItemsHost="true" Margin="0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+							<Border x:Name="contentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
+								<ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+							</Border>
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="TabStripPlacement" Value="Bottom">
+								<Setter Property="Grid.Row" TargetName="headerPanel" Value="1"/>
+								<Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
+								<Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+								<Setter Property="Height" TargetName="RowDefinition1" Value="Auto"/>
+							</Trigger>
+							<Trigger Property="TabStripPlacement" Value="Left">
+								<Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
+								<Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
+								<Setter Property="Grid.Column" TargetName="headerPanel" Value="0"/>
+								<Setter Property="Grid.Column" TargetName="contentPanel" Value="1"/>
+								<Setter Property="Width" TargetName="ColumnDefinition0" Value="Auto"/>
+								<Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
+								<Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+								<Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+							</Trigger>
+							<Trigger Property="TabStripPlacement" Value="Right">
+								<Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
+								<Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
+								<Setter Property="Grid.Column" TargetName="headerPanel" Value="1"/>
+								<Setter Property="Grid.Column" TargetName="contentPanel" Value="0"/>
+								<Setter Property="Width" TargetName="ColumnDefinition0" Value="*"/>
+								<Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto"/>
+								<Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+								<Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+							</Trigger>
+							<Trigger Property="IsEnabled" Value="false">
+								<Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 
-    </Window.Resources>
+	</Window.Resources>
 
-    <Grid>
+	<Grid>
 
-        <TabControl x:Name="MainTabView" Background="{DynamicResource BackMediumBrush}"
+		<TabControl x:Name="MainTabView" Background="{DynamicResource BackMediumBrush}"
                     BorderBrush="{x:Null}" BorderThickness="0" TabStripPlacement="Left"
-                    SelectedIndex="{Binding Path=LastSelectedTab}" Style="{DynamicResource TabControlStyle}">
+                    SelectedValue="{Binding Path=LastSelectedTab}" SelectedValuePath="Name" Style="{StaticResource TabControlStyle}">
 
-            <TabControl.Resources>
-                <Style TargetType="TabItem" x:Key="TabStyle">
-                    <Setter Property="Background" Value="{StaticResource BackDarkBrush}"/>
-                    <Setter Property="Template" Value="{StaticResource TabItemTemplate}"/>
-                    <Setter Property="BorderBrush" Value="{x:Null}"/>
-                    <Setter Property="MinHeight" Value="48"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                </Style>
-            </TabControl.Resources>
+			<TabControl.Resources>
+				<Style TargetType="TabItem" x:Key="TabStyle">
+					<Setter Property="Background" Value="{StaticResource BackDarkBrush}"/>
+					<Setter Property="Template" Value="{StaticResource TabItemTemplate}"/>
+					<Setter Property="BorderBrush" Value="{x:Null}"/>
+					<Setter Property="MinHeight" Value="48"/>
+					<Setter Property="BorderThickness" Value="0"/>
+				</Style>
+			</TabControl.Resources>
 
-
-            <TabItem Style="{StaticResource TabStyle}" x:Name="SortFilesTab" Header="Sort Files">
-
-                <controls:FileSortControl x:Name="SortFilesView"></controls:FileSortControl>
-            </TabItem>
-            <TabItem Style="{StaticResource TabStyle}" x:Name="FindDuplicatesTab" Header="Find Duplicates">
-                <controls:FindDuplicatesControl x:Name="FindDuplicatesView"></controls:FindDuplicatesControl>
-            </TabItem>
-            <TabItem Style="{StaticResource TabStyle}" x:Name="CleanFoldersTab" Header="Clean Folders">
-                <controls:CleanFoldersControl x:Name="CleanFoldersView"></controls:CleanFoldersControl>
-            </TabItem>
-			<TabItem Style="{StaticResource TabStyle}" x:Name="CustomSearchTab" Header="Custom Search">
+			<TabItem Style="{StaticResource TabStyle}" Name="SortFilesSection" Header="Sort Files">
+				<controls:FileSortControl x:Name="SortFilesView"></controls:FileSortControl>
+			</TabItem>
+			<TabItem Style="{StaticResource TabStyle}" Name="FindCopiesSection" Header="Find Duplicates">
+				<controls:FindDuplicatesControl x:Name="FindCopiesView"></controls:FindDuplicatesControl>
+			</TabItem>
+			<TabItem Style="{StaticResource TabStyle}" x:Name="CleanFoldersSection" Header="Clean Folders">
+				<controls:CleanFoldersControl x:Name="CleanFoldersView"></controls:CleanFoldersControl>
+			</TabItem>
+			<TabItem Style="{StaticResource TabStyle}" x:Name="CustomSearchSection" Header="Custom Search">
 				<controls:CustomSearch x:Name="CustomSearchView"></controls:CustomSearch>
 			</TabItem>
-        </TabControl>
+		</TabControl>
 
-        <Button x:Name="BtnSettings" Style="{StaticResource StdButton}"
+		<Button x:Name="BtnSettings" Style="{StaticResource StdButton}"
                     VerticalAlignment="Bottom" HorizontalAlignment="Left" 
-                    Width="48" Height="48" Panel.ZIndex="10000" Click="BtnSettings_Click" >
+                    Width="48" Height="48" Panel.ZIndex="10000" Command="{Binding CmdShowSettings}">
 
-            <Image Source="pack://siteoforigin:,,,/assets/images/flat/png/Settings-02-128.png" Stretch="UniformToFill"/>
+			<Image Source="pack://siteoforigin:,,,/assets/images/flat/png/Settings-02-128.png" Stretch="UniformToFill"/>
 
-        </Button>
+		</Button>
 
-    </Grid>
+	</Grid>
 
 </Window>

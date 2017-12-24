@@ -27,7 +27,7 @@ namespace TorboFile {
 	/// Must be Disposable for the ServiceContainer.
 	/// 
 	/// </summary>
-	public partial class App : Application, IDisposable {
+	public partial class App : Application, IDisposable, ITorbViewMaker {
 
 		// <categories:CategoryManager x:Name="categoryManager" x:Key="{x:Static local:Constants.CategoryManager}" />
 		private CategoryManager categoryManager;
@@ -149,6 +149,8 @@ namespace TorboFile {
 
 			this.services = new ServiceContainer();
 
+			this.services.AddService( typeof( ITorbViewMaker ), this );
+
 			this.services.AddService( typeof( IMessageBox ), new ServiceCreatorCallback(
 				( container, type ) => { return new CustomMessageBox(); }
 			) );
@@ -172,7 +174,9 @@ namespace TorboFile {
 
 			MainWindow main = new MainWindow();
 
-			this.InitView( main.FindDuplicatesView, new FindDuplicatesModel() );
+			this.InitView( main, new MainVM() );
+
+			this.InitView( main.FindCopiesView, new FindCopiesVM() );
 			this.InitView( main.SortFilesView, new FileSortModel( this.services, this.CategoryManager ) );
 			this.InitView( main.CleanFoldersView, new CleanFoldersModel() );
 			this.InitView( main.CustomSearchView, new CustomSearchVM() );
@@ -196,6 +200,22 @@ namespace TorboFile {
 			}
 
 		}
+
+		#region APP WINDOWS INTERFACE
+
+		public void InitFindCopiesView( FindCopiesVM model ) {
+			this.InitView( ( this.MainWindow as MainWindow).FindCopiesView , model );
+		}
+		public void InitSortView( FileSortModel model ) {
+			this.InitView( ( this.MainWindow as MainWindow ).SortFilesView, model );
+		}
+		public void InitCustomSearchView( CustomSearchVM model ) {
+			this.InitView( ( this.MainWindow as MainWindow ).CustomSearchView, model );
+		}
+		public void InitCleanFoldersView( CleanFoldersModel model ) {
+			this.InitView( ( this.MainWindow as MainWindow ).CleanFoldersView, model );
+		}
+		#endregion
 
 		public void InitView( FrameworkElement view, ViewModelBase viewModel, ViewModelBase parentModel=null ) {
 

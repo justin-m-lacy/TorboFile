@@ -16,10 +16,19 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using Lemur.Operations.FileMatching;
 using Lemur.Operations;
+using System.Diagnostics;
 
 namespace TorboFile.ViewModels {
 
 	public class CleanFoldersModel : ViewModelBase {
+
+		~CleanFoldersModel() {
+			DebugDestructor();
+		}
+		[Conditional( "DEBUG" )]
+		void DebugDestructor() {
+			Console.WriteLine( "CLEAN FOLDERS MODEL DESTRUCTOR" );
+		}
 
 		private const string SUCCESS_STRING = "success";
 		private const string ERROR_STRING = "error";

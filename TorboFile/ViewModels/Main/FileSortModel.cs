@@ -18,6 +18,7 @@ using System.Threading;
 using System.Windows.Input;
 using System.Collections.Specialized;
 using Lemur.Operations;
+using System.Diagnostics;
 
 namespace TorboFile.ViewModels {
 
@@ -27,6 +28,14 @@ namespace TorboFile.ViewModels {
 	/// Made IDisposable for the DirectoryVisitor which listens to changes in the current Directory.
 	/// </summary>
 	public class FileSortModel : ViewModelBase, IDisposable {
+
+		~FileSortModel() {
+			DebugDestructor();
+		}
+		[Conditional( "DEBUG" )]
+		void DebugDestructor() {
+			Console.WriteLine( "FILE SORT MODEL DESTRUCTOR" );
+		}
 
 		#region COMMANDS
 

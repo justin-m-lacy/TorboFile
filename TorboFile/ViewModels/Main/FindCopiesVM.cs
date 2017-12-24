@@ -11,10 +11,19 @@ using TorboFile.Properties;
 using System.Windows.Data;
 using System.Collections.Specialized;
 using Lemur;
+using System.Diagnostics;
 
 namespace TorboFile.ViewModels {
 
-	public class FindDuplicatesModel : ViewModelBase {
+	public class FindCopiesVM : ViewModelBase {
+
+		~FindCopiesVM() {
+			DebugDestructor();
+		}
+		[Conditional( "DEBUG" )]
+		void DebugDestructor() {
+			Console.WriteLine( "FIND DUPLICATES MODEL DESTRUCTOR" );
+		}
 
 		private RelayCommand _cmdBeginSearch;
 		/// <summary>
@@ -98,7 +107,7 @@ namespace TorboFile.ViewModels {
 
 		#endregion
 
-		public FindDuplicatesModel() {} //
+		public FindCopiesVM() {} //
 
 		private void PickFolder() {
 

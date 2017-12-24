@@ -116,6 +116,7 @@
     <Compile Include="Services\FileDialogService.cs" />
     <Compile Include="Services\IMessageBox.cs" />
     <Compile Include="Services\InputBinder.cs" />
+    <Compile Include="Services\ITorbViewMaker.cs" />
     <Compile Include="Services\SystemMessageBox.cs" />
     <Compile Include="ViewModels\CategoryManagerVM.cs" />
     <Compile Include="ViewModels\Main\CustomSearchVM.cs" />
@@ -123,7 +124,7 @@
     <Compile Include="ViewModels\Main\CleanFoldersModel.cs" />
     <Compile Include="ViewModels\FileDetailsModel.cs" />
     <Compile Include="ViewModels\FileCheckListModel.cs" />
-    <Compile Include="ViewModels\Main\FindDuplicatesModel.cs" />
+    <Compile Include="ViewModels\Main\FindCopiesVM.cs" />
     <Compile Include="ViewModels\EditCategoryModel.cs" />
     <Compile Include="ViewModels\Main\MainVM.cs" />
     <Compile Include="ViewModels\TagFileModel.cs" />
