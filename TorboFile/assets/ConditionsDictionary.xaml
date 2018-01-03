@@ -1,0 +1,271 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:types="clr-namespace:Lemur.Types"
+    xmlns:controls="clr-namespace:Lemur.Windows.Controls"
+    xmlns:rules="clr-namespace:Lemur.Windows.Validation"
+    xmlns:convert="clr-namespace:Lemur.Windows.Converters"
+	xmlns:models="clr-namespace:Lemur.Operations.FileMatching.Models"
+	xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
+    xmlns:local="clr-namespace:Lemur.Operations.FileMatching">
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="BaseDictionary.xaml"/>
+	</ResourceDictionary.MergedDictionaries>
+	
+	<!-- DEFAULT/SAMPLE RESOURCES FOR WORKING WITH FILE MATCHING CONDITIONS -->
+ 
+	<DataTemplate x:Key="baseConditionTemplate" DataType="{x:Type local:BaseCondition}">
+
+		<StackPanel Orientation="Horizontal">
+			<CheckBox x:Name="chkExclude" Content="Exclusion Condition" IsChecked="{Binding Exclude, Mode=TwoWay}"
+                  ToolTip="If checked, only items that do NOT match this requirement will be included in results."/>
+			<TextBlock x:Name="fldExclude" Text="Items matching this condition will be included in the search."/>
+		</StackPanel>
+
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding Exclude}" Value="true">
+				<Setter TargetName="fldExclude" Property="Text"
+						Value="Items matching this condition will be excluded from the search." />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+
+	</DataTemplate>
+
+	<DataTemplate x:Key="emptyDirTemplate" DataType="{x:Type models:FileTestVM}">
+
+        <TextBlock x:Name="fldText"
+				   Text="Empty directories will be included in the search." />
+
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=Exclude}" Value="true">
+                <Setter TargetName="fldText" Property="Text"
+						Value="Empty directories will be excluded from the search.">
+                </Setter>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+
+    </DataTemplate>
+
+	<DataTemplate x:Key="extensionTestTemplate" DataType="{x:Type models:FileTestVM}">
+		<StackPanel>
+			<TextBlock Style="{StaticResource infoText}" Text="Allowed File Extensions: " ToolTip="Separate extensions with ';'" />
+			<TextBox x:Name="fldExtensionList" Style="{StaticResource textInput}">
+				<TextBox.Text>
+					<Binding ValidatesOnExceptions="True" Path="Condition.Extensions" Converter="{StaticResource stringSplitter}">
+						<Binding.ValidationRules>
+							<rules:StringContentsRule />
+						</Binding.ValidationRules>
+					</Binding>
+				</TextBox.Text>
+			</TextBox>
+		</StackPanel>
+	</DataTemplate>
+
+	<DataTemplate x:Key="fileCountTemplate" DataType="{x:Type models:FileTestVM}">
+
+		<StackPanel>
+
+			<TextBlock Style="{StaticResource infoText}"
+					   Text="Matches directories which contain a given number of sub-files.&#x0a;Files are also included in the search, unless a Directory-Only condition is added." />
+			
+			<CheckBox Name="chkIncludeDirs" Style="{StaticResource chkOption}" Content="Subdirectories count against total." IsChecked="{Binding Condition.CountSubDirs}"/>
+
+			<StackPanel Orientation="Horizontal">
+
+				<TextBlock Style="{StaticResource infoText}" Text="Min Files: "/>
+
+				<TextBox Name="fldMinCount" Style="{StaticResource intInput}"
+						 ToolTip="Directories containing fewer files will not be matched.">
+					<TextBox.Text>
+						<Binding ValidatesOnExceptions="True" Path="Condition.MinFiles">
+							<Binding.ValidationRules>
+								<rules:IntValidationRule />
+							</Binding.ValidationRules>
+						</Binding>
+					</TextBox.Text>
+				</TextBox>
+			</StackPanel>
+
+			<StackPanel Orientation="Horizontal">
+				
+			<TextBlock Style="{StaticResource infoText}" Text="Max Files: " />
+				<TextBox Name="fldMaxCount" Style="{StaticResource intInput}" ToolTip="Directories containing more files will not be matched.">
+				<TextBox.Text>
+					<Binding ValidatesOnExceptions="True" Path="Condition.MaxFiles">
+						<Binding.ValidationRules>
+							<rules:IntValidationRule />
+						</Binding.ValidationRules>
+					</Binding>
+				</TextBox.Text>
+			</TextBox>
+			</StackPanel>
+
+		</StackPanel>
+
+	</DataTemplate>
+
+	<DataTemplate x:Key="isFileTemplate" DataType="{x:Type models:FileTestVM}">
+
+		<TextBlock Name="fldInfo" Text="Directories will be excluded from the search results."/>
+
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding Exclude}" Value="true">
+				<Setter TargetName="fldInfo" Property="Text" Value="Only directories will be included in the search results."/>
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<DataTemplate x:Key="isDirectoryTemplate" DataType="{x:Type models:FileTestVM}">
+
+		<StackPanel Orientation="Horizontal">
+			<TextBlock Name="lblInfo" Text="Only directories will be included in the search results."/>
+		</StackPanel>
+
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding Exclude}" Value="true">
+				<Setter TargetName="lblInfo" Property="Text" Value="Directories will be excluded from the search results." />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+	
+	<DataTemplate x:Key="nameContainsTemplate" DataType="{x:Type models:FileTestVM}">
+
+		<StackPanel>
+
+			<CheckBox Name="chkFullPath" Content="Search Full Path" IsChecked="{Binding Condition.FullPath}"
+						  ToolTip="If checked, the entire file path is searched for the match string."/>
+			<StackPanel Orientation="Horizontal">
+
+				<TextBlock Style="{StaticResource infoText}" Text="File/Dictory Name contains: "/>
+				<TextBox Style="{StaticResource textInput}" Text="{Binding Path=Condition.MatchString}" />
+				
+			</StackPanel>
+
+		</StackPanel>
+
+	</DataTemplate>
+
+	<DataTemplate x:Key="regexTestTemplate" DataType="{x:Type models:FileTestVM}">
+
+		<StackPanel>
+
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Test Mode: " Style="{StaticResource infoText}" />
+				<ComboBox Name="comboTestMode" ItemsSource="{mvvm:EnumSource EnumType={x:Type local:FileNameSearchMode} }"
+					  SelectedItem="{Binding Condition.Mode}"/>
+			</StackPanel>
+			<!--<CheckBox Name="chkFullPath" Style="{StaticResource chkOption}" Content="Test Full Path" IsChecked="{Binding Condition.FullPath}"
+						  ToolTip="If checked, the entire file path is tested for the expression."/>-->
+
+		<StackPanel Orientation="Vertical">
+
+			<TextBlock Style="{StaticResource infoText}" Text="Test Expression: "/>
+			<TextBox Style="{StaticResource intInput}" Text="{Binding Path=Condition.TestExpression}" MinWidth="240"/>
+		</StackPanel>
+
+		</StackPanel>
+		
+	</DataTemplate>
+
+	<DataTemplate x:Key="sizeConditionTemplate" DataType="{x:Type models:FileTestVM}">
+
+		<StackPanel>
+
+			<StackPanel x:Name="ContentSizeRange" Orientation="Horizontal" Margin="16,4,0,8">
+                <StackPanel x:Name="MinSizePanel">
+					<TextBlock x:Name="LblMinSize" Style="{StaticResource infoText}" Text="Min Size (bytes): "/>
+					<TextBox Style="{StaticResource textInput}" Width="120" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+						<TextBox.Text>
+							<Binding ValidatesOnExceptions="true" Converter="{StaticResource dataConverter}" Path="Condition.MinSize">
+								<Binding.ValidationRules>
+									<rules:DataSizeRule />
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+
+					</TextBox>
+
+				</StackPanel>
+                <StackPanel Margin="32,0,0,0">
+                    <TextBlock x:Name="LblMaxSize" Style="{StaticResource infoText}" Text="Max Size (bytes): "/>
+					<TextBox Style="{StaticResource textInput}" Width="120" MaxLines="1"
+                 Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+						<TextBox.Text>
+							<Binding ValidatesOnExceptions="true" Converter="{StaticResource dataConverter}" Path="Condition.MaxSize">
+								<Binding.ValidationRules>
+									<rules:DataSizeRule />
+								</Binding.ValidationRules>
+							</Binding>
+						</TextBox.Text>
+
+					</TextBox>
+
+				</StackPanel>
+
+            </StackPanel>
+   
+        </StackPanel>
+        
+    </DataTemplate>
+
+	<DataTemplate x:Key="fileTestTemplate" DataType="{x:Type models:FileTestVM}">
+
+		<Border Style="{StaticResource listItemBorder}">
+			
+			<StackPanel Style="{StaticResource itemPanel}">
+				
+			<TextBlock x:Name="fldOpName" Style="{StaticResource BoldText}" Text="{Binding Path=DisplayName}" Visibility="{Binding Path=DisplayName, Converter={StaticResource NonNullToVisible}}"/>
+			<TextBlock x:Name="fldDesc" Style="{StaticResource minorText}" Text="{Binding Path=Desc}" Visibility="{Binding Path=Desc, Converter={StaticResource NonNullToVisible}}"/>
+
+			<CheckBox x:Name="chkExclude" Style="{StaticResource chkOption}" Content="Exclude Matches" IsChecked="{Binding Exclude}"
+                  ToolTip="If checked, only items that do NOT match this requirement will be included in results."/>
+			<TextBlock x:Name="fldExclude" Text="{Binding Path=IncludeText}"/>
+
+			<ContentPresenter Content="{Binding}">
+				<ContentPresenter.Style>
+					<Style TargetType="ContentPresenter">
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:SizeCondition}">
+								<Setter Property="ContentTemplate" Value="{StaticResource sizeConditionTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:IsFile}">
+								<Setter Property="ContentTemplate" Value="{StaticResource isFileTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:FileCount}">
+								<Setter Property="ContentTemplate" Value="{StaticResource fileCountTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:ExtensionCondition}">
+								<Setter Property="ContentTemplate" Value="{StaticResource extensionTestTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:IsDirectory}">
+								<Setter Property="ContentTemplate" Value="{StaticResource isDirectoryTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:NameContains}">
+								<Setter Property="ContentTemplate" Value="{StaticResource nameContainsTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:RegexTest}">
+								<Setter Property="ContentTemplate" Value="{StaticResource regexTestTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:EmptyCondition}">
+								<Setter Property="ContentTemplate" Value="{StaticResource emptyDirTemplate}"/>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</ContentPresenter.Style>
+			</ContentPresenter>
+			
+		</StackPanel>
+
+
+		</Border>
+
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding Exclude}" Value="true">
+				<Setter TargetName="fldExclude" Property="Text" Value="{Binding Path=ExcludeText}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+
+	</DataTemplate>
+
+</ResourceDictionary>

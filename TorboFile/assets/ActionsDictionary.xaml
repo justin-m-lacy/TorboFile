@@ -1,0 +1,120 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					    xmlns:convert="clr-namespace:Lemur.Windows.Converters"
+	xmlns:models="clr-namespace:Lemur.Operations.FileMatching.Models"
+					xmlns:rules="clr-namespace:Lemur.Windows.Validation"
+					xmlns:actions="clr-namespace:Lemur.Operations.FileMatching.Actions"
+					xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
+    xmlns:local="clr-namespace:Lemur.Operations.FileMatching">
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="BaseDictionary.xaml"/>
+	</ResourceDictionary.MergedDictionaries>
+
+	<DataTemplate x:Key="fileDeleteTemplate" DataType="{x:Type mvvm:DataObjectVM}">
+
+		<TextBlock Style="{StaticResource infoText}" Text="Matched Files and Directories will be deleted. This action cannot be undone." />
+
+	</DataTemplate>
+
+	<DataTemplate x:Key="recycleTemplate" DataType="{x:Type mvvm:DataObjectVM}">
+
+		<TextBlock Style="{StaticResource infoText}" Text="Matched Files and Directories will be moved to the Recycle Bin." />
+
+	</DataTemplate>
+	
+	<DataTemplate x:Key="moveFileTemplate" DataType="{x:Type mvvm:DataObjectVM}">
+
+		<StackPanel>
+		<TextBlock Style="{StaticResource infoText}" Text="Move Files and Directories to the given location." />
+
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Style="{StaticResource infoText}" Text="Destination: " />
+				<Button Name="btnChooseDirectory">Browse...</Button>
+				<TextBox Style="{StaticResource textInput}" />
+			</StackPanel>
+		</StackPanel>
+
+	</DataTemplate>
+
+	<DataTemplate x:Key="emptyRecycleTemplate" DataType="{x:Type mvvm:DataObjectVM}">
+		<TextBlock Style="{StaticResource infoText}" Text="The Recycle Bin will be emptied. This action cannot be undone." />
+	</DataTemplate>
+	
+	<DataTemplate x:Key="nameReplaceTemplate" DataType="{x:Type mvvm:DataObjectVM}">
+
+		<StackPanel>
+			<TextBlock Style="{StaticResource infoText}" Text="Rename all occurances of the given string in the file name." />
+			
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Style="{StaticResource infoText}" Text="Search for: "/>
+				<TextBox Name="fldSearch" Style="{StaticResource textInput}" Text="{Binding Data.SearchString}" />
+				<TextBlock Style="{StaticResource infoText}" Text="Replace with: " />
+				<TextBox Name="fldReplace" Style="{StaticResource textInput}" Text="{Binding Data.ReplaceString}" />
+			</StackPanel>
+			
+		</StackPanel>
+
+	</DataTemplate>
+
+	<DataTemplate x:Key="regexReplaceTemplate" DataType="{x:Type mvvm:DataObjectVM}">
+
+		<StackPanel>
+			<TextBlock Style="{StaticResource infoText}"
+					   Text="Rename all matches of the regular expression in the file or directory name by the given
+					   replacement string." />
+
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Style="{StaticResource infoText}" Text="Search for: "/>
+				<TextBox Name="fldSearch" Style="{StaticResource textInput}" Text="{Binding Data.ReplaceRule}" />
+				<TextBlock Style="{StaticResource infoText}" Text="Replace with: " />
+				<TextBox Name="fldReplace" Style="{StaticResource textInput}" Text="{Binding Data.ReplaceString}" />
+			</StackPanel>
+
+		</StackPanel>
+
+	</DataTemplate>
+
+	<DataTemplate x:Key="fileActionTemplate" DataType="{x:Type mvvm:DataObjectVM}">
+
+		<Border Style="{StaticResource listItemBorder}">
+		<StackPanel Style="{StaticResource itemPanel}">
+
+			<TextBlock x:Name="fldOpName" Text="{Binding Path=DisplayName}"
+					   Visibility="{Binding Path=DisplayName, Converter={StaticResource NonNullToVisible}}"/>
+			<TextBlock x:Name="fldDesc" Text="{Binding Path=Desc}"
+					   Visibility="{Binding Path=Desc, Converter={StaticResource NonNullToVisible}}" />
+
+			<ContentPresenter Content="{Binding}">
+				<ContentPresenter.Style>
+					<Style TargetType="ContentPresenter">
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:FileDeleteAction}">
+								<Setter Property="ContentTemplate" Value="{StaticResource fileDeleteTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:RecycleAction}">
+								<Setter Property="ContentTemplate" Value="{StaticResource recycleTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:MoveFileAction}">
+								<Setter Property="ContentTemplate" Value="{StaticResource moveFileTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:EmptyRecycleBin}">
+								<Setter Property="ContentTemplate" Value="{StaticResource emptyRecycleTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:NameReplace}">
+								<Setter Property="ContentTemplate" Value="{StaticResource nameReplaceTemplate}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:RegexReplace}">
+								<Setter Property="ContentTemplate" Value="{StaticResource regexReplaceTemplate}"/>
+							</DataTrigger>
+
+						</Style.Triggers>
+					</Style>
+				</ContentPresenter.Style>
+			</ContentPresenter>
+
+		</StackPanel>
+		</Border>
+	</DataTemplate>
+
+</ResourceDictionary>
