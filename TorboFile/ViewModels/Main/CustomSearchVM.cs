@@ -1,4 +1,5 @@
-﻿using Lemur.Operations.FileMatching.Models;
+﻿using Lemur.Operations.FileMatching.Actions;
+using Lemur.Operations.FileMatching.Models;
 using Lemur.Windows;
 using Lemur.Windows.MVVM;
 using System;
@@ -8,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TorboFile.ViewModels {
+
+	public class ActionBuilder : CollectionBuilderVM<IFileAction> { }
 
 	public class CustomSearchVM : ViewModelBase {
 
@@ -43,6 +46,33 @@ namespace TorboFile.ViewModels {
 
 		#endregion
 
+		#region PROPERTIES
+
+		/// <summary>
+		/// Model for building a new search.
+		/// </summary>
+		private readonly FileMatchBuilderVM matchBuilder = new FileMatchBuilderVM();
+		public FileMatchBuilderVM MatchBuilder {
+			get => matchBuilder;
+		}
+
+		public ActionBuilder ActionBuilder {
+			get {
+				return this.actionBuilder;
+			}
+		}
+		private readonly ActionBuilder actionBuilder = new ActionBuilder();
+
+		/// <summary>
+		/// Model for picking an Action Type.
+		/// </summary>
+		/*public ActionPickerVM ActionPicker {
+			get { return this.actionPicker; }
+		}
+		private readonly ActionPickerVM actionPicker = new ActionPickerVM();*/
+
+		#endregion
+
 		/// <summary>
 		/// Event triggers when match conditions should be saved for
 		/// future use.
@@ -55,12 +85,8 @@ namespace TorboFile.ViewModels {
 		public void LoadSearch() {
 		}
 
-		/// <summary>
-		/// Model for building a new search.
-		/// </summary>
-		private readonly FileMatchBuilderVM matchBuilder = new FileMatchBuilderVM();
-		public FileMatchBuilderVM MatchBuilder {
-			get => matchBuilder;
+		public bool HasActions() {
+			return this.actionBuilder.HasItems();
 		}
 
 		/// <summary>

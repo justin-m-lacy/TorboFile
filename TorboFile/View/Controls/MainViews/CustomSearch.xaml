@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:matchmodel="clr-namespace:Lemur.Operations.FileMatching.Models"
 			 xmlns:types="clr-namespace:Lemur.Types"
-             xmlns:local="clr-namespace:TorboFile.View.Controls"
+			 xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
+			 xmlns:appmodels="clr-namespace:TorboFile.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -14,32 +15,53 @@
 		<ResourceDictionary>
 
 			<ResourceDictionary.MergedDictionaries>
-				<!--<ResourceDictionary
-					Source="ConditionsDictionary.xaml"/>-->
 				<ResourceDictionary
 					Source="/TorboFile;component/assets/ConditionsDictionary.xaml"/>
+				<ResourceDictionary Source="/TorboFile;component/assets/ActionsDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 
+			<!-- Picker for condition type -->
 			<DataTemplate x:Key="pickerTemplate" DataType="{x:Type matchmodel:ConditionPickerVM}">
 
 				<StackPanel Orientation="Horizontal">
 					<ComboBox Name="matchTypesDropDown" MinWidth="64" Margin="2"
-						ItemsSource="{Binding ConditionTypes}" SelectedItem="{Binding CreateType}">
+						ItemsSource="{Binding AvailableTypes}" SelectedItem="{Binding CreateType}">
 						<ComboBox.ItemTemplate>
 							<DataTemplate DataType="{x:Type types:TypeDescription}">
 
-									<TextBlock Text="{Binding Name}" ToolTip="{Binding Desc}"/>
+								<TextBlock Text="{Binding Name}" ToolTip="{Binding Desc}"/>
 
 							</DataTemplate>
 						</ComboBox.ItemTemplate>
 					</ComboBox>
 				
 				<Button Name="btnCreate" Style="{StaticResource StdButton}" Content="CREATE" Margin="2"
-						Command="{Binding CmdCreateCondition}">
+						Command="{Binding CmdInstantiate}">
 				</Button>
 				</StackPanel>
 			</DataTemplate>
 
+			<!-- Picker for condition type -->
+			<DataTemplate x:Key="actionPicker" DataType="{x:Type matchmodel:ActionPickerVM}">
+
+				<StackPanel Orientation="Horizontal">
+					<ComboBox Name="matchTypesDropDown" MinWidth="64" Margin="2"
+						ItemsSource="{Binding AvailableTypes}" SelectedItem="{Binding CreateType}">
+						<ComboBox.ItemTemplate>
+							<DataTemplate DataType="{x:Type types:TypeDescription}">
+
+								<TextBlock Text="{Binding Name}" ToolTip="{Binding Desc}"/>
+
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+
+					<Button Name="btnCreate" Style="{StaticResource StdButton}" Content="CREATE" Margin="2"
+						Command="{Binding CmdInstantiate}">
+					</Button>
+				</StackPanel>
+			</DataTemplate>
+			
 			<!-- MATCH BUILDER -->
 			<DataTemplate x:Key="builderTemplate" DataType="{x:Type matchmodel:FileMatchBuilderVM}">
 
@@ -48,21 +70,28 @@
 									Content="{Binding ConditionPicker}" ContentTemplate="{StaticResource pickerTemplate}"/>
 
 					<TextBlock DockPanel.Dock="Top" Text="Conditions:"/>
-					<ListView x:Name="conditionsList" ItemsSource="{Binding ConditionModels}" DockPanel.Dock="Bottom">
+					<ListView x:Name="conditionsList" ItemsSource="{Binding ConditionModels}" DockPanel.Dock="Bottom"
+							  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
 
 						<ListView.ItemTemplate>
 
 							<DataTemplate DataType="{x:Type matchmodel:FileTestVM}">
 
-								<Grid>
-									<ContentPresenter ContentTemplate="{StaticResource fileTestTemplate}" />
+								<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+									
+									<ContentPresenter ContentTemplate="{StaticResource fileTestTemplate}"/>
 
 									<Button Name="btnRemove" Style="{StaticResource StdButton}" Grid.Row="0"
-											HorizontalAlignment="Right" VerticalAlignment="Top"
+											HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,4,0"
 									Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type ListView}},
 										Path=DataContext.CmdRemoveCondition}"
 										CommandParameter="{Binding}">
-										<Image Source="pack://siteoforigin:,,,/assets/images/flat/png/Close-128.png"/>
+
+										<StackPanel>
+											<TextBlock>REMOVE</TextBlock>
+											<Image Source="/TorboFile;component/assets/images/flat/png/Close-128.png"/>
+										</StackPanel>
+
 									</Button>
 
 								</Grid>
@@ -77,7 +106,50 @@
 				
 			</DataTemplate>
 
-		
+			<!-- ACTION BUILDER -->
+			<DataTemplate x:Key="actionTemplate" DataType="{x:Type appmodels:ActionBuilder}">
+
+				<DockPanel>
+					<ContentControl DockPanel.Dock="Top"
+									Content="{Binding Picker}" ContentTemplate="{StaticResource actionPicker}"/>
+
+					<TextBlock DockPanel.Dock="Top" Text="Actions:"/>
+					<ListView x:Name="actionsList" ItemsSource="{Binding DataModels}" DockPanel.Dock="Bottom"
+							  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+
+						<ListView.ItemTemplate>
+
+							<DataTemplate DataType="{x:Type mvvm:DataObjectVM}">
+
+								<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+									<ContentPresenter ContentTemplate="{StaticResource fileActionTemplate}"/>
+
+									<Button Name="btnRemove" Style="{StaticResource StdButton}" Grid.Row="0"
+											HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,4,0"
+									Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type ListView}},
+										Path=DataContext.CmdRemove}"
+										CommandParameter="{Binding}">
+
+										<StackPanel>
+											<TextBlock>REMOVE</TextBlock>
+											<Image Source="/TorboFile;component/assets/images/flat/png/Close-128.png"/>
+										</StackPanel>
+
+									</Button>
+
+								</Grid>
+
+							</DataTemplate>
+
+						</ListView.ItemTemplate>
+
+					</ListView>
+
+				</DockPanel>
+
+			</DataTemplate>
+
 		</ResourceDictionary>
 
 		
@@ -87,13 +159,22 @@
 	<Grid>
 
 		<Grid.RowDefinitions>
-			<RowDefinition Height="90*"/>
+			<RowDefinition Height="95*"/>
 			<RowDefinition Height="10*"/>
 		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="50*"/>
+			<ColumnDefinition Width="2"/>
+			<ColumnDefinition Width="50*"/>
+		</Grid.ColumnDefinitions>
 
-		<ContentPresenter Content="{Binding MatchBuilder}" ContentTemplate="{StaticResource builderTemplate}"/>
+		<ContentPresenter Grid.Row="0" Grid.Column="0" Content="{Binding MatchBuilder}" ContentTemplate="{StaticResource builderTemplate}"/>
 
-		<StackPanel Name="buttonPanel" Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
+		<GridSplitter Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2" MaxWidth="2" />
+		
+		<ContentPresenter Grid.Row="0" Grid.Column="2" Content="{Binding ActionBuilder}" ContentTemplate="{StaticResource actionTemplate}"/>
+		
+		<StackPanel Name="buttonPanel" Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Right">
 		<Button Name="btnAdd" Style="{StaticResource StdButton}" Content="Add" />
 		<Button Name="btnSave" Style="{StaticResource StdButton}" Content="Save Search"
 				Command="{Binding CmdSaveSearch}"/>
