@@ -52,7 +52,7 @@
 			<TextBlock Style="{StaticResource infoText}" Text="Allowed File Extensions: " ToolTip="Separate extensions with ';'" />
 			<TextBox x:Name="fldExtensionList" Style="{StaticResource textInput}">
 				<TextBox.Text>
-					<Binding ValidatesOnExceptions="True" Path="Condition.Extensions" Converter="{StaticResource stringSplitter}">
+					<Binding ValidatesOnExceptions="True" Path="Data.Extensions" Converter="{StaticResource stringSplitter}">
 						<Binding.ValidationRules>
 							<rules:StringContentsRule />
 						</Binding.ValidationRules>
@@ -69,7 +69,7 @@
 			<TextBlock Style="{StaticResource infoText}"
 					   Text="Matches directories which contain a given number of sub-files.&#x0a;Files are also included in the search, unless a Directory-Only condition is added." />
 			
-			<CheckBox Name="chkIncludeDirs" Style="{StaticResource chkOption}" Content="Subdirectories count against total." IsChecked="{Binding Condition.CountSubDirs}"/>
+			<CheckBox Name="chkIncludeDirs" Style="{StaticResource chkOption}" Content="Subdirectories count against total." IsChecked="{Binding Data.CountSubDirs}"/>
 
 			<StackPanel Orientation="Horizontal">
 
@@ -78,7 +78,7 @@
 				<TextBox Name="fldMinCount" Style="{StaticResource intInput}"
 						 ToolTip="Directories containing fewer files will not be matched.">
 					<TextBox.Text>
-						<Binding ValidatesOnExceptions="True" Path="Condition.MinFiles">
+						<Binding ValidatesOnExceptions="True" Path="Data.MinFiles">
 							<Binding.ValidationRules>
 								<rules:IntValidationRule />
 							</Binding.ValidationRules>
@@ -133,12 +133,12 @@
 
 		<StackPanel>
 
-			<CheckBox Name="chkFullPath" Content="Search Full Path" IsChecked="{Binding Condition.FullPath}"
+			<CheckBox Name="chkFullPath" Content="Search Full Path" IsChecked="{Binding Data.FullPath}"
 						  ToolTip="If checked, the entire file path is searched for the match string."/>
 			<StackPanel Orientation="Horizontal">
 
 				<TextBlock Style="{StaticResource infoText}" Text="File/Dictory Name contains: "/>
-				<TextBox Style="{StaticResource textInput}" Text="{Binding Path=Condition.MatchString}" />
+				<TextBox Style="{StaticResource textInput}" Text="{Binding Path=Data.MatchString}" />
 				
 			</StackPanel>
 
@@ -153,15 +153,13 @@
 			<StackPanel Orientation="Horizontal">
 				<TextBlock Text="Test Mode: " Style="{StaticResource infoText}" />
 				<ComboBox Name="comboTestMode" ItemsSource="{mvvm:EnumSource EnumType={x:Type local:FileNameSearchMode} }"
-					  SelectedItem="{Binding Condition.Mode}"/>
+					  SelectedItem="{Binding Data.Mode}"/>
 			</StackPanel>
-			<!--<CheckBox Name="chkFullPath" Style="{StaticResource chkOption}" Content="Test Full Path" IsChecked="{Binding Condition.FullPath}"
-						  ToolTip="If checked, the entire file path is tested for the expression."/>-->
 
-		<StackPanel Orientation="Vertical">
+			<StackPanel Orientation="Vertical">
 
 			<TextBlock Style="{StaticResource infoText}" Text="Test Expression: "/>
-			<TextBox Style="{StaticResource intInput}" Text="{Binding Path=Condition.TestExpression}" MinWidth="240"/>
+			<TextBox Style="{StaticResource intInput}" Text="{Binding Path=Data.TestExpression}" MinWidth="240"/>
 		</StackPanel>
 
 		</StackPanel>
@@ -177,7 +175,7 @@
 					<TextBlock x:Name="LblMinSize" Style="{StaticResource infoText}" Text="Min Size (bytes): "/>
 					<TextBox Style="{StaticResource textInput}" Width="120" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
 						<TextBox.Text>
-							<Binding ValidatesOnExceptions="true" Converter="{StaticResource dataConverter}" Path="Condition.MinSize">
+							<Binding ValidatesOnExceptions="true" Converter="{StaticResource dataConverter}" Path="Data.MinSize">
 								<Binding.ValidationRules>
 									<rules:DataSizeRule />
 								</Binding.ValidationRules>
@@ -192,7 +190,7 @@
 					<TextBox Style="{StaticResource textInput}" Width="120" MaxLines="1"
                  Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
 						<TextBox.Text>
-							<Binding ValidatesOnExceptions="true" Converter="{StaticResource dataConverter}" Path="Condition.MaxSize">
+							<Binding ValidatesOnExceptions="true" Converter="{StaticResource dataConverter}" Path="Data.MaxSize">
 								<Binding.ValidationRules>
 									<rules:DataSizeRule />
 								</Binding.ValidationRules>
@@ -226,28 +224,28 @@
 				<ContentPresenter.Style>
 					<Style TargetType="ContentPresenter">
 						<Style.Triggers>
-							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:SizeCondition}">
+							<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:SizeCondition}">
 								<Setter Property="ContentTemplate" Value="{StaticResource sizeConditionTemplate}"/>
 							</DataTrigger>
-							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:IsFile}">
+								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:IsFile}">
 								<Setter Property="ContentTemplate" Value="{StaticResource isFileTemplate}"/>
 							</DataTrigger>
-							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:FileCount}">
+								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:FileCount}">
 								<Setter Property="ContentTemplate" Value="{StaticResource fileCountTemplate}"/>
 							</DataTrigger>
-							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:ExtensionCondition}">
+								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:ExtensionCondition}">
 								<Setter Property="ContentTemplate" Value="{StaticResource extensionTestTemplate}"/>
 							</DataTrigger>
-							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:IsDirectory}">
+								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:IsDirectory}">
 								<Setter Property="ContentTemplate" Value="{StaticResource isDirectoryTemplate}"/>
 							</DataTrigger>
-							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:NameContains}">
+								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:NameContains}">
 								<Setter Property="ContentTemplate" Value="{StaticResource nameContainsTemplate}"/>
 							</DataTrigger>
-							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:RegexTest}">
+								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:RegexTest}">
 								<Setter Property="ContentTemplate" Value="{StaticResource regexTestTemplate}"/>
 							</DataTrigger>
-							<DataTrigger Binding="{Binding ConditionType}" Value="{x:Type local:EmptyCondition}">
+								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:EmptyCondition}">
 								<Setter Property="ContentTemplate" Value="{StaticResource emptyDirTemplate}"/>
 							</DataTrigger>
 						</Style.Triggers>

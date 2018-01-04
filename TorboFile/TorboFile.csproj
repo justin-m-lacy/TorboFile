@@ -104,6 +104,7 @@
     <Compile Include="Categories\CategoryManager.cs" />
     <Compile Include="Categories\ICategorySource.cs" />
     <Compile Include="ColorEffect.cs" />
+    <Compile Include="Model\CustomFileSearch.cs" />
     <Compile Include="Properties\FolderCleanSettings.cs" />
     <Compile Include="Properties\PreviewSettings.cs" />
     <Compile Include="Properties\PreviewSettings.Designer.cs">
