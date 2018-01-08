@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Collections.Specialized;
 using Lemur;
 using System.Diagnostics;
+using Lemur.Windows.Services;
 
 namespace TorboFile.ViewModels {
 
@@ -43,7 +44,6 @@ namespace TorboFile.ViewModels {
 
 		#region PROPERTIES
 
-		private FilePreviewModel _filePreview;
 		/// <summary>
 		/// Current file being previewed.
 		/// </summary>
@@ -56,6 +56,7 @@ namespace TorboFile.ViewModels {
 			}
 
 		}
+		private FilePreviewModel _filePreview;
 
 		private ProgressModel _currentSearch;
 		/// <summary>
@@ -64,16 +65,10 @@ namespace TorboFile.ViewModels {
 		public ProgressModel CurrentSearch {
 			get { return this._currentSearch; }
 			set {
-
-				if( this._currentSearch != value ) {
-					this._currentSearch = value;
-					this.NotifyPropertyChanged();
-				}
-
+				this.SetProperty( ref this._currentSearch, value );
 			} // set()
 		}
 
-		private FileCheckListModel _resultsList;
 		/// <summary>
 		/// Model of the results from a matching operation.
 		/// </summary>
@@ -86,6 +81,7 @@ namespace TorboFile.ViewModels {
 			}
 
 		}
+		private FileCheckListModel _resultsList;
 
 		public string IncludeText {
 			get {
@@ -111,13 +107,13 @@ namespace TorboFile.ViewModels {
 
 		private void PickFolder() {
 
-			FileDialogService dialog = (FileDialogService)this.ServiceProvider.GetService( typeof( FileDialogService ) );
+			IFileDialogService dialog = (IFileDialogService)this.ServiceProvider.GetService( typeof( IFileDialogService ) );
 			if( dialog != null ) {
 				string folder = dialog.PickFolder( "Choose a source folder..." );
 
 				if( !string.IsNullOrEmpty( folder ) ) {
 
-					Task t = this.FindDuplicatesAsync( folder );
+					Task t = this.FindCopiesAsync( folder );
 
 				}
 			}
@@ -147,15 +143,21 @@ namespace TorboFile.ViewModels {
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		private async Task FindDuplicatesAsync( string path ) {
+		private async Task FindCopiesAsync( string path ) {
 
 			FileMatchFinder matchFinder = this.BuildMatchOperation( path );
 
-			MatchCollection matchGroups = matchFinder.Matches;
-			object groupLock = new object();
-			//BindingOperations.EnableCollectionSynchronization( matchGroups, groupLock );
-
+			/// Displays progress.
 			this.CurrentSearch = new ProgressModel( matchFinder );
+
+			MatchCollection matchGroups = matchFinder.Matches;
+
+
+			// NOTE: This isn't needed because the results are Dispatched to the UI Dispatcher.
+			// The collection is locked during the CollectionChanged events, and the results are copied into a new list.
+			// If the MatchCollection itself was displayed, this line would probably be necessary.
+			//BindingOperations.EnableCollectionSynchronization( matchGroups, groupLock );
+			
 	
 			// Receive updates as matches are found.
 			matchGroups.CollectionChanged += this.Matches_CollectionChanged;
@@ -164,8 +166,11 @@ namespace TorboFile.ViewModels {
 			this.CreateResultsList();
 
 			try {
+
+				object groupLock = new object();
 				await
 					Task.Run( () => { matchFinder.Run( groupLock ); } );
+
 			} catch( Exception e ) {
 				Console.WriteLine( "ERROR: " + e.ToString() );
 			}

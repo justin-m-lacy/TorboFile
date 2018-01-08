@@ -18,6 +18,7 @@ using TorboFile.Categories;
 using TorboFile.ViewModels;
 using TorboFile.Properties;
 using Lemur.Windows;
+using Lemur.Windows.Services;
 
 namespace TorboFile {
 
@@ -155,14 +156,21 @@ namespace TorboFile {
 				( container, type ) => { return new CustomMessageBox(); }
 			) );
 
-			this.services.AddService( typeof( FileDialogService ), new ServiceCreatorCallback( ( container, type ) => {
+			this.services.AddService( typeof( IFileDialogService ), new ServiceCreatorCallback( ( container, type ) => {
 				return new FileDialogService();
 			} ) );
 
-			this.services.AddService( typeof( InputBinder ), new ServiceCreatorCallback( ( container, type ) => {
-				return new InputBinder();
-			}
+			this.services.AddService( typeof( InputBinder ), new ServiceCreatorCallback( ( container, type ) => new InputBinder()
 			) );
+
+			this.services.AddService( typeof( ViewModelBuilder ),
+				new ServiceCreatorCallback( ( c, t ) => {
+					ViewModelBuilder builder = new ViewModelBuilder();
+					builder.FallbackCreator = this.CreateDefaultVM;
+					return builder;
+				}
+
+			));
 
 			this.services.AddService( typeof( FileDeleteService ), new ServiceCreatorCallback( ( container, type ) => {
 				return new FileDeleteService();
@@ -179,12 +187,25 @@ namespace TorboFile {
 			this.InitView( main.FindCopiesView, new FindCopiesVM() );
 			this.InitView( main.SortFilesView, new FileSortModel( this.services, this.CategoryManager ) );
 			this.InitView( main.CleanFoldersView, new CleanFoldersModel() );
-			this.InitView( main.CustomSearchView, new CustomSearchVM() );
+			this.InitView( main.CustomSearchView, new CustomSearchVM( this.services ) );
 
 			this.MainWindow = main;
 
 			main.Show();
 
+		}
+
+		private DataObjectVM CreateDefaultVM( object data, object view=null ) {
+
+			Console.WriteLine( "USING FALLBACK CREATOR" );
+			if( view != null ) {
+				this.InitView( view as FrameworkElement );
+			}
+			DataObjectVM vm = new DataObjectVM( data );
+			vm.ServiceProvider = this.services;
+
+			return vm;
+	
 		}
 
 		public void InitView( FrameworkElement view ) {
@@ -239,7 +260,7 @@ namespace TorboFile {
 				myWindow.Owner = topWindow;
 			}
 
-		}
+		} // InitView()
 
 		/// <summary>
 		/// Display the Settings dialog window.

@@ -23,7 +23,7 @@
         <convert:InvertBoolConverter x:Key="InvertBool"/>
 
         <Style x:Key="ResultsContent" TargetType="ContentControl">
-            <!-- NOTE: Using ContentControl here captures the DataContext, whereas ContentPresenter does not. -->
+            <!-- NOTE: Using ContentControl appears to capture the DataContext, whereas ContentPresenter does not. -->
             
             <Setter Property="Content">
                 <Setter.Value>

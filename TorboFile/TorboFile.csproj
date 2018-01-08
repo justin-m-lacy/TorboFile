@@ -120,6 +120,7 @@
     <Compile Include="Services\ITorbViewMaker.cs" />
     <Compile Include="Services\SystemMessageBox.cs" />
     <Compile Include="ViewModels\CategoryManagerVM.cs" />
+    <Compile Include="ViewModels\Main\BuildSearchVM.cs" />
     <Compile Include="ViewModels\Main\CustomSearchVM.cs" />
     <Compile Include="ViewModels\EditCategorySetVM.cs" />
     <Compile Include="ViewModels\Main\CleanFoldersModel.cs" />
@@ -230,6 +231,7 @@
       <DependentUpon>ProgressWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.cs" />
+    <Compile Include="Windows\MVVM\IView.cs" />
     <Page Include="assets\ActionsDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -17,6 +17,7 @@ using System.Windows.Documents;
 using Lemur.Operations.FileMatching;
 using Lemur.Operations;
 using System.Diagnostics;
+using Lemur.Windows.Services;
 
 namespace TorboFile.ViewModels {
 
@@ -239,7 +240,7 @@ namespace TorboFile.ViewModels {
 
 		private void PickFolder() {
 
-			FileDialogService dialog = (FileDialogService)this.ServiceProvider.GetService( typeof( FileDialogService ) );
+			IFileDialogService dialog = (IFileDialogService)this.ServiceProvider.GetService( typeof( IFileDialogService ) );
 			if( dialog != null ) {
 
 				string folder = this.SearchDirectory;

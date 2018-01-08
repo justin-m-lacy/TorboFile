@@ -4,6 +4,7 @@
 	xmlns:models="clr-namespace:Lemur.Operations.FileMatching.Models"
 					xmlns:rules="clr-namespace:Lemur.Windows.Validation"
 					xmlns:actions="clr-namespace:Lemur.Operations.FileMatching.Actions"
+					xmlns:actionmodels="clr-namespace:Lemur.Operations.FileMatching.Models"
 					xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
     xmlns:local="clr-namespace:Lemur.Operations.FileMatching">
 
@@ -22,8 +23,23 @@
 		<TextBlock Style="{StaticResource infoText}" Text="Matched Files and Directories will be moved to the Recycle Bin." />
 
 	</DataTemplate>
+
+	<DataTemplate x:Key="moveFileTemplate" DataType="{x:Type actionmodels:MoveFileVM}">
+
+		<StackPanel>
+			<TextBlock Style="{StaticResource infoText}" Text="Move Files and Directories to the given location." />
+
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Style="{StaticResource infoText}" Text="Destination: " />
+				<Button Name="btnChooseDirectory" Command="{Binding CmdPickFolder}">Browse...</Button>
+				<TextBox Style="{StaticResource textInput}"
+					Text="{Binding Data.Destination, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+			</StackPanel>
+		</StackPanel>
+
+	</DataTemplate>
 	
-	<DataTemplate x:Key="moveFileTemplate" DataType="{x:Type mvvm:DataObjectVM}">
+	<!--<DataTemplate x:Key="moveFileTemplate" DataType="{x:Type mvvm:DataObjectVM}">
 
 		<StackPanel>
 		<TextBlock Style="{StaticResource infoText}" Text="Move Files and Directories to the given location." />
@@ -31,11 +47,12 @@
 			<StackPanel Orientation="Horizontal">
 				<TextBlock Style="{StaticResource infoText}" Text="Destination: " />
 				<Button Name="btnChooseDirectory">Browse...</Button>
-				<TextBox Style="{StaticResource textInput}" />
+				<TextBox Style="{StaticResource textInput}"
+					Text="{Binding Data.Destination, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
 			</StackPanel>
 		</StackPanel>
 
-	</DataTemplate>
+	</DataTemplate>-->
 
 	<DataTemplate x:Key="emptyRecycleTemplate" DataType="{x:Type mvvm:DataObjectVM}">
 		<TextBlock Style="{StaticResource infoText}" Text="The Recycle Bin will be emptied. This action cannot be undone." />

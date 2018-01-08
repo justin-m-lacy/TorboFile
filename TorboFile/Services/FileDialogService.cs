@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using Lemur.Windows.Services;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TorboFile.Services {
 
-	public class FileDialogService {
+	public class FileDialogService : IFileDialogService {
 
 		/// <summary>
 		/// The file picked must exist.
