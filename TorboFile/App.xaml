@@ -16,7 +16,7 @@
 
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="assets/MainDictionary.xaml"/>
+				<ResourceDictionary Source="assets/HelperDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 
         <!-- DATA TEMPLATES -->

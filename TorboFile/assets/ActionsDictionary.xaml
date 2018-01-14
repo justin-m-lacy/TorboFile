@@ -9,7 +9,7 @@
     xmlns:local="clr-namespace:Lemur.Operations.FileMatching">
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="BaseDictionary.xaml"/>
+		<ResourceDictionary Source="HelperDictionary.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 
 	<DataTemplate x:Key="fileDeleteTemplate" DataType="{x:Type mvvm:DataObjectVM}">
@@ -29,30 +29,16 @@
 		<StackPanel>
 			<TextBlock Style="{StaticResource infoText}" Text="Move Files and Directories to the given location." />
 
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Style="{StaticResource infoText}" Text="Destination: " />
-				<Button Name="btnChooseDirectory" Command="{Binding CmdPickFolder}">Browse...</Button>
-				<TextBox Style="{StaticResource textInput}"
-					Text="{Binding Data.Destination, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+				<!--<TextBlock Style="{StaticResource infoText}" Text="Destination: " />-->
+				<Button Name="btnChooseDirectory" MaxHeight="24"
+						Command="{Binding CmdPickFolder}">Browse...</Button>
+				<TextBox Style="{StaticResource TextInputTemplate}"
+					Text="{Binding Destination, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
 			</StackPanel>
 		</StackPanel>
 
 	</DataTemplate>
-	
-	<!--<DataTemplate x:Key="moveFileTemplate" DataType="{x:Type mvvm:DataObjectVM}">
-
-		<StackPanel>
-		<TextBlock Style="{StaticResource infoText}" Text="Move Files and Directories to the given location." />
-
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Style="{StaticResource infoText}" Text="Destination: " />
-				<Button Name="btnChooseDirectory">Browse...</Button>
-				<TextBox Style="{StaticResource textInput}"
-					Text="{Binding Data.Destination, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
-			</StackPanel>
-		</StackPanel>
-
-	</DataTemplate>-->
 
 	<DataTemplate x:Key="emptyRecycleTemplate" DataType="{x:Type mvvm:DataObjectVM}">
 		<TextBlock Style="{StaticResource infoText}" Text="The Recycle Bin will be emptied. This action cannot be undone." />
@@ -61,13 +47,13 @@
 	<DataTemplate x:Key="nameReplaceTemplate" DataType="{x:Type mvvm:DataObjectVM}">
 
 		<StackPanel>
-			<TextBlock Style="{StaticResource infoText}" Text="Rename all occurances of the given string in the file name." />
+			<TextBlock Style="{StaticResource infoText}" Text="Rename all occurances of the given string in a file or directory name." />
 			
 			<StackPanel Orientation="Horizontal">
-				<TextBlock Style="{StaticResource infoText}" Text="Search for: "/>
-				<TextBox Name="fldSearch" Style="{StaticResource textInput}" Text="{Binding Data.SearchString}" />
-				<TextBlock Style="{StaticResource infoText}" Text="Replace with: " />
-				<TextBox Name="fldReplace" Style="{StaticResource textInput}" Text="{Binding Data.ReplaceString}" />
+				<TextBlock Style="{StaticResource infoText}" Text="Search: "/>
+				<TextBox Name="fldSearch" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.SearchString}" />
+				<TextBlock Style="{StaticResource infoText}" Text="Replace: " />
+				<TextBox Name="fldReplace" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.ReplaceString}" />
 			</StackPanel>
 			
 		</StackPanel>
@@ -83,9 +69,9 @@
 
 			<StackPanel Orientation="Horizontal">
 				<TextBlock Style="{StaticResource infoText}" Text="Search for: "/>
-				<TextBox Name="fldSearch" Style="{StaticResource textInput}" Text="{Binding Data.ReplaceRule}" />
+				<TextBox Name="fldSearch" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.ReplaceRule}" />
 				<TextBlock Style="{StaticResource infoText}" Text="Replace with: " />
-				<TextBox Name="fldReplace" Style="{StaticResource textInput}" Text="{Binding Data.ReplaceString}" />
+				<TextBox Name="fldReplace" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.ReplaceString}" />
 			</StackPanel>
 
 		</StackPanel>

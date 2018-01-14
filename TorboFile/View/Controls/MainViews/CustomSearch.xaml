@@ -5,9 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:matchmodel="clr-namespace:Lemur.Operations.FileMatching.Models"
 			 xmlns:types="clr-namespace:Lemur.Types"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:b="clr-namespace:Lemur.Windows.Behaviors"
 			 xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
 			 xmlns:appmodels="clr-namespace:TorboFile.ViewModels"
 			 xmlns:controls="clr-namespace:TorboFile.View.Controls"
+			 xmlns:convert="clr-namespace:Lemur.Windows.Converters"
 			 mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -21,8 +24,18 @@
 				<ResourceDictionary Source="/TorboFile;component/assets/ActionsDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 
+			<Style x:Key="SearchItemControl" TargetType="ItemsControl">
+				<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+				<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+				<Setter Property="VerticalContentAlignment" Value="Stretch"/>
+				<Setter Property="Background" Value="White"/>
+			</Style>
+
+			<convert:IntToVisible x:Key="HasItemsToVisible" />
+			<convert:CollectionToVisible x:Key="CollectionToVisible"/>
+
 			<!-- Picker for condition type -->
-			<DataTemplate x:Key="pickerTemplate" DataType="{x:Type matchmodel:ConditionPickerVM}">
+			<DataTemplate x:Key="conditionPicker" DataType="{x:Type matchmodel:ConditionPickerVM}">
 
 				<StackPanel Orientation="Horizontal">
 					<ComboBox Name="matchTypesDropDown" MinWidth="64" Margin="2"
@@ -64,18 +77,19 @@
 			</DataTemplate>
 			
 			<!-- MATCH BUILDER -->
-			<DataTemplate x:Key="builderTemplate" DataType="{x:Type appmodels:MatchBuilder}">
+			<DataTemplate x:Key="conditionsTemplate" DataType="{x:Type appmodels:MatchBuilder}">
 
-				<DockPanel >
+				<DockPanel>
 
 					<TextBlock DockPanel.Dock="Top" Text="SEARCH CONDITIONS:"/>
 					<ContentControl DockPanel.Dock="Top"
-									Content="{Binding Picker}" ContentTemplate="{StaticResource pickerTemplate}"/>
+									Content="{Binding Picker}" ContentTemplate="{StaticResource conditionPicker}"/>
 					
-					<ListView x:Name="conditionsList" ItemsSource="{Binding DataModels}" DockPanel.Dock="Bottom"
-							  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+					<ItemsControl x:Name="conditionsList" Style="{StaticResource SearchItemControl}"
+								  Visibility="{Binding DataModels.Count, Converter={StaticResource HasItemsToVisible}}"
+								  ItemsSource="{Binding DataModels}" DockPanel.Dock="Bottom">
 
-						<ListView.ItemTemplate>
+						<ItemsControl.ItemTemplate>
 
 							<DataTemplate DataType="{x:Type mvvm:DataObjectVM}">
 
@@ -85,8 +99,7 @@
 
 									<Button Name="btnRemove" Style="{StaticResource StdButton}" Grid.Row="0"
 											HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,4,0"
-									Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type ListView}},
-										Path=DataContext.CmdRemove}"
+									Command="{Binding ElementName=conditionsList, Path=DataContext.CmdRemove}"
 										CommandParameter="{Binding}">
 
 										<StackPanel>
@@ -100,9 +113,9 @@
 
 							</DataTemplate>
 
-						</ListView.ItemTemplate>
+						</ItemsControl.ItemTemplate>
 
-					</ListView>
+					</ItemsControl>
 
 				</DockPanel>
 				
@@ -117,10 +130,11 @@
 					<ContentControl DockPanel.Dock="Top"
 									Content="{Binding Picker}" ContentTemplate="{StaticResource actionPicker}"/>
 					
-					<ListView x:Name="actionsList" ItemsSource="{Binding DataModels}" DockPanel.Dock="Bottom"
-							  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+					<ItemsControl x:Name="actionsList" ItemsSource="{Binding DataModels}" DockPanel.Dock="Bottom"
+								  Style="{StaticResource SearchItemControl}"
+							  Visibility="{Binding DataModels.Count, Converter={StaticResource HasItemsToVisible}}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
-						<ListView.ItemTemplate>
+						<ItemsControl.ItemTemplate>
 
 							<DataTemplate DataType="{x:Type mvvm:DataObjectVM}">
 
@@ -130,8 +144,7 @@
 
 									<Button Name="btnRemove" Style="{StaticResource StdButton}" Grid.Row="0"
 											HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,4,0"
-									Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type ListView}},
-										Path=DataContext.CmdRemove}"
+									Command="{Binding ElementName=actionsList, Path=DataContext.CmdRemove}"
 										CommandParameter="{Binding}">
 
 										<StackPanel>
@@ -145,9 +158,9 @@
 
 							</DataTemplate>
 
-						</ListView.ItemTemplate>
+						</ItemsControl.ItemTemplate>
 
-					</ListView>
+					</ItemsControl>
 
 				</DockPanel>
 
@@ -155,31 +168,10 @@
 
 			<DataTemplate x:Key="buildSearchTemplate" DataType="{x:Type appmodels:CustomSearchVM}">
 
-				<Grid>
-
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="Auto"/>
-					</Grid.RowDefinitions>
-
-					<Grid Grid.Row="0">
-
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="2"/>
-							<RowDefinition Height="Auto"/>
-						</Grid.RowDefinitions>
+				<DockPanel LastChildFill="False">
 
 
-						<ContentPresenter Grid.Row="0" Content="{Binding MatchBuilder}" ContentTemplate="{StaticResource builderTemplate}"/>
-
-						<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="2" />
-
-						<ContentPresenter Grid.Row="2" Grid.Column="2" Content="{Binding ActionBuilder}" ContentTemplate="{StaticResource actionTemplate}"/>
-
-					</Grid>
-
-					<StackPanel Name="buttonPanel" Orientation="Horizontal" HorizontalAlignment="Right"
+					<StackPanel DockPanel.Dock="Bottom" Name="buttonPanel" Orientation="Horizontal" HorizontalAlignment="Right"
 					Grid.Row="1">
 						<Button Name="btnSave" Style="{StaticResource StdButton}" Content="Save Search"
 				Command="{Binding CmdSaveOperation}"/>
@@ -187,11 +179,20 @@
 					Command="{Binding CmdLoadOperation}">
 						</Button>
 						<Button Name="btnRun" Style="{StaticResource StdButton}" Content="RUN SEARCH"
-					Command="{Binding CmdRunOperation}">
+					Command="{Binding CmdSearchMode}">
 						</Button>
 					</StackPanel>
 
-				</Grid>
+					<ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto"
+								  DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.BuildSearchVM}">
+						<DockPanel>
+
+							<ContentPresenter Grid.Row="0" DockPanel.Dock="Top" Content="{Binding MatchBuilder}" ContentTemplate="{StaticResource conditionsTemplate}"/>
+
+							<ContentPresenter Grid.Row="2" Grid.Column="2" Content="{Binding ActionBuilder}" ContentTemplate="{StaticResource actionTemplate}"/>
+						</DockPanel>
+					</ScrollViewer>
+				</DockPanel>
 				
 			</DataTemplate>
 			
@@ -204,18 +205,26 @@
 					</Grid.RowDefinitions>
 
 
-					<DockPanel>
-						<StackPanel Orientation="Horizontal">
-							<Button x:Name="BtnDirectory" Style="{StaticResource StdButton}" MaxHeight="28" Command="{Binding CmdPickFolder}">
+					<DockPanel DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.RunSearchVM}">
+						
+						<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+							<Button x:Name="BtnDirectory" Style="{StaticResource StdButton}" MaxHeight="28" Command="{Binding CmdPickDirectory}">
 								<Image Source="/TorboFile;component/assets/images/folder-yellow_open.png"/>
 							</Button>
-							<TextBox Name="fldDirectory" />
+							<TextBox Style="{StaticResource TextInputTemplate}" Name="fldDirectory" />
+							<Button Name="btnRunSearch" Style="{StaticResource StdButton}" MaxHeight="32" MaxWidth="32" Command="{Binding CmdRunSearch}">
+								<Image Source="/TorboFile;component/assets/images/media-playback-start-8.png"/>
+							</Button>
+							<Button Name="btnRunActions" Style="{StaticResource StdButton}" MaxHeight="32" MaxWidth="32" Command="{Binding CmdRunActions}">
+								APPLY ACTIONS
+							</Button>
 						</StackPanel>
+						
 						<controls:ProgressControl Margin="4,0,4,0" DockPanel.Dock="Top"
                                   DataContext="{Binding SearchProgress}"
                                   Visibility="{Binding Converter={StaticResource NonNullToVisible}}" />
 
-						<ContentPresenter Content="{Binding ResultsList}" >
+						<ContentPresenter DockPanel.Dock="Bottom" Content="{Binding ResultsList}"  Visibility="{Binding Converter={StaticResource CollectionToVisible}}">
 							<ContentPresenter.ContentTemplate>
 								<DataTemplate>
 
@@ -227,7 +236,7 @@
 					</DockPanel>
 
 					<StackPanel Name="btnPanel" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-						<Button Name="btnEdit" Content="NEW SEARCH" Command="{Binding CmdEditSearch}">
+						<Button Name="btnEdit" Style="{StaticResource StdButton}" Content="EDIT SEARCH" Command="{Binding CmdEditSearch}">
 
 						</Button>
 					</StackPanel>
@@ -240,8 +249,9 @@
 
 	</UserControl.Resources>
 
-	<ContentPresenter Content="{Binding}">
+		<ContentPresenter Content="{Binding}">
 		<ContentPresenter.Style>
+			
 			<Style TargetType="ContentPresenter">
 				<Style.Triggers>
 					<DataTrigger Binding="{Binding EditMode}" Value="true">

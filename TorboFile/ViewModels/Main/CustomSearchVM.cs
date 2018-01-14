@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using TorboFile.Model;
 using TorboFile.Services;
+using TorboFile.ViewModels.Main;
 
 namespace TorboFile.ViewModels {
 
@@ -78,16 +79,9 @@ namespace TorboFile.ViewModels {
 			}
 		}
 
-		public RelayCommand CmdPickDirectory {
-			get {
-				return this._cmdPickDirectory ?? ( this._cmdPickDirectory = new RelayCommand(
-					this.PickDirectory ) );
-			}
-		}
-		private RelayCommand _cmdPickDirectory;
-
 		/// <summary>
-		/// Command to edit/begin a new search. Cancels an operation in progress.
+		/// Command to edit the current search or build a new search.
+		/// Cancels any operation in progress and switches to edit mode.
 		/// </summary>
 		public RelayCommand CmdEditSearch {
 			get {
@@ -98,15 +92,15 @@ namespace TorboFile.ViewModels {
 		private RelayCommand _cmdEdit;
 
 		/// <summary>
-		/// Command to run the current search and associated actions.
+		/// Command to switch into run-search mode.
 		/// </summary>
-		public RelayCommand CmdRunOperation {
+		public RelayCommand CmdSearchMode {
 			get {
-				return this._cmdRun ?? ( this._cmdRun = new RelayCommand(
-					this.RunCurrent ) );
+				return this._cmdSearchMode ?? ( this._cmdSearchMode = new RelayCommand(
+					this.DoSearchMode ) );
 			}
 		}
-		private RelayCommand _cmdRun;
+		private RelayCommand _cmdSearchMode;
 
 		#endregion
 
@@ -126,86 +120,28 @@ namespace TorboFile.ViewModels {
 		}
 		private bool _editMode = true;
 
+		public BuildSearchVM BuildSearchVM { get => _buildSearchVM; set => _buildSearchVM = value; }
+		private BuildSearchVM _buildSearchVM;
 
 		/// <summary>
-		/// Models the progression of the current search.
+		/// ViewModel for running the search.
 		/// </summary>
-		public ProgressModel SearchProgress {
-			get { return this._searchProgress; }
-			set {
-				this.SetProperty( ref this._searchProgress, value );
-			} // set()
-		}
-		private ProgressModel _searchProgress;
+		public RunSearchVM RunSearchVM { get => _runSearchVM; }
+		private RunSearchVM _runSearchVM;
 
-		/// <summary>
-		/// Model for building a new search.
-		/// </summary>
-		private readonly MatchBuilder matchBuilder;
-		public MatchBuilder MatchBuilder {
-			get => matchBuilder;
-		}
 
-		public ActionBuilder ActionBuilder {
-			get {
-				return this.actionBuilder;
-			}
-		}
-		private readonly ActionBuilder actionBuilder;
-
-		/// <summary>
-		/// Used to lock Search results and search errors to enable synchronization
-		/// between the search-thread and the ui-thread.
-		/// </summary>
-		private object resultsLock;
-
-		/// <summary>
-		/// Model of the results from a matching operation.
-		/// </summary>
-		public FileCheckListModel ResultsList {
-
-			get { return this._resultsList; }
-
-			private set {
-				this.SetProperty( ref this._resultsList, value );
-			}
-
-		}
-		private FileCheckListModel _resultsList;
-
-		public CustomFileSearch CustomSearch {
+		public CustomSearchData CustomSearch {
 			get => _customSearch;
 			set {
 
 				if( this.SetProperty( ref this._customSearch, value ) ) {
-					this.actionBuilder.SetItems( this._customSearch.Actions );
-					this.matchBuilder.SetItems( this._customSearch.Conditions );
+					this.BuildSearchVM.CustomSearch = value;
+					this.RunSearchVM.CustomSearch = value;
 				}
 			}
 
 		}
-
-		public string SearchDirectory {
-			get => _searchDirectory;
-			set {
-
-				if( value != this._searchDirectory ) {
-
-					this.SetProperty( ref this._searchDirectory, value );
-
-					if( !Directory.Exists( value ) ) {
-						throw new ValidationException( "Error: Search directory does not exist." );
-
-					}
-
-				}
-
-			} // set()
-		}
-
-		private string _searchDirectory;
-
-		private CustomFileSearch _customSearch;
+		private CustomSearchData _customSearch;
 
 
 		#endregion
@@ -213,122 +149,17 @@ namespace TorboFile.ViewModels {
 		/// <summary>
 		/// Run the operation.
 		/// </summary>
-		private void RunCurrent() {
+		private void DoSearchMode() {
 
-			this.CloneSearch();
-
-			Console.WriteLine( "RUNNING SEARCH" );
+			Console.WriteLine( "RUN-SEARCH MODE." );
 
 			this.EditMode = false;
 
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		private async Task RunSearchAsync( string path ) {
-
-			FileMatchOperation matchFinder = this.BuildMatchOperation();
-
-			List<FileSystemInfo> matches = matchFinder.Matches;
-
-			if( this.resultsLock == null ) {
-				this.resultsLock = new object();
-			}
-			BindingOperations.EnableCollectionSynchronization( matches, resultsLock );
-
-			this.SearchProgress = new ProgressModel( matchFinder );
-
-			// Ensure the ResultsModel exists for displaying results.
-			this.CreateResultsList();
-
-			try {
-				await
-					Task.Run( () => { matchFinder.Run( this.resultsLock ); } );
-			} catch( Exception e ) {
-				Console.WriteLine( "ERROR: " + e.ToString() );
-			}
-
-			if( this.ResultsList.Items.Count == 0 ) {
-				// report no results found.
-			}
-
-		} //
-
-		private void ResultFound( FileSystemInfo result ) {
-		}
-
-		private async Task RunActionsAsync() {
-
-			/*try {
-				await
-					Task.Run( () => { matchFinder.Run( groupLock ); } );
-			} catch( Exception e ) {
-				Console.WriteLine( "Actions Error: " + e.ToString() );
-			}*/
-
-		} //
-
-		private FileMatchOperation BuildMatchOperation() {
-
-			FileMatchOperation matchOp = new FileMatchOperation( this._customSearch.Conditions );
-			return matchOp;
-		}
-
-		private FileCheckListModel CreateResultsList() {
-
-			if( this.ResultsList != null ) {
-				ResultsList.Clear();
-				return this.ResultsList;
-			}
-
-			FileCheckListModel checkList = new FileCheckListModel();
-
-			this.ResultsList = checkList;
-
-			return checkList;
-
-		}
-
-		/// <summary>
-		/// Assigns a directory to a destination object.
-		/// This is used when a descendent object needs to allow the user to pick
-		/// a directory from a file dialog.
-		/// </summary>
-		/// <param name="destObject"></param>
-		/// <param name="destProp"></param>
-		/*private void AssignFolder( object destObject, string destProp ) {
-
-			IFileDialogService dialog = this.GetService<IFileDialogService>();
-			string directory = dialog.PickFolder( "Choose a destination folder..." );
-			if( !string.IsNullOrEmpty( directory ) ) {
-
-				PropertyInfo pinfo = destObject.GetType().GetProperty( destProp );
-				pinfo.SetValue( destObject, directory );
-
-			}
-
-		}*/ //
-
-		private void PickDirectory() {
-
-			IFileDialogService dialog = this.GetService<IFileDialogService>();
-			if( dialog != null ) {
-
-				string searchDir = dialog.PickFolder( "Choose search folder." );
-				if( !string.IsNullOrEmpty( searchDir ) ) {
-					this.SearchDirectory = searchDir;
-				}
-
-			}
-
-		} //
-
 		private void EditSearch() {
 
-			Console.WriteLine( "EDITING SEARCH" );
+			Console.WriteLine( "EDIT-SEARCH MODE." );
 			this.EditMode = true;
 
 		}
@@ -338,7 +169,6 @@ namespace TorboFile.ViewModels {
 
 			this.CloneSearch();
 
-			/// need a save dialog?
 			IFileDialogService dialog = this.GetService<IFileDialogService>();
 			if( dialog != null ) {
 
@@ -356,15 +186,14 @@ namespace TorboFile.ViewModels {
 
 		public void LoadSearch() {
 
-			/// need a save dialog?
-			FileDialogService dialog = this.GetService<FileDialogService>();
+			IFileDialogService dialog = this.GetService<IFileDialogService>();
 			if( dialog != null ) {
 
 				string loadFile = dialog.PickLoadFile( "Load Search..." );
 				if( !string.IsNullOrEmpty( loadFile ) ) {
 
 					/// TODO: Make async?
-					CustomFileSearch loadedSearch = FileUtils.ReadBinary<CustomFileSearch>( loadFile );
+					CustomSearchData loadedSearch = FileUtils.ReadBinary<CustomSearchData>( loadFile );
 					if( loadedSearch != null ) {
 						this.CustomSearch = loadedSearch;
 					}
@@ -375,9 +204,6 @@ namespace TorboFile.ViewModels {
 
 		} // LoadSearch()
 
-		public bool HasActions() {
-			return this.actionBuilder.HasItems();
-		}
 
 		/// <summary>
 		/// Build the current search from the currently displayed items.
@@ -385,13 +211,13 @@ namespace TorboFile.ViewModels {
 		private void CloneSearch() {
 
 			if( this._customSearch == null ) {
-				this._customSearch = new CustomFileSearch();
+				this._customSearch = new CustomSearchData();
 			} else {
 				this._customSearch.Clear();
 			}
 
-			this._customSearch.Conditions = this.matchBuilder.CloneCollection();
-			this._customSearch.Actions = this.actionBuilder.CloneCollection();
+			this._customSearch.Conditions = this.BuildSearchVM.MatchBuilder.CloneCollection();
+			this._customSearch.Actions = this.BuildSearchVM.ActionBuilder.CloneCollection();
 
 		}
 
@@ -400,50 +226,15 @@ namespace TorboFile.ViewModels {
 		/// </summary>
 		/// <returns></returns>
 		public bool HasConditions() {
-			return this.matchBuilder.HasItems();
+			return this.BuildSearchVM.MatchBuilder.HasItems();
 		}
 
 		public CustomSearchVM( IServiceProvider provider ) : base( provider ) {
 
-			this.matchBuilder = new MatchBuilder();
-			this.matchBuilder.ServiceProvider = provider;
-
-			this.actionBuilder = new ActionBuilder();
-			this.actionBuilder.ServiceProvider = provider;
-
-			this.InitViewModelCreators();
-
-			this.matchBuilder.Picker.ExcludeTypes = new Type[] { typeof( ContainedIn ), typeof( ConditionList ), typeof( ConditionEnumeration ) };
+			this._buildSearchVM = new BuildSearchVM( provider );
+			this._runSearchVM = new RunSearchVM( provider );
 
 		}
-
-		/// <summary>
-		/// Initializes the view models to use for each displayed data type.
-		/// </summary>
-		private void InitViewModelCreators() {
-
-			ViewModelBuilder builder = this.GetService<ViewModelBuilder>();
-			if( builder != null ) {
-
-				//Console.WriteLine( "SETTING DEFAULT VM BUILDERS" );
-				builder.SetCreator<BaseCondition>( this.CreateVM<FileTestVM> );
-				builder.SetCreator<MoveFileAction>( this.CreateVM<MoveFileVM> );
-				builder.SetCreator<FileActionBase>( this.CreateVM<DataObjectVM> );
-
-			}
-
-		}
-
-
-		private VM CreateVM<VM>( object data, object view = null ) where VM : DataObjectVM, new() {
-
-			Console.WriteLine( "Creating ViewModel: " + typeof( VM ).Name );
-			VM vm = new VM();
-			vm.ServiceProvider = this.ServiceProvider;
-			vm.Data = data;
-			return vm;
-
-		} //
 
 	} // class
 

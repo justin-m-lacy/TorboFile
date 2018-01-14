@@ -10,7 +10,7 @@
     xmlns:local="clr-namespace:Lemur.Operations.FileMatching">
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="BaseDictionary.xaml"/>
+		<ResourceDictionary Source="HelperDictionary.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 	
 	<!-- DEFAULT/SAMPLE RESOURCES FOR WORKING WITH FILE MATCHING CONDITIONS -->
@@ -50,7 +50,7 @@
 	<DataTemplate x:Key="extensionTestTemplate" DataType="{x:Type models:FileTestVM}">
 		<StackPanel>
 			<TextBlock Style="{StaticResource infoText}" Text="Allowed File Extensions: " ToolTip="Separate extensions with ';'" />
-			<TextBox x:Name="fldExtensionList" Style="{StaticResource textInput}">
+			<TextBox x:Name="fldExtensionList" Style="{StaticResource SimpleTextInput}">
 				<TextBox.Text>
 					<Binding ValidatesOnExceptions="True" Path="Data.Extensions" Converter="{StaticResource stringSplitter}">
 						<Binding.ValidationRules>
@@ -138,7 +138,7 @@
 			<StackPanel Orientation="Horizontal">
 
 				<TextBlock Style="{StaticResource infoText}" Text="File/Dictory Name contains: "/>
-				<TextBox Style="{StaticResource textInput}" Text="{Binding Path=Data.MatchString}" />
+				<TextBox Style="{StaticResource SimpleTextInput}" Text="{Binding Path=Data.MatchString}" />
 				
 			</StackPanel>
 
@@ -159,7 +159,7 @@
 			<StackPanel Orientation="Vertical">
 
 			<TextBlock Style="{StaticResource infoText}" Text="Test Expression: "/>
-			<TextBox Style="{StaticResource intInput}" Text="{Binding Path=Data.TestExpression}" MinWidth="240"/>
+			<TextBox Style="{StaticResource SimpleTextInput}" Text="{Binding Path=Data.TestExpression}" MinWidth="240"/>
 		</StackPanel>
 
 		</StackPanel>

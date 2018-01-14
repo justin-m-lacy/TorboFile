@@ -29,7 +29,7 @@
                 <Setter.Value>
                     <DockPanel>
 
-                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+                        <StackPanel Name="ResultSizePanel" Orientation="Horizontal" DockPanel.Dock="Bottom">
                         <TextBlock Text="Total Selected Size: " />
                         <TextBlock Text="{Binding CheckedSize, Converter={StaticResource DataConverter}}" />
                         </StackPanel>

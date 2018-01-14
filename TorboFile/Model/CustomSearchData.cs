@@ -10,9 +10,10 @@ namespace TorboFile.Model {
 
 	/// <summary>
 	/// Search criteria and actions to apply during a custom file operation.
+	/// This only holds the data for a search, it does not actually run it.
 	/// </summary>
 	[Serializable]
-	public class CustomFileSearch {
+	public class CustomSearchData {
 
 		public List<IMatchCondition> Conditions { get => _conditions; set => _conditions = value; }
 		private List<IMatchCondition> _conditions;
@@ -20,14 +21,14 @@ namespace TorboFile.Model {
 		public List<IFileAction> Actions { get => _actions; set => _actions = value; }
 		private List<IFileAction> _actions;
 
-		public CustomFileSearch() {
+		public CustomSearchData() {
 
 			this.Conditions = new List<IMatchCondition>();
 			this.Actions = new List<IFileAction>();
 
 		}
 
-		public CustomFileSearch( IEnumerable<IMatchCondition> conditions, IEnumerable<IFileAction> actions ) {
+		public CustomSearchData( IEnumerable<IMatchCondition> conditions, IEnumerable<IFileAction> actions ) {
 
 			this.Conditions = new List<IMatchCondition>( conditions );
 			this.Actions = new List<IFileAction>( actions );
