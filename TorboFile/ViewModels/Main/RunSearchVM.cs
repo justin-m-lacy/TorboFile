@@ -106,7 +106,7 @@ namespace TorboFile.ViewModels.Main {
 		/// <summary>
 		/// Model of the results from a matching operation.
 		/// </summary>
-		public FileCheckListModel ResultsList {
+		public FileCheckListVM ResultsList {
 
 			get { return this._resultsList; }
 
@@ -115,7 +115,7 @@ namespace TorboFile.ViewModels.Main {
 			}
 
 		}
-		private FileCheckListModel _resultsList;
+		private FileCheckListVM _resultsList;
 
 		public CustomSearchData CustomSearch {
 			get => _customSearch;
@@ -171,6 +171,8 @@ namespace TorboFile.ViewModels.Main {
 		private async Task RunActionsAsyc() {
 
 			FileActionOperation operation = new FileActionOperation();
+			operation.Actions = this.CustomSearch.Actions;
+			operation.Targets = this.ResultsList.CheckedItems;
 
 			this.SearchProgress.Operation = operation;
 
@@ -233,14 +235,14 @@ namespace TorboFile.ViewModels.Main {
 			return matchOp;
 		}
 
-		private FileCheckListModel CreateResultsList() {
+		private FileCheckListVM CreateResultsList() {
 
 			if( this.ResultsList != null ) {
 				ResultsList.Clear();
 				return this.ResultsList;
 			}
 
-			FileCheckListModel checkList = new FileCheckListModel();
+			FileCheckListVM checkList = new FileCheckListVM();
 
 			this.ResultsList = checkList;
 
@@ -248,6 +250,9 @@ namespace TorboFile.ViewModels.Main {
 
 		}
 
+		/// <summary>
+		/// Pick the starting directory for the search.
+		/// </summary>
 		private void PickDirectory() {
 
 			IFileDialogService dialog = this.GetService<IFileDialogService>();
@@ -258,8 +263,6 @@ namespace TorboFile.ViewModels.Main {
 					this.SearchDirectory = searchDir;
 				}
 
-			} else {
-				Console.WriteLine( "ERROR: DIALOG NULL" );
 			}
 
 		} //

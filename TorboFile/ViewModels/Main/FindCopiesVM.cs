@@ -13,6 +13,7 @@ using System.Collections.Specialized;
 using Lemur;
 using System.Diagnostics;
 using Lemur.Windows.Services;
+using System.IO;
 
 namespace TorboFile.ViewModels {
 
@@ -72,7 +73,7 @@ namespace TorboFile.ViewModels {
 		/// <summary>
 		/// Model of the results from a matching operation.
 		/// </summary>
-		public FileCheckListModel ResultsList {
+		public DuplicateFilesVM ResultsList {
 
 			get { return this._resultsList; }
 
@@ -81,7 +82,7 @@ namespace TorboFile.ViewModels {
 			}
 
 		}
-		private FileCheckListModel _resultsList;
+		private DuplicateFilesVM _resultsList;
 
 		public string IncludeText {
 			get {
@@ -120,7 +121,7 @@ namespace TorboFile.ViewModels {
 
 		}
 
-		private async void DeleteCheckedAsync( IEnumerable<FileData> checked_files ) {
+		private async void DeleteCheckedAsync( IEnumerable<FileSystemInfo> checked_files ) {
 
 			//Console.WriteLine( "deleting files: " + checked_files.Count() );
 
@@ -128,7 +129,7 @@ namespace TorboFile.ViewModels {
 			if( deleteService != null ) {
 
 				await deleteService.DeleteFilesAsync(
-					checked_files.Select<FileData, string>( ( data ) => { return data.Path; } ),
+					checked_files.Select<FileSystemInfo, string>( ( data ) => { return data.FullName; } ),
 					FindCopiesSettings.Default.moveToTrash
 				);
 
@@ -221,14 +222,14 @@ namespace TorboFile.ViewModels {
 
 		}
 
-		private FileCheckListModel CreateResultsList() {
+		private DuplicateFilesVM CreateResultsList() {
 
 			if( this.ResultsList != null ) {
 				ResultsList.Clear();
 				return this.ResultsList;
 			}
 
-			FileCheckListModel checkList = new FileCheckListModel();
+			DuplicateFilesVM checkList = new DuplicateFilesVM();
 			checkList.DeleteDelegate = this.DeleteCheckedAsync;
 
 			/// Listen for selected item to set the FilePreviewModel current preview.
@@ -243,11 +244,11 @@ namespace TorboFile.ViewModels {
 		private void CheckList_PropertyChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e ) {
 
 			/// file selected change. show preview.
-			if( e.PropertyName == CheckListModel<FileData>.SelectedPropertyName ) {
+			if( e.PropertyName == CheckListVM<FileDuplicateInfo>.SelectedPropertyName ) {
 
-				ListItemModel<FileData> selectedData = this.ResultsList.SelectedItem;
+				ListItemModel<FileSystemInfo> selectedData = this.ResultsList.SelectedItem;
 				if( selectedData != null ) {
-					FilePreview.FilePath = selectedData.Item.Path;
+					FilePreview.FilePath = selectedData.Item.FullName;
 				} else {
 					FilePreview.FilePath = string.Empty;
 				}
@@ -274,11 +275,12 @@ namespace TorboFile.ViewModels {
 					IEnumerator<string> matches = group.GetEnumerator();
 
 					if( matches.MoveNext() ) {
-						this.ResultsList.Items.Add( new ListItemModel<FileData>( new FileData( matches.Current, groupFileSize ) ) );
+						this.ResultsList.AddDuplicateInfo( new FileDuplicateInfo( matches.Current, groupFileSize ) );
 					}
 
 					while( matches.MoveNext() ) {
-						this.ResultsList.Items.Add( new ListItemModel<FileData>( new FileData( matches.Current, groupFileSize ), true ) );
+
+						this.ResultsList.AddDuplicateInfo( new FileDuplicateInfo( matches.Current, groupFileSize ), true );
 					}
 
 

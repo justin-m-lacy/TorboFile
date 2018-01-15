@@ -53,7 +53,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto" CellTemplate="{StaticResource TemplateCheckbox}"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Item.Path}" Header="File" Width="Auto"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Item.FullName}" Header="File" Width="Auto"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Item.Size, Converter={StaticResource DataConverter}}" Header="Size" Width="Auto"></GridViewColumn>
                 </GridView>
             </ListView.View>

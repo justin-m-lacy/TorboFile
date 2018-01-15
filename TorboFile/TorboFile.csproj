@@ -120,12 +120,13 @@
     <Compile Include="Services\ITorbViewMaker.cs" />
     <Compile Include="Services\SystemMessageBox.cs" />
     <Compile Include="ViewModels\CategoryManagerVM.cs" />
+    <Compile Include="ViewModels\FileCheckListVM.cs" />
     <Compile Include="ViewModels\Main\BuildSearchVM.cs" />
     <Compile Include="ViewModels\Main\CustomSearchVM.cs" />
     <Compile Include="ViewModels\EditCategorySetVM.cs" />
     <Compile Include="ViewModels\Main\CleanFoldersModel.cs" />
     <Compile Include="ViewModels\FileDetailsModel.cs" />
-    <Compile Include="ViewModels\FileCheckListModel.cs" />
+    <Compile Include="ViewModels\DuplicateFilesVM.cs" />
     <Compile Include="ViewModels\Main\FindCopiesVM.cs" />
     <Compile Include="ViewModels\EditCategoryModel.cs" />
     <Compile Include="ViewModels\Main\MainVM.cs" />

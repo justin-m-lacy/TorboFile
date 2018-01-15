@@ -213,9 +213,10 @@
 							</Button>
 							<TextBox Style="{StaticResource TextInputTemplate}" Name="fldDirectory" />
 							<Button Name="btnRunSearch" Style="{StaticResource StdButton}" MaxHeight="32" MaxWidth="32" Command="{Binding CmdRunSearch}">
-								<Image Source="/TorboFile;component/assets/images/media-playback-start-8.png"/>
+								RUN SEARCH
 							</Button>
-							<Button Name="btnRunActions" Style="{StaticResource StdButton}" MaxHeight="32" MaxWidth="32" Command="{Binding CmdRunActions}">
+							<Button Name="btnRunActions" Style="{StaticResource StdButton}" MaxHeight="32" MaxWidth="32"
+									Command="{Binding CmdRunActions}" Visibility="{Binding Path=ResultsList, Converter={StaticResource CollectionToVisible}}">
 								APPLY ACTIONS
 							</Button>
 						</StackPanel>
