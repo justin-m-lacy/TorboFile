@@ -217,20 +217,20 @@
 								RUN SEARCH
 							</Button>
 							<Button Name="btnRunActions" Style="{StaticResource StdButton}" MaxHeight="32"
-									Command="{Binding CmdRunActions}" Visibility="{Binding Path=ResultsList, Converter={StaticResource CollectionToVisible}}">
+									Command="{Binding CmdRunActions}" Visibility="{Binding Path=ResultsList, Converter={StaticResource NonNullToVisible}}">
 								APPLY ACTIONS
 							</Button>
 						</StackPanel>
 						
 						<controls:ProgressControl Margin="4,0,4,0" DockPanel.Dock="Top"
-                                  DataContext="{Binding SearchProgress}"
-                                  Visibility="{Binding Converter={StaticResource NonNullToVisible}}" />
+                                  DataContext="{Binding CurrentProgress}"
+                                  Visibility="{Binding Path=Operation, Converter={StaticResource NonNullToVisible}}" />
 
-						<ContentPresenter DockPanel.Dock="Bottom" Content="{Binding ResultsList}"  Visibility="{Binding Converter={StaticResource CollectionToVisible}}">
+						<ContentPresenter DockPanel.Dock="Bottom" Content="{Binding ResultsList}">
 							<ContentPresenter.ContentTemplate>
 								<DataTemplate>
 
-									<controls:FileSelectionView />
+									<controls:FileSelectionView  Visibility="{Binding Converter={StaticResource NonNullToVisible}}" />
 
 								</DataTemplate>
 							</ContentPresenter.ContentTemplate>

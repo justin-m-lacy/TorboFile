@@ -6,6 +6,7 @@ using Lemur.Windows.MVVM;
 using Lemur.Windows.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
@@ -66,7 +67,8 @@ namespace TorboFile.ViewModels.Main {
 		public RelayCommand CmdRunSearch {
 			get {
 				return this._cmdRunSearch ?? ( this._cmdRunSearch = new RelayCommand(
-					this.RunSearch ) );
+					async () => await this.RunSearchAsync( this.SearchDirectory )
+				) );
 			}
 		}
 		private RelayCommand _cmdRunSearch;
@@ -77,7 +79,8 @@ namespace TorboFile.ViewModels.Main {
 		public RelayCommand CmdRunActions {
 			get {
 				return this._cmdRunActions ?? ( this._cmdRunActions = new RelayCommand(
-					this.RunActions ) );
+					this.RunActionsAsync, HasCheckedResults
+				) );
 			}
 		}
 		private RelayCommand _cmdRunActions;
@@ -89,13 +92,13 @@ namespace TorboFile.ViewModels.Main {
 		/// <summary>
 		/// Models the progression of the current search.
 		/// </summary>
-		public ProgressModel SearchProgress {
-			get { return this._searchProgress; }
+		public ProgressModel CurrentProgress {
+			get { return this._currentProgress; }
 			set {
-				this.SetProperty( ref this._searchProgress, value );
+				this.SetProperty( ref this._currentProgress, value );
 			} // set()
 		}
-		private ProgressModel _searchProgress;
+		private ProgressModel _currentProgress;
 
 		/// <summary>
 		/// Model of the results from a matching operation.
@@ -110,6 +113,12 @@ namespace TorboFile.ViewModels.Main {
 
 		}
 		private FileCheckListVM _resultsList;
+
+		public bool HasCheckedItems {
+			get {
+				return this._resultsList != null && this._resultsList.CheckedItems.Count > 0;
+			}
+		}
 
 		public CustomSearchData CustomSearch {
 			get => _customSearch;
@@ -141,30 +150,16 @@ namespace TorboFile.ViewModels.Main {
 		#endregion
 
 		/// <summary>
-		/// Run the operation.
-		/// </summary>
-		private async void RunSearch() {
-
-			// Assign task to get rid of the warning of not using await.
-			await this.RunSearchAsync( this.SearchDirectory );
-
-		}
-
-		private void RunActions() {
-			Task t = this.RunActionsAsyc();
-		}
-
-		/// <summary>
 		/// Only run the actions on the selected files.
 		/// </summary>
 		/// <returns>A Task, apparently.</returns>
-		private async Task RunActionsAsyc() {
+		private async void RunActionsAsync() {
 
 			FileActionOperation operation = new FileActionOperation();
 			operation.Actions = this.CustomSearch.Actions;
 			operation.Targets = this.ResultsList.CheckedItems;
 
-			this.SearchProgress.Operation = operation;
+			this.CurrentProgress.Operation = operation;
 
 
 			try {
@@ -176,7 +171,7 @@ namespace TorboFile.ViewModels.Main {
 				Console.WriteLine( "ERROR: " + e.ToString() );
 
 			}
-
+			Console.WriteLine( "ACTIONS DONE" );
 		}
 
 		/// <summary>
@@ -186,7 +181,7 @@ namespace TorboFile.ViewModels.Main {
 		/// <returns></returns>
 		private async Task RunSearchAsync( string path ) {
 
-			Console.WriteLine( "RUNNING SEARCH" );
+			//Console.WriteLine( "RUNNING SEARCH" );
 
 			FileMatchOperation matchFinder = this.BuildMatchOperation( this.SearchDirectory );
 			matchFinder.OnMatchFound += MatchFinder_OnMatchFound;
@@ -194,7 +189,7 @@ namespace TorboFile.ViewModels.Main {
 			//List<FileSystemInfo> matches = matchFinder.Matches;
 			//BindingOperations.EnableCollectionSynchronization( matches, resultsLock );
 
-			this.SearchProgress = new ProgressModel( matchFinder );
+			this.CurrentProgress = new ProgressModel( matchFinder );
 
 			// Ensure the ResultsModel exists for displaying results.
 			this.CreateResultsList();
@@ -211,16 +206,18 @@ namespace TorboFile.ViewModels.Main {
 				// report no results found.
 				Console.WriteLine( "NO RESULTS FOUND" );
 			} else {
-				Console.WriteLine( "FOUND RESULTS" );
+				//Console.WriteLine( "FOUND RESULTS" );
 			}
 
 		} //
 
 		private void MatchFinder_OnMatchFound( FileSystemInfo obj ) {
 
-			Console.WriteLine( "RESULT FOUND: " + obj.Name );
+			//Console.WriteLine( "RESULT FOUND: " + obj.Name );
 			if( this.ResultsList != null ) {
 				this.ResultsList.Add( obj, true );
+			} else {
+				Console.WriteLine( "ERROR: RESULT LIST IS NULL" );
 			}
 
 		}
@@ -239,12 +236,26 @@ namespace TorboFile.ViewModels.Main {
 			}
 
 			FileCheckListVM checkList = new FileCheckListVM();
-
 			this.ResultsList = checkList;
+	
+			/// NOTE: Apparently a public interface member can be protected unless explicitly cast.
+			/// This seems insane to me.
+			( (INotifyPropertyChanged)this.ResultsList.CheckedItems ).PropertyChanged += CheckedItems_PropertyChanged;
 
 			return checkList;
 
 		}
+
+
+		private void CheckedItems_PropertyChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e ) {
+
+			if( e.PropertyName == "Count" ) {
+				this.CmdRunActions.RaiseCanExecuteChanged();
+			}
+
+		}
+
+
 
 		/// <summary>
 		/// Pick the starting directory for the search.
