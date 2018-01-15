@@ -211,11 +211,12 @@
 							<Button x:Name="BtnDirectory" Style="{StaticResource StdButton}" MaxHeight="28" Command="{Binding CmdPickDirectory}">
 								<Image Source="/TorboFile;component/assets/images/folder-yellow_open.png"/>
 							</Button>
-							<TextBox Style="{StaticResource TextInputTemplate}" Name="fldDirectory" />
-							<Button Name="btnRunSearch" Style="{StaticResource StdButton}" MaxHeight="32" MaxWidth="32" Command="{Binding CmdRunSearch}">
+							<TextBox Style="{StaticResource TextInputTemplate}" Name="fldDirectory"
+									 Text="{Binding SearchDirectory, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+							<Button Name="btnRunSearch" Style="{StaticResource StdButton}" MaxHeight="32" Command="{Binding CmdRunSearch}">
 								RUN SEARCH
 							</Button>
-							<Button Name="btnRunActions" Style="{StaticResource StdButton}" MaxHeight="32" MaxWidth="32"
+							<Button Name="btnRunActions" Style="{StaticResource StdButton}" MaxHeight="32"
 									Command="{Binding CmdRunActions}" Visibility="{Binding Path=ResultsList, Converter={StaticResource CollectionToVisible}}">
 								APPLY ACTIONS
 							</Button>

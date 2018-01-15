@@ -41,12 +41,6 @@ namespace TorboFile.ViewModels {
 
 	} //
 
-	/// <summary>
-	/// Class definitions required for xaml links.
-	/// </summary>
-	public class MatchBuilder : CollectionBuilderVM<IMatchCondition, FileTestVM>  {}
-	public class ActionBuilder : CollectionBuilderVM<IFileAction, DataObjectVM> { }
-
 	public class CustomSearchVM : ViewModelBase {
 
 		#region COMMANDs
@@ -167,7 +161,8 @@ namespace TorboFile.ViewModels {
 
 		private void SaveCurrent() {
 
-			this.CloneSearch();
+			//TODO: Cloning not appropriate here.
+			//this.CloneSearch();
 
 			IFileDialogService dialog = this.GetService<IFileDialogService>();
 			if( dialog != null ) {
@@ -233,6 +228,8 @@ namespace TorboFile.ViewModels {
 
 			this._buildSearchVM = new BuildSearchVM( provider );
 			this._runSearchVM = new RunSearchVM( provider );
+
+			this.CustomSearch = new CustomSearchData();
 
 		}
 

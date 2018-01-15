@@ -98,12 +98,6 @@ namespace TorboFile.ViewModels.Main {
 		private ProgressModel _searchProgress;
 
 		/// <summary>
-		/// Used to lock Search results and search errors to enable synchronization
-		/// between the search-thread and the ui-thread.
-		/// </summary>
-		private object resultsLock;
-
-		/// <summary>
 		/// Model of the results from a matching operation.
 		/// </summary>
 		public FileCheckListVM ResultsList {
@@ -124,6 +118,7 @@ namespace TorboFile.ViewModels.Main {
 			}
 
 		}
+		private CustomSearchData _customSearch;
 
 		public string SearchDirectory {
 			get => _searchDirectory;
@@ -135,33 +130,28 @@ namespace TorboFile.ViewModels.Main {
 
 					if( !Directory.Exists( value ) ) {
 						throw new ValidationException( "Error: Search directory does not exist." );
-
 					}
 
 				}
 
 			} // set()
 		}
-
 		private string _searchDirectory;
-
-		private CustomSearchData _customSearch;
-
 
 		#endregion
 
 		/// <summary>
 		/// Run the operation.
 		/// </summary>
-		private void RunSearch() {
+		private async void RunSearch() {
 
-			Console.WriteLine( "RUNNING SEARCH" );
+			// Assign task to get rid of the warning of not using await.
+			await this.RunSearchAsync( this.SearchDirectory );
 
 		}
 
 		private void RunActions() {
-
-			Console.WriteLine( "RUNNING ACTIONS" );
+			Task t = this.RunActionsAsyc();
 		}
 
 		/// <summary>
@@ -196,14 +186,13 @@ namespace TorboFile.ViewModels.Main {
 		/// <returns></returns>
 		private async Task RunSearchAsync( string path ) {
 
-			FileMatchOperation matchFinder = this.BuildMatchOperation();
+			Console.WriteLine( "RUNNING SEARCH" );
 
-			List<FileSystemInfo> matches = matchFinder.Matches;
+			FileMatchOperation matchFinder = this.BuildMatchOperation( this.SearchDirectory );
+			matchFinder.OnMatchFound += MatchFinder_OnMatchFound;
 
-			if( this.resultsLock == null ) {
-				this.resultsLock = new object();
-			}
-			BindingOperations.EnableCollectionSynchronization( matches, resultsLock );
+			//List<FileSystemInfo> matches = matchFinder.Matches;
+			//BindingOperations.EnableCollectionSynchronization( matches, resultsLock );
 
 			this.SearchProgress = new ProgressModel( matchFinder );
 
@@ -212,9 +201,7 @@ namespace TorboFile.ViewModels.Main {
 
 			try {
 
-				await Task.Run(
-					() => { matchFinder.Run( this.resultsLock ); }
-				);
+				await Task.Run( () => matchFinder.Run() );
 
 			} catch( Exception e ) {
 				Console.WriteLine( "ERROR: " + e.ToString() );
@@ -222,19 +209,28 @@ namespace TorboFile.ViewModels.Main {
 
 			if( this.ResultsList.Items.Count == 0 ) {
 				// report no results found.
+				Console.WriteLine( "NO RESULTS FOUND" );
+			} else {
+				Console.WriteLine( "FOUND RESULTS" );
 			}
 
 		} //
 
-		private void ResultFound( FileSystemInfo result ) {
+		private void MatchFinder_OnMatchFound( FileSystemInfo obj ) {
+
+			Console.WriteLine( "RESULT FOUND: " + obj.Name );
+			if( this.ResultsList != null ) {
+				this.ResultsList.Add( obj, true );
+			}
+
 		}
 
-		private FileMatchOperation BuildMatchOperation() {
+		private FileMatchOperation BuildMatchOperation( string basePath ) {
 
-			FileMatchOperation matchOp = new FileMatchOperation( this._customSearch.Conditions );
+			FileMatchOperation matchOp = new FileMatchOperation( basePath, this._customSearch.Conditions );
 			return matchOp;
 		}
-
+	
 		private FileCheckListVM CreateResultsList() {
 
 			if( this.ResultsList != null ) {

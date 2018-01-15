@@ -15,6 +15,19 @@ using TorboFile.Model;
 namespace TorboFile.ViewModels {
 
 	/// <summary>
+	/// Classes with Typed Generic paramaters required for xaml type references.
+	/// </summary>
+	public class MatchBuilder : CollectionBuilderVM<IMatchCondition, FileTestVM> {
+		public MatchBuilder() { }
+		public MatchBuilder( IServiceProvider provider ) : base( provider ) { }
+	}
+	public class ActionBuilder : CollectionBuilderVM<IFileAction, DataObjectVM> {
+		public ActionBuilder() { }
+		public ActionBuilder( IServiceProvider provider ) : base( provider ) { }
+	}
+
+
+	/// <summary>
 	/// ViewModel for creating a custom search with arbitrary file test conditions
 	/// and an arbitrary list of actions to apply to results.
 	/// 
@@ -57,20 +70,18 @@ namespace TorboFile.ViewModels {
 		#region PROPERTIES
 
 		/// <summary>
-		/// Model for building a list of file test conditions.
+		/// ViewModel for building a list of file test conditions.
 		/// </summary>
-		private readonly MatchBuilder matchBuilder;
 		public MatchBuilder MatchBuilder {
 			get => matchBuilder;
 		}
+		private readonly MatchBuilder matchBuilder;
 
 		/// <summary>
 		/// Model for building a list of actions.
 		/// </summary>
 		public ActionBuilder ActionBuilder {
-			get {
-				return this.actionBuilder;
-			}
+			get => this.actionBuilder;
 		}
 		private readonly ActionBuilder actionBuilder;
 
@@ -79,17 +90,17 @@ namespace TorboFile.ViewModels {
 			set {
 
 				if( this.SetProperty( ref this._customSearch, value ) ) {
-					this.actionBuilder.SetItems( this._customSearch.Actions );
-					this.matchBuilder.SetItems( this._customSearch.Conditions );
+
+					this.actionBuilder.SourceCollection = value.Actions;
+					this.matchBuilder.SourceCollection = value.Conditions;
+
 				}
 			}
 
 		}
 		private CustomSearchData _customSearch;
 
-
 		#endregion
-
 
 		private FileMatchOperation BuildMatchOperation() {
 
@@ -114,7 +125,7 @@ namespace TorboFile.ViewModels {
 
 			}
 
-		} //
+		} // SaveCurrent()
 
 		public void LoadSearch() {
 
@@ -178,11 +189,8 @@ namespace TorboFile.ViewModels {
 
 		public BuildSearchVM( IServiceProvider provider ) : base( provider ) {
 
-			this.matchBuilder = new MatchBuilder();
-			this.matchBuilder.ServiceProvider = provider;
-
-			this.actionBuilder = new ActionBuilder();
-			this.actionBuilder.ServiceProvider = provider;
+			this.matchBuilder = new MatchBuilder( provider );
+			this.actionBuilder = new ActionBuilder( provider );
 
 			this.InitViewModelCreators();
 
