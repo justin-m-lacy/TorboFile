@@ -17,14 +17,19 @@ namespace TorboFile.Services {
 		/// <param name="defaultPath"></param>
 		/// <param name="defaultFileName"></param>
 		/// <returns></returns>
-		public string PickLoadFile( string dialogTitle, string defaultPath = null, string defaultFileName = null ) {
+		public string PickOpenFile( string dialogTitle, string defaultPath = null, string extensionList = null ) {
 
 			CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+			dialog.Multiselect = false;
+			
+
 			if( !String.IsNullOrEmpty( defaultPath ) ) {
 				dialog.DefaultDirectory = defaultPath;
 			}
-			if( !string.IsNullOrEmpty( defaultFileName ) ) {
-				dialog.DefaultFileName = defaultFileName;
+
+			if( !string.IsNullOrEmpty( extensionList ) ) {
+				dialog.Filters.Add( new CommonFileDialogFilter( "", extensionList ) );
+				dialog.Filters.Add( new CommonFileDialogFilter( "", "*" ) );
 			}
 
 			dialog.Title = dialogTitle;
@@ -45,15 +50,23 @@ namespace TorboFile.Services {
 		/// <param name="defaultPath"></param>
 		/// <param name="defaultFileName"></param>
 		/// <returns></returns>
-		public string PickSaveFile( string dialogTitle, string defaultPath=null, string defaultFileName=null ) {
+		public string PickSaveFile( string dialogTitle, string defaultPath=null, string defaultFileName=null, string defaultExtension=null ) {
 
-			CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+			CommonSaveFileDialog dialog = new CommonSaveFileDialog();
+
+			dialog.Filters.Add( new CommonFileDialogFilter( "Extension", defaultExtension ) );
+			//dialog.Filters.Add( new CommonFileDialogFilter( "", "." ) );
+
 			if( !String.IsNullOrEmpty( defaultPath ) ) {
 				dialog.DefaultDirectory = defaultPath;
 			}
+
 			if( !string.IsNullOrEmpty( defaultFileName ) ) {
 				dialog.DefaultFileName = defaultFileName;
 			}
+
+			dialog.DefaultExtension = defaultExtension;
+			dialog.AlwaysAppendDefaultExtension = false;
 
 			dialog.Title = dialogTitle;
 			dialog.EnsureFileExists = false;

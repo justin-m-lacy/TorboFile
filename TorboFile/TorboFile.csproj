@@ -16,6 +16,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -31,7 +32,6 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -105,6 +105,11 @@
     <Compile Include="Categories\ICategorySource.cs" />
     <Compile Include="ColorEffect.cs" />
     <Compile Include="Model\CustomSearchData.cs" />
+    <Compile Include="Properties\CustomSearch.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>CustomSearch.settings</DependentUpon>
+    </Compile>
     <Compile Include="Properties\FolderCleanSettings.cs" />
     <Compile Include="Properties\PreviewSettings.cs" />
     <Compile Include="Properties\PreviewSettings.Designer.cs">
@@ -379,6 +384,10 @@
       <CompileDirect2DCustomEffect>False</CompileDirect2DCustomEffect>
       <ShaderModel>3_0</ShaderModel>
       <AllResourcesBound>False</AllResourcesBound>
+    </None>
+    <None Include="Properties\CustomSearch.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>CustomSearch.Designer.cs</LastGenOutput>
     </None>
     <None Include="Properties\FindCopiesSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

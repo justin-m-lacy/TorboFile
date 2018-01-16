@@ -59,5 +59,14 @@ namespace TorboFile.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tsrch.
+        /// </summary>
+        internal static string SEARCH_FILE_EXTENSION {
+            get {
+                return ResourceManager.GetString("SEARCH_FILE_EXTENSION", resourceCulture);
+            }
+        }
     }
 }

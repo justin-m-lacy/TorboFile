@@ -13,11 +13,11 @@ namespace TorboFile.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
-    internal sealed partial class PreviewSettings : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class CustomSearch : global::System.Configuration.ApplicationSettingsBase {
         
-        private static PreviewSettings defaultInstance = ((PreviewSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new PreviewSettings())));
+        private static CustomSearch defaultInstance = ((CustomSearch)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new CustomSearch())));
         
-        public static PreviewSettings Default {
+        public static CustomSearch Default {
             get {
                 return defaultInstance;
             }
@@ -25,23 +25,37 @@ namespace TorboFile.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::TorboFile.Properties.ViewMode imageViewMode {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string lastDirectory {
             get {
-                return ((global::TorboFile.Properties.ViewMode)(this["imageViewMode"]));
+                return ((string)(this["lastDirectory"]));
             }
             set {
-                this["imageViewMode"] = value;
+                this["lastDirectory"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::TorboFile.Properties.ViewMode mediaViewMode {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool saveLastDirectory {
             get {
-                return ((global::TorboFile.Properties.ViewMode)(this["mediaViewMode"]));
+                return ((bool)(this["saveLastDirectory"]));
             }
             set {
-                this["mediaViewMode"] = value;
+                this["saveLastDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool recursive {
+            get {
+                return ((bool)(this["recursive"]));
+            }
+            set {
+                this["recursive"] = value;
             }
         }
     }

@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using TorboFile.Model;
+using TorboFile.Properties;
 using TorboFile.Services;
 using TorboFile.ViewModels.Main;
 
@@ -167,7 +168,8 @@ namespace TorboFile.ViewModels {
 			IFileDialogService dialog = this.GetService<IFileDialogService>();
 			if( dialog != null ) {
 
-				string saveFile = dialog.PickSaveFile( "Save Search..." );
+				string saveFile = dialog.PickSaveFile( "Save Search...", null, "custom_search", Properties.Resources.SEARCH_FILE_EXTENSION );
+
 				if( !string.IsNullOrEmpty( saveFile ) ) {
 
 					/// TODO: Make async?
@@ -184,16 +186,18 @@ namespace TorboFile.ViewModels {
 			IFileDialogService dialog = this.GetService<IFileDialogService>();
 			if( dialog != null ) {
 
-				string loadFile = dialog.PickLoadFile( "Load Search..." );
+				string loadFile = dialog.PickOpenFile( "Load Search...", null, Properties.Resources.SEARCH_FILE_EXTENSION );
 				if( !string.IsNullOrEmpty( loadFile ) ) {
 
 					/// TODO: Make async?
 					CustomSearchData loadedSearch = FileUtils.ReadBinary<CustomSearchData>( loadFile );
 					if( loadedSearch != null ) {
+
 						this.CustomSearch = loadedSearch;
+
 					}
 
-				}
+				} //
 
 			}
 

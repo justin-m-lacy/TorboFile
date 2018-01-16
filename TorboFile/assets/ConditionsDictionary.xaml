@@ -92,7 +92,7 @@
 			<TextBlock Style="{StaticResource infoText}" Text="Max Files: " />
 				<TextBox Name="fldMaxCount" Style="{StaticResource intInput}" ToolTip="Directories containing more files will not be matched.">
 				<TextBox.Text>
-					<Binding ValidatesOnExceptions="True" Path="Condition.MaxFiles">
+					<Binding ValidatesOnExceptions="True" Path="Data.MaxFiles">
 						<Binding.ValidationRules>
 							<rules:IntValidationRule />
 						</Binding.ValidationRules>
@@ -166,16 +166,16 @@
 		
 	</DataTemplate>
 
-	<DataTemplate x:Key="sizeConditionTemplate" DataType="{x:Type models:FileTestVM}">
+	<DataTemplate x:Key="sizeMatchTemplate" DataType="{x:Type models:FileTestVM}">
 
 		<StackPanel>
 
 			<StackPanel x:Name="ContentSizeRange" Orientation="Horizontal" Margin="16,4,0,8">
                 <StackPanel x:Name="MinSizePanel">
 					<TextBlock x:Name="LblMinSize" Style="{StaticResource infoText}" Text="Min Size (bytes): "/>
-					<TextBox Style="{StaticResource textInput}" Width="120" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+					<TextBox Style="{StaticResource SimpleTextInput}" Width="120" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
 						<TextBox.Text>
-							<Binding ValidatesOnExceptions="true" Converter="{StaticResource dataConverter}" Path="Data.MinSize">
+							<Binding ValidatesOnExceptions="true" Converter="{StaticResource SizeToString}" Path="Data.MinSize">
 								<Binding.ValidationRules>
 									<rules:DataSizeRule />
 								</Binding.ValidationRules>
@@ -187,10 +187,10 @@
 				</StackPanel>
                 <StackPanel Margin="32,0,0,0">
                     <TextBlock x:Name="LblMaxSize" Style="{StaticResource infoText}" Text="Max Size (bytes): "/>
-					<TextBox Style="{StaticResource textInput}" Width="120" MaxLines="1"
+					<TextBox Style="{StaticResource SimpleTextInput}" Width="120" MaxLines="1"
                  Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
 						<TextBox.Text>
-							<Binding ValidatesOnExceptions="true" Converter="{StaticResource dataConverter}" Path="Data.MaxSize">
+							<Binding ValidatesOnExceptions="true" Converter="{StaticResource SizeToString}" Path="Data.MaxSize">
 								<Binding.ValidationRules>
 									<rules:DataSizeRule />
 								</Binding.ValidationRules>
@@ -225,7 +225,7 @@
 					<Style TargetType="ContentPresenter">
 						<Style.Triggers>
 							<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:SizeCondition}">
-								<Setter Property="ContentTemplate" Value="{StaticResource sizeConditionTemplate}"/>
+								<Setter Property="ContentTemplate" Value="{StaticResource sizeMatchTemplate}"/>
 							</DataTrigger>
 								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:IsFile}">
 								<Setter Property="ContentTemplate" Value="{StaticResource isFileTemplate}"/>

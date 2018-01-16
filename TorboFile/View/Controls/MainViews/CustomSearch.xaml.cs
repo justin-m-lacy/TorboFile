@@ -26,6 +26,14 @@ namespace TorboFile.View.Controls {
 
 		}
 
+		private void ComboBox_PreviewMouseDown( object sender, MouseButtonEventArgs e ) {
+
+			if( !( (ComboBox)sender ).IsDropDownOpen ) {
+				Console.WriteLine( "CHANGING SELECTED INDEX TO -1" );
+				( (ComboBox)sender ).SelectedIndex = -1;
+			}
+		}
+
 	} // class
 
 } // namespace

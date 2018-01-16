@@ -7,6 +7,9 @@ using TorboFile.ViewModels;
 
 namespace TorboFile.Services {
 
+	/// <summary>
+	/// Actually referenced, though probably not used.
+	/// </summary>
 	public interface ITorbViewMaker {
 
 		void InitFindCopiesView( FindCopiesVM model );

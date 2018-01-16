@@ -24,34 +24,6 @@ namespace TorboFile.ViewModels.Main {
 
 		#region COMMANDs
 
-		/// <summary>
-		/// Command to load a Search Operation saved to disk.
-		/// </summary>
-		private RelayCommand _cmdLoadOperation;
-		/// <summary>
-		/// Command to load an existing search from disk.
-		/// </summary>
-		public RelayCommand CmdLoadOperation {
-			get {
-				return this._cmdLoadOperation ?? ( this._cmdLoadOperation = new RelayCommand(
-					this.LoadSearch ) );
-			}
-		}
-
-		/// <summary>
-		/// Command to save the operation as a permanent object.
-		/// </summary>
-		private RelayCommand _cmdSaveOperation;
-		/// <summary>
-		/// TODO: Doesn't really belong in this model?
-		/// </summary>
-		public RelayCommand CmdSaveOperation {
-			get {
-				return this._cmdSaveOperation ?? ( this._cmdSaveOperation = new RelayCommand(
-					this.SaveCurrent ) );
-			}
-		}
-
 		public RelayCommand CmdPickDirectory {
 			get {
 				return this._cmdPickDirectory ?? ( this._cmdPickDirectory = new RelayCommand(
@@ -170,6 +142,12 @@ namespace TorboFile.ViewModels.Main {
 				Console.WriteLine( "ERROR: " + e.ToString() );
 
 			}
+
+			Exception[] exceptions = operation.ErrorList;
+			foreach( Exception e in exceptions ) {
+				Console.WriteLine( e.ToString() );
+			}
+
 			Console.WriteLine( "ACTIONS DONE" );
 		}
 
@@ -263,45 +241,6 @@ namespace TorboFile.ViewModels.Main {
 			}
 
 		} //
-
-		private void SaveCurrent() {
-
-			/// need a save dialog?
-			IFileDialogService dialog = this.GetService<IFileDialogService>();
-			if( dialog != null ) {
-
-				string saveFile = dialog.PickSaveFile( "Save Search..." );
-				if( !string.IsNullOrEmpty( saveFile ) ) {
-
-					/// TODO: Make async?
-					FileUtils.WriteBinary( saveFile, this._customSearch );
-
-				}
-
-			}
-
-		} //
-
-		public void LoadSearch() {
-
-			/// need a save dialog?
-			IFileDialogService dialog = this.GetService<IFileDialogService>();
-			if( dialog != null ) {
-
-				string loadFile = dialog.PickLoadFile( "Load Search..." );
-				if( !string.IsNullOrEmpty( loadFile ) ) {
-
-					/// TODO: Make async?
-					CustomSearchData loadedSearch = FileUtils.ReadBinary<CustomSearchData>( loadFile );
-					if( loadedSearch != null ) {
-						this.CustomSearch = loadedSearch;
-					}
-
-				}
-
-			}
-
-		} // LoadSearch()
 
 		public bool HasActions() {
 			//return this.actionBuilder.HasItems();
