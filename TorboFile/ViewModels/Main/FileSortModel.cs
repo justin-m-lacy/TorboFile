@@ -139,8 +139,8 @@ namespace TorboFile.ViewModels {
 
 		#region PROPERTIES
 
-		private FilePreviewModel _filePreview;
-		public FilePreviewModel FilePreview {
+		private FilePreviewVM _filePreview;
+		public FilePreviewVM FilePreview {
 			get {
 				return this._filePreview;
 			}
@@ -264,7 +264,7 @@ namespace TorboFile.ViewModels {
 			manager.PropertyChanged += Manager_PropertyChanged;
 			this.CategorySet = manager.Current;
 
-			this.FilePreview = new FilePreviewModel();
+			this.FilePreview = new FilePreviewVM();
 
 			this.visitor = new DirectoryVisitor( string.Empty );
 			this.visitor.PropertyChanged += this.DirectoryPropertyChanged;

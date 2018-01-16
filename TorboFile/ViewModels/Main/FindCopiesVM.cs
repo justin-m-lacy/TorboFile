@@ -48,16 +48,16 @@ namespace TorboFile.ViewModels {
 		/// <summary>
 		/// Current file being previewed.
 		/// </summary>
-		public FilePreviewModel FilePreview {
+		public FilePreviewVM FilePreview {
 
-			get { return this._filePreview ?? ( this.FilePreview = new FilePreviewModel() ); }
+			get { return this._filePreview ?? ( this.FilePreview = new FilePreviewVM() ); }
 			set {
 				this._filePreview = value;
 				this.NotifyPropertyChanged();
 			}
 
 		}
-		private FilePreviewModel _filePreview;
+		private FilePreviewVM _filePreview;
 
 		private ProgressModel _currentSearch;
 		/// <summary>

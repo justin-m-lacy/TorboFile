@@ -10,7 +10,7 @@
     xmlns:local="clr-namespace:Lemur.Operations.FileMatching">
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="HelperDictionary.xaml"/>
+		<ResourceDictionary Source="CommonDictionary.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 	
 	<!-- DEFAULT/SAMPLE RESOURCES FOR WORKING WITH FILE MATCHING CONDITIONS -->

@@ -9,11 +9,12 @@
                 Style="{StaticResource AppWindow}"
         Title="FileInfoWindow" Height="300" Width="300">
     
+	<!-- CURRENTLY UNUSED -->
     <!-- Displays information about a file. -->
     
     <Window.Resources>
 
-        <model:FileDetailsModel x:Key="DetailsModel" />
+        <model:FileDetailsVM x:Key="DetailsModel" />
         <Style x:Key="StackGroup" TargetType="{x:Type StackPanel}">
             <Setter Property="Orientation" Value="Horizontal"/>
             <Setter Property="DockPanel.Dock" Value="Top"/>

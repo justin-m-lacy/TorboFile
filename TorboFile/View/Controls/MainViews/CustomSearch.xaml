@@ -19,9 +19,9 @@
 		<ResourceDictionary>
 
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary
-					Source="/TorboFile;component/assets/ConditionsDictionary.xaml"/>
+				<ResourceDictionary Source="/TorboFile;component/assets/ConditionsDictionary.xaml"/>
 				<ResourceDictionary Source="/TorboFile;component/assets/ActionsDictionary.xaml"/>
+
 			</ResourceDictionary.MergedDictionaries>
 
 			<Style x:Key="SearchItemControl" TargetType="ItemsControl">
@@ -30,9 +30,6 @@
 				<Setter Property="VerticalContentAlignment" Value="Stretch"/>
 				<Setter Property="Background" Value="White"/>
 			</Style>
-
-			<convert:IntToVisible x:Key="HasItemsToVisible" />
-			<convert:CollectionToVisible x:Key="CollectionToVisible"/>
 
 			<!-- Picker for condition type -->
 			<DataTemplate x:Key="conditionPicker" DataType="{x:Type matchmodel:ConditionPickerVM}">
@@ -77,7 +74,7 @@
 			</DataTemplate>
 			
 			<!-- MATCH BUILDER -->
-			<DataTemplate x:Key="conditionsTemplate" DataType="{x:Type appmodels:MatchBuilder}">
+			<DataTemplate x:Key="conditionBuilder" DataType="{x:Type appmodels:MatchBuilder}">
 
 				<DockPanel>
 
@@ -122,7 +119,7 @@
 			</DataTemplate>
 
 			<!-- ACTION BUILDER -->
-			<DataTemplate x:Key="actionTemplate" DataType="{x:Type appmodels:ActionBuilder}">
+			<DataTemplate x:Key="actionBuilder" DataType="{x:Type appmodels:ActionBuilder}">
 
 				<DockPanel>
 
@@ -187,9 +184,9 @@
 								  DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.BuildSearchVM}">
 						<DockPanel>
 
-							<ContentPresenter Grid.Row="0" DockPanel.Dock="Top" Content="{Binding MatchBuilder}" ContentTemplate="{StaticResource conditionsTemplate}"/>
+							<ContentPresenter Grid.Row="0" DockPanel.Dock="Top" Content="{Binding MatchBuilder}" ContentTemplate="{StaticResource conditionBuilder}"/>
 
-							<ContentPresenter Grid.Row="2" Grid.Column="2" Content="{Binding ActionBuilder}" ContentTemplate="{StaticResource actionTemplate}"/>
+							<ContentPresenter Grid.Row="2" Grid.Column="2" Content="{Binding ActionBuilder}" ContentTemplate="{StaticResource actionBuilder}"/>
 						</DockPanel>
 					</ScrollViewer>
 				</DockPanel>

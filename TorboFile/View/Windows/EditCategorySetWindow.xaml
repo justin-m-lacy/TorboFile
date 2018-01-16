@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Style="{StaticResource AppWindow}"
         Title="Edit Category Set" Height="144.162" Width="377.162">
-  
-    <controls:EditCategorySetView x:Name="CategorySetView"
+
+	<controls:EditCategorySetView x:Name="CategorySetView"
                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
- 
+
 </Window>

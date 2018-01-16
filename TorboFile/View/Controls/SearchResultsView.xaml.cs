@@ -14,12 +14,18 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace TorboFile.View.Controls {
+
 	/// <summary>
-	/// Interaction logic for FileMatchView.xaml
+	/// Interaction logic for SearchResultsView.xaml
 	/// </summary>
-	public partial class FileMatchView : UserControl {
-		public FileMatchView() {
+	public partial class SearchResultsView : UserControl {
+
+		public SearchResultsView() {
+
 			InitializeComponent();
+
 		}
-	}
-}
+
+	} // class
+
+} // namespace

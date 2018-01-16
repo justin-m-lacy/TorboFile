@@ -14,7 +14,7 @@ namespace TorboFile.ViewModels {
 	/// <summary>
 	/// Model for previwing a File.
 	/// </summary>
-	public class FilePreviewModel : ViewModelBase {
+	public class FilePreviewVM : ViewModelBase {
 
 		#region COMMANDS
 

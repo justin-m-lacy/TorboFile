@@ -16,13 +16,13 @@
 
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="assets/HelperDictionary.xaml"/>
+				<ResourceDictionary Source="assets/CommonDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 
         <!-- DATA TEMPLATES -->
 
         <!-- FILE PREVIEW TEMPLATES -->
-        <DataTemplate x:Key="ViewImageTemplate" DataType="{x:Type models:FilePreviewModel}">
+        <DataTemplate x:Key="ViewImageTemplate" DataType="{x:Type models:FilePreviewVM}">
             <controls:ViewImageControl Source="{Binding FilePath, Mode=OneWay}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewFailed">
@@ -32,7 +32,7 @@
             </controls:ViewImageControl>
         </DataTemplate>
 
-        <DataTemplate x:Key="ViewMediaTemplate" DataType="{x:Type models:FilePreviewModel}">
+        <DataTemplate x:Key="ViewMediaTemplate" DataType="{x:Type models:FilePreviewVM}">
             <controls:MediaKitPreview>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewFailed">
@@ -46,10 +46,10 @@
             <controls:PdfPreview />
         </DataTemplate>-->
         
-        <DataTemplate x:Key="ViewTextTemplate" DataType="{x:Type models:FilePreviewModel}">
+        <DataTemplate x:Key="ViewTextTemplate" DataType="{x:Type models:FilePreviewVM}">
             <controls:ViewTextControl/>
         </DataTemplate>
-        <DataTemplate x:Key="ViewUnknownTemplate" DataType="{x:Type models:FilePreviewModel}">
+        <DataTemplate x:Key="ViewUnknownTemplate" DataType="{x:Type models:FilePreviewVM}">
             <controls:ViewUnknownControl HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
         </DataTemplate>
 

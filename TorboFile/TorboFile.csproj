@@ -125,16 +125,13 @@
     <Compile Include="ViewModels\Main\CustomSearchVM.cs" />
     <Compile Include="ViewModels\EditCategorySetVM.cs" />
     <Compile Include="ViewModels\Main\CleanFoldersModel.cs" />
-    <Compile Include="ViewModels\FileDetailsModel.cs" />
+    <Compile Include="ViewModels\FileDetailsVM.cs" />
     <Compile Include="ViewModels\DuplicateFilesVM.cs" />
     <Compile Include="ViewModels\Main\FindCopiesVM.cs" />
     <Compile Include="ViewModels\EditCategoryModel.cs" />
     <Compile Include="ViewModels\Main\MainVM.cs" />
     <Compile Include="ViewModels\Main\RunSearchVM.cs" />
     <Compile Include="ViewModels\TagFileModel.cs" />
-    <Compile Include="View\Controls\FileMatchView.xaml.cs">
-      <DependentUpon>FileMatchView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Controls\MainViews\CustomSearch.xaml.cs">
       <DependentUpon>CustomSearch.xaml</DependentUpon>
     </Compile>
@@ -143,6 +140,9 @@
     </Compile>
     <Compile Include="View\Controls\PreviewViews\PdfPreview.xaml.cs">
       <DependentUpon>PdfPreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\SearchResultsView.xaml.cs">
+      <DependentUpon>SearchResultsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\FileDetailsWindow.xaml.cs">
       <DependentUpon>FileDetailsWindow.xaml</DependentUpon>
@@ -209,7 +209,7 @@
       <DependentUpon>SortingSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="Properties\SortingSettings.cs" />
-    <Compile Include="ViewModels\FilePreviewModel.cs" />
+    <Compile Include="ViewModels\FilePreviewVM.cs" />
     <Compile Include="ViewModels\Main\FileSortModel.cs" />
     <Compile Include="View\Controls\ProgressControl.xaml.cs">
       <DependentUpon>ProgressControl.xaml</DependentUpon>
@@ -219,9 +219,6 @@
     </Compile>
     <Compile Include="View\Windows\EditCategorySetWindow.xaml.cs">
       <DependentUpon>EditCategorySetWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Windows\FileResultsWindow.xaml.cs">
-      <DependentUpon>FileResultsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\EditCategoryWindow.xaml.cs">
       <DependentUpon>EditCategoryWindow.xaml</DependentUpon>
@@ -238,7 +235,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="assets\HelperDictionary.xaml">
+    <Page Include="assets\CommonDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -247,10 +244,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="assets\BaseDictionary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Controls\FileMatchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -263,6 +256,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\PreviewViews\PdfPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\SearchResultsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -330,10 +327,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\EditCategorySetWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Windows\FileResultsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

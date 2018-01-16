@@ -10,18 +10,12 @@
              xmlns:models="clr-namespace:TorboFile.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    
-    <Control.Resources>
 
-        <convert:LongToDataString x:Key="DataConverter" />
-        
-        <DataTemplate x:Key="TemplateCheckbox">
-            <CheckBox IsChecked="{Binding Path=IsChecked}"></CheckBox>
-        </DataTemplate>
-        
-    </Control.Resources>
+	<Control.Resources>
 
-    <!-- Use FileCheckListModel -->
+	</Control.Resources>
+
+    <!-- Use FileCheckListVM -->
 
     <DockPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
@@ -47,14 +41,20 @@
         </StackPanel>
 
         <ListView DockPanel.Dock="Top" x:Name="ListResults" ItemsSource="{Binding Items, diag:PresentationTraceSources.TraceLevel=Low}"
-                  GridViewColumnHeader.Click="ListResults_Click"
+ GridViewColumnHeader.Click="ListResults_Click"
                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedItem}">
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="Auto" CellTemplate="{StaticResource TemplateCheckbox}"></GridViewColumn>
+                    <GridViewColumn Width="Auto">
+						<GridViewColumn.CellTemplate>
+							<DataTemplate>
+								<CheckBox IsChecked="{Binding Path=IsChecked}"></CheckBox>
+							</DataTemplate>
+						</GridViewColumn.CellTemplate>
+					</GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Item.FullName}" Header="File" Width="Auto"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Item.Size, Converter={StaticResource DataConverter}}" Header="Size" Width="Auto"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Item.Length, Converter={StaticResource SizeToString}}" Header="Size" Width="Auto"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

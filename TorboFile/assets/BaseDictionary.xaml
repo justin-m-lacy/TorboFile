@@ -3,11 +3,21 @@
 					xmlns:convert="clr-namespace:Lemur.Windows.Converters"
                     xmlns:local="clr-namespace:TorboFile.assets">
 
+	<!-- CONVERTERS -->
+	
+	<convert:StringArrayToString x:Key="stringSplitter"/>
+	<convert:BoolToVisible x:Key="BoolVisibility" />
+	<convert:NonNullToVisible x:Key="NonNullToVisible" />
+	<convert:IntToVisible x:Key="HasItemsToVisible" />
+	<convert:CollectionToVisible x:Key="CollectionToVisible"/>
+	<convert:DataSizeToString x:Key="SizeToString"/>
+	<convert:InvertBoolConverter x:Key="InvertBool"/>
 
-
-	<SolidColorBrush x:Key="BackgroundColor" Color="#FFF0F0F0" />
 
 	<!-- BRUSHES -->
+	
+	<SolidColorBrush x:Key="BackgroundColor" Color="#FFF0F0F0" />
+
 	<SolidColorBrush x:Key="BackLightBrush" Color="#fff1da"/>
 	<SolidColorBrush x:Key="BackMediumBrush" Color="#e9d282" />
 	<SolidColorBrush x:Key="BackDarkBrush" Color="#b04a33"/>
@@ -37,40 +47,7 @@
 		<Setter Property="Foreground" Value="{StaticResource ForeDark}"/>
 	</Style>
 
-	<!-- Settings Dialog Styles -->
-	<Style x:Key="TextSettingHeader" TargetType="TextBlock">
-		<Setter Property="HorizontalAlignment" Value="Center"/>
-		<Setter Property="Margin" Value="0,4,0,4" />
-		<Setter Property="FontWeight" Value="Bold"/>
-	</Style>
-	<Style x:Key="SettingHeader" TargetType="Label">
-		<Setter Property="HorizontalAlignment" Value="Center"/>
-		<Setter Property="BorderThickness" Value="1"/>
-		<Setter Property="FontWeight" Value="Bold"/>
-	</Style>
-	<Style x:Key="SettingControl" TargetType="FrameworkElement">
-		<Setter Property="Margin" Value="8,2,0,0"></Setter>
-		<Setter Property="HorizontalAlignment" Value="Left"/>
-	</Style>
-	<Style x:Key="SettingsTab" TargetType="TabItem">
-		<Setter Property="Background" Value="{StaticResource BackMediumBrush}"/>
-		<Setter Property="BorderBrush" Value="{StaticResource BackMediumBrush}"/>
-	</Style>
-	<Style x:Key="SettingsContent" TargetType="StackPanel">
-		<Setter Property="Background" Value="{StaticResource BackLightBrush }" />
-	</Style>
-	<Style x:Key="SettingsDock" TargetType="DockPanel">
-		<Setter Property="Background" Value="{StaticResource BackLightBrush}" />
-	</Style>
-	<Style x:Key="FocusVisual">
-		<Setter Property="Control.Template">
-			<Setter.Value>
-				<ControlTemplate>
-					<Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+
 
 	<SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
 	<SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
@@ -80,6 +57,17 @@
 	<SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
 	<SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
 
+	<!-- Apparently changes the style of StdButton on focus. Probably part of the basic button template. -->
+	<Style x:Key="FocusVisual">
+		<Setter Property="Control.Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
 	<Style x:Key="StdButton" TargetType="{x:Type Button}">
 		<Setter Property="BorderBrush" Value="{x:Null}"/>
 		<Setter Property="Background" Value="{x:Null}"/>

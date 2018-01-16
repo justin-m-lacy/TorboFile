@@ -11,7 +11,7 @@ using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
 namespace TorboFile.ViewModels {
 
-	public class FileDetailsModel : FilePreviewModel {
+	public class FileDetailsVM : FilePreviewVM {
 
 
 		private readonly ObservableCollection<string> _tags = new ObservableCollection<string>();
@@ -19,7 +19,7 @@ namespace TorboFile.ViewModels {
 			get { return this._tags; }
 		}
 
-		public FileDetailsModel() {
+		public FileDetailsVM() {
 
 			this.PropertyChanged += FileDetailsModel_PropertyChanged;
 		}

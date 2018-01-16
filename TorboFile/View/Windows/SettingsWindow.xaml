@@ -10,10 +10,43 @@
 
         mc:Ignorable="d" Background="{StaticResource BackDarkBrush}"
         Title="Settings" Height="400" MinHeight="128" MinWidth="128" Width="512">
-    
-    <Window.Resources>
-        <convert:InvertBoolConverter x:Key="InverseBool" />
-    </Window.Resources>
+
+	<Window.Resources>
+
+		<ResourceDictionary>
+
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/TorboFile;component/assets/BaseDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+
+			<!-- SETTINGS STYLES -->
+			<Style x:Key="TextSettingHeader" TargetType="TextBlock">
+				<Setter Property="HorizontalAlignment" Value="Center"/>
+				<Setter Property="Margin" Value="0,4,0,4" />
+				<Setter Property="FontWeight" Value="Bold"/>
+			</Style>
+			<Style x:Key="SettingHeader" TargetType="Label">
+				<Setter Property="HorizontalAlignment" Value="Center"/>
+				<Setter Property="BorderThickness" Value="1"/>
+				<Setter Property="FontWeight" Value="Bold"/>
+			</Style>
+			<Style x:Key="SettingControl" TargetType="FrameworkElement">
+				<Setter Property="Margin" Value="8,2,0,0"></Setter>
+				<Setter Property="HorizontalAlignment" Value="Left"/>
+			</Style>
+			<Style x:Key="SettingsTab" TargetType="TabItem">
+				<Setter Property="Background" Value="{StaticResource BackMediumBrush}"/>
+				<Setter Property="BorderBrush" Value="{StaticResource BackMediumBrush}"/>
+			</Style>
+			<Style x:Key="SettingsContent" TargetType="StackPanel">
+				<Setter Property="Background" Value="{StaticResource BackLightBrush }" />
+			</Style>
+			<Style x:Key="SettingsDock" TargetType="DockPanel">
+				<Setter Property="Background" Value="{StaticResource BackLightBrush}" />
+			</Style>
+
+		</ResourceDictionary>
+	</Window.Resources>
     
     <TabControl x:Name="TabSettings" Height="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" TabStripPlacement="left">
         <TabItem x:Name="GeneralSettings" DataContext="{Binding Source={x:Static settings:Settings.Default}}" Header="General" Style="{StaticResource SettingsTab}">
@@ -31,7 +64,7 @@
                 <Label Style="{StaticResource SettingHeader}" DockPanel.Dock="Top">Deleted Files:</Label>
                 <RadioButton x:Name="RadioSortingRecycle" DockPanel.Dock="Top" Content="Move To Recycle Bin" Style="{StaticResource SettingControl}" IsChecked="{Binding moveToTrash}" />
                 <RadioButton x:Name="RadioSortingDelete" DockPanel.Dock="Top" Content="Remove From Disk" Style="{StaticResource SettingControl}"
-                             IsChecked="{Binding moveToTrash, Converter={StaticResource InverseBool}, Mode=OneWay}" />
+                             IsChecked="{Binding moveToTrash, Converter={StaticResource InvertBool}, Mode=OneWay}" />
 
                 <TextBlock Style="{StaticResource TextSettingHeader}" DockPanel.Dock="Top" Text="Restore Last Directory"/>
                 <CheckBox x:Name="ChkSaveSortDirectory" DockPanel.Dock="Top" Style="{StaticResource SettingControl}" Content="Remember Directory" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember last folder between program runs."/>
@@ -48,7 +81,7 @@
                 <Label Style="{StaticResource SettingHeader}">Deleted Files:</Label>
                     <RadioButton x:Name="RadioDuplicateRecycle" Content="Move To Recycle Bin" Style="{StaticResource SettingControl}" IsChecked="{Binding moveToTrash}" />
                     <RadioButton x:Name="RadioDuplicateDelete" Content="Remove From Disk" Style="{StaticResource SettingControl}"
-                                 IsChecked="{Binding moveToTrash, Converter={StaticResource InverseBool}, Mode=OneWay}"/>
+                                 IsChecked="{Binding moveToTrash, Converter={StaticResource InvertBool}, Mode=OneWay}"/>
                 <Label Style="{StaticResource SettingHeader}">Recursive Search:</Label>
                 <CheckBox x:Name="ChkDuplicateRecursive" Content="Search All Subfolders" Style="{StaticResource SettingControl}" IsChecked="{Binding recursive}" />
                 <Label Style="{StaticResource SettingHeader}">Search File Extensions:</Label>
@@ -62,7 +95,7 @@
                 <Label Style="{StaticResource SettingHeader}">Deleted Files:</Label>
                 <RadioButton x:Name="RadioCleanRecycle" Content="Move To Recycle Bin" Style="{StaticResource SettingControl}" IsChecked="{Binding moveToTrash}"/>
                 <RadioButton x:Name="RadioCleanDelete" Content="Remove From Disk" Style="{StaticResource SettingControl}"
-                             IsChecked="{Binding moveToTrash, Converter={StaticResource InverseBool}, Mode=OneWay}"/>
+                             IsChecked="{Binding moveToTrash, Converter={StaticResource InvertBool}, Mode=OneWay}"/>
                 
                 <Label Style="{StaticResource SettingHeader}">Recursive Search:</Label>
                 <CheckBox x:Name="ChkEmptyFoldersRecursive" Content="Search All Subfolders" Style="{StaticResource SettingControl}" IsChecked="{Binding recursive}" />
@@ -70,6 +103,11 @@
                 <CheckBox x:Name="ChkSaveLastDirectory" Style="{StaticResource SettingControl}" Content="Remember Directory" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember search directory between program runs."/>
             </StackPanel>
         </TabItem>
+		<TabItem x:Name="CustomSearchTab" Header="Custom Search" Style="{StaticResource SettingsTab}">
+			<StackPanel Style="{StaticResource SettingsContent}">
+				
+			</StackPanel>
+		</TabItem>
         <TabItem x:Name="AboutTab" Style="{StaticResource SettingsTab}" Header="About">
             <StackPanel Style="{StaticResource SettingsContent}">
                 <RichTextBox Margin="4" Background="{x:Null}" BorderBrush="{x:Null}" IsDocumentEnabled="True" BorderThickness="0" IsReadOnly="True" HorizontalAlignment="Center">

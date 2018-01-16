@@ -17,51 +17,51 @@
 
     <UserControl.Resources>
 
-        <convert:NonNullToVisible x:Key="NonNullConverter"/>
-        <convert:CollectionToVisible x:Key="CollectionConverter"/>
-        <convert:DataSizeToString x:Key="DataConverter"/>
-        <convert:InvertBoolConverter x:Key="InvertBool"/>
 
-        <Style x:Key="ResultsContent" TargetType="ContentControl">
-            <!-- NOTE: Using ContentControl appears to capture the DataContext, whereas ContentPresenter does not. -->
-            
-            <Setter Property="Content">
-                <Setter.Value>
-                    <DockPanel>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+			</ResourceDictionary.MergedDictionaries>
+			
+			<Style x:Key="ResultsContent" TargetType="ContentControl">
+				<!-- NOTE: Using ContentControl appears to capture the DataContext, whereas ContentPresenter does not. -->
 
-                        <StackPanel Name="ResultSizePanel" Orientation="Horizontal" DockPanel.Dock="Bottom">
-                        <TextBlock Text="Total Selected Size: " />
-                        <TextBlock Text="{Binding CheckedSize, Converter={StaticResource DataConverter}}" />
-                        </StackPanel>
+				<Setter Property="Content">
+					<Setter.Value>
+						<DockPanel>
 
-                        <controls:FileSelectionView />
+							<StackPanel Name="ResultSizePanel" Orientation="Horizontal" DockPanel.Dock="Bottom">
+								<TextBlock Text="Total Selected Size: " />
+								<TextBlock Text="{Binding CheckedSize, Converter={StaticResource SizeToString}}" />
+							</StackPanel>
 
-                </DockPanel>
-                </Setter.Value>
+							<controls:FileSelectionView />
 
-            </Setter>
+						</DockPanel>
+					</Setter.Value>
 
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Items.Count}" Value="0">
-                    <Setter Property="Content">
-                        <Setter.Value>
-                            <TextBlock Visibility="{Binding ElementName=ResultSizePanel, Path=IsVisible, Converter={StaticResource InvertBool}}"
+				</Setter>
+
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding Items.Count}" Value="0">
+						<Setter Property="Content">
+							<Setter.Value>
+								<TextBlock Visibility="{Binding ElementName=ResultSizePanel, Path=IsVisible, Converter={StaticResource InvertBool}}"
                           Text="No duplicate files found." />
-                        </Setter.Value>
-                    </Setter>
+							</Setter.Value>
+						</Setter>
 
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-    </UserControl.Resources>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+		</ResourceDictionary>
+	</UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch" Margin="8,8,8,8">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*" />
-            <ColumnDefinition Width="4"/>
-            <!--GridSplitter -->
-            <ColumnDefinition Name="ColumnPreview" Width="40*" />
+			<!--GridSplitter -->
+			<ColumnDefinition Width="4"/>
+			<ColumnDefinition Name="ColumnPreview" Width="40*" />
         </Grid.ColumnDefinitions>
 
         <!-- GRID LEFT SIDE -->
@@ -124,21 +124,21 @@
 
             <controls:ProgressControl Margin="4,0,4,0" DockPanel.Dock="Top"
                                   DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.CurrentSearch}"
-                                  Visibility="{Binding Converter={StaticResource NonNullConverter}}" />
+                                  Visibility="{Binding Converter={StaticResource NonNullToVisible}}" />
 
             <ContentControl
                             DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}, Path=DataContext.ResultsList}"
-                                 Style="{StaticResource ResultsContent}" Visibility="{Binding Converter={StaticResource NonNullConverter}}"/>
+                                 Style="{StaticResource ResultsContent}" Visibility="{Binding Converter={StaticResource NonNullToVisible}}"/>
 
         </DockPanel>
 
 
-        <GridSplitter Grid.Column="1" Width="12" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter Grid.Column="1" Width="4" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
         <!-- PREVIEW PANE -->
-        <ContentControl x:Name="SelectionPreview" Grid.Column="2" Margin="4,4,4,4" VerticalAlignment="Center"
+        <ContentControl x:Name="SelectionPreview" Grid.Column="2" Margin="0,4,4,4" VerticalAlignment="Center"
                     HorizontalAlignment="Center"  HorizontalContentAlignment="Center"
-                    Visibility="{Binding Path=FilePath, Converter={StaticResource NonNullConverter}}"
+                    Visibility="{Binding Path=FilePath, Converter={StaticResource NonNullToVisible}}"
                     DataContext="{Binding Path=DataContext.FilePreview, RelativeSource={RelativeSource AncestorType=Control, Mode=FindAncestor}}"
                     Style="{StaticResource PreviewSelector}"/>
 

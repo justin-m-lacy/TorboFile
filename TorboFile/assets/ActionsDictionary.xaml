@@ -9,7 +9,7 @@
     xmlns:local="clr-namespace:Lemur.Operations.FileMatching">
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="HelperDictionary.xaml"/>
+		<ResourceDictionary Source="CommonDictionary.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 
 	<DataTemplate x:Key="fileDeleteTemplate" DataType="{x:Type mvvm:DataObjectVM}">

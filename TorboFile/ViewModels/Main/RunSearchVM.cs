@@ -79,7 +79,7 @@ namespace TorboFile.ViewModels.Main {
 		public RelayCommand CmdRunActions {
 			get {
 				return this._cmdRunActions ?? ( this._cmdRunActions = new RelayCommand(
-					this.RunActionsAsync, HasCheckedResults
+					this.RunActionsAsync
 				) );
 			}
 		}
@@ -236,25 +236,16 @@ namespace TorboFile.ViewModels.Main {
 			}
 
 			FileCheckListVM checkList = new FileCheckListVM();
-			this.ResultsList = checkList;
 	
 			/// NOTE: Apparently a public interface member can be protected unless explicitly cast.
 			/// This seems insane to me.
-			( (INotifyPropertyChanged)this.ResultsList.CheckedItems ).PropertyChanged += CheckedItems_PropertyChanged;
+			//( (INotifyPropertyChanged)checkList.CheckedItems ).PropertyChanged += CheckedItems_PropertyChanged;
+
+			this.ResultsList = checkList;
 
 			return checkList;
 
 		}
-
-
-		private void CheckedItems_PropertyChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e ) {
-
-			if( e.PropertyName == "Count" ) {
-				this.CmdRunActions.RaiseCanExecuteChanged();
-			}
-
-		}
-
 
 
 		/// <summary>
