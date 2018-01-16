@@ -59,11 +59,11 @@ namespace TorboFile.ViewModels {
 		}
 		private FilePreviewVM _filePreview;
 
-		private ProgressModel _currentSearch;
+		private ProgressVM _currentSearch;
 		/// <summary>
 		/// Current duplicates-search in progress.
 		/// </summary>
-		public ProgressModel CurrentSearch {
+		public ProgressVM CurrentSearch {
 			get { return this._currentSearch; }
 			set {
 				this.SetProperty( ref this._currentSearch, value );
@@ -149,7 +149,7 @@ namespace TorboFile.ViewModels {
 			FileMatchFinder matchFinder = this.BuildMatchOperation( path );
 
 			/// Displays progress.
-			this.CurrentSearch = new ProgressModel( matchFinder );
+			this.CurrentSearch = new ProgressVM( matchFinder );
 
 			MatchCollection matchGroups = matchFinder.Matches;
 

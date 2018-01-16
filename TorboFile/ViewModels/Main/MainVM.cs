@@ -140,7 +140,7 @@ namespace TorboFile.ViewModels {
 		/// </summary>
 		private void WinSizeChanged() {
 
-			Console.WriteLine( "WIN SIZE CHANGED" );
+			//Console.WriteLine( "WIN SIZE CHANGED" );
 			string winSize = this.Width.ToString() + ',' + this.Height.ToString();
 			Properties.Settings.Default.lastViewSize = winSize;
 			Properties.Settings.Default.Save();

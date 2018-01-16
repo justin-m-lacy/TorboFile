@@ -151,7 +151,7 @@
       <DependentUpon>MessageBoxWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ModelTrigger.cs" />
-    <Compile Include="ViewModels\ProgressModel.cs" />
+    <Compile Include="ViewModels\ProgressVM.cs" />
     <Compile Include="View\Controls\EditCategorySetView.xaml.cs">
       <DependentUpon>EditCategorySetView.xaml</DependentUpon>
     </Compile>

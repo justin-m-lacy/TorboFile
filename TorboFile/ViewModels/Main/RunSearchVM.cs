@@ -92,13 +92,13 @@ namespace TorboFile.ViewModels.Main {
 		/// <summary>
 		/// Models the progression of the current search.
 		/// </summary>
-		public ProgressModel CurrentProgress {
+		public ProgressVM CurrentProgress {
 			get { return this._currentProgress; }
 			set {
 				this.SetProperty( ref this._currentProgress, value );
 			} // set()
 		}
-		private ProgressModel _currentProgress;
+		private ProgressVM _currentProgress = new ProgressVM( null );
 
 		/// <summary>
 		/// Model of the results from a matching operation.
@@ -161,7 +161,6 @@ namespace TorboFile.ViewModels.Main {
 
 			this.CurrentProgress.Operation = operation;
 
-
 			try {
 
 				await Task.Run( () => { operation.Run(); } );
@@ -186,10 +185,10 @@ namespace TorboFile.ViewModels.Main {
 			FileMatchOperation matchFinder = this.BuildMatchOperation( this.SearchDirectory );
 			matchFinder.OnMatchFound += MatchFinder_OnMatchFound;
 
+			this._currentProgress.Operation = matchFinder;
+
 			//List<FileSystemInfo> matches = matchFinder.Matches;
 			//BindingOperations.EnableCollectionSynchronization( matches, resultsLock );
-
-			this.CurrentProgress = new ProgressModel( matchFinder );
 
 			// Ensure the ResultsModel exists for displaying results.
 			this.CreateResultsList();

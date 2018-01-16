@@ -12,11 +12,20 @@ namespace TorboFile.ViewModels {
 	/// <summary>
 	/// Links an Operation in progress for display in UI.
 	/// </summary>
-	public class ProgressModel : ViewModelBase {
+	public class ProgressVM : ViewModelBase {
 
-		private ProgressOperation _operation;
+		#region PROPERTIES
+
+		public bool IsRunning {
+			get { return ( this._operation != null ) ? this._operation.IsRunning : false; }
+		}
+
+		/// <summary>
+		/// The Operation being watched.
+		/// </summary>
 		public ProgressOperation Operation {
 			get { return this._operation; }
+
 			set {
 
 				if( this._operation != null ) {
@@ -34,27 +43,14 @@ namespace TorboFile.ViewModels {
 					this.MaxProgress = info.MaxProgress;
 				}
 				this.NotifyPropertyChanged();
+				this.NotifyPropertyChanged( "IsRunning" );
+				this.CmdCancel.RaiseCanExecuteChanged();
 
 			}
 
 		}
+		private ProgressOperation _operation;
 
-		private RelayCommand _cmdCancel;
-
-		/// <summary>
-		/// Command to cancel the operation in progress.
-		/// </summary>
-		public RelayCommand CmdCancel {
-			get {
-				return this._cmdCancel ?? ( this._cmdCancel = new RelayCommand( this._operation.Cancel,
-
-				/// command can't run unless a current search is actually in progress.
-				() => { return this._operation != null; }
-				) );
-			}
-		}
-
-		private string _lastMessage;
 		/// <summary>
 		/// Current message or item being processed by the operation.
 		/// </summary>
@@ -68,8 +64,8 @@ namespace TorboFile.ViewModels {
 			}
 
 		}
+		private string _lastMessage;
 
-		private long _lastMax;
 		/// <summary>
 		/// Maximum progress number.
 		/// </summary>
@@ -82,8 +78,9 @@ namespace TorboFile.ViewModels {
 				}
 			}
 		}
+		private long _lastMax;
 
-		private long _lastProgress;
+		
 		/// <summary>
 		/// Current progress amount.
 		/// </summary>
@@ -96,12 +93,50 @@ namespace TorboFile.ViewModels {
 				}
 			}
 		}
+		private long _lastProgress;
 
-		public ProgressModel( ProgressOperation operation ) {
+		#endregion
+
+		#region COMMANDS
+
+		/// <summary>
+		/// Command to cancel the operation in progress.
+		/// </summary>
+		public RelayCommand CmdCancel {
+			get {
+				return this._cmdCancel ?? ( this._cmdCancel = new RelayCommand(
+
+					this.Cancel, this.CanCancel
+
+				) );
+			}
+		}
+		private RelayCommand _cmdCancel;
+
+		#endregion
+
+
+		public ProgressVM() {
+		}
+
+		public ProgressVM( ProgressOperation operation ) {
 
 			this.Operation = operation;
 
 		} //
+
+		private void Cancel() {
+
+			if( this._operation != null ) {
+				this._operation.Cancel();
+			}
+
+		}
+
+		private bool CanCancel() {
+			return this._operation != null && this._operation.IsRunning;
+		}
+
 
 		private void Operation_Complete() {
 
