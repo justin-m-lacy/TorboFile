@@ -27,15 +27,25 @@
 	<DataTemplate x:Key="moveFileTemplate" DataType="{x:Type actionmodels:MoveFileVM}">
 
 		<StackPanel>
-			<TextBlock Style="{StaticResource infoText}" Text="Move Files and Directories to the given location." />
+
+			<TextBlock Style="{StaticResource infoText}" Text="Moves Files and Directories to the given location." />
+
+			<CheckBox Style="{StaticResource chkOption}" IsChecked="{Binding Property[CreateDirs]}" Content="Create Directories"
+					  ToolTip="Create any missing destination folders."/>
 
 			<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 				<!--<TextBlock Style="{StaticResource infoText}" Text="Destination: " />-->
-				<Button Name="btnChooseDirectory" MaxHeight="24"
-						Command="{Binding CmdPickFolder}">Browse...</Button>
+				<Button Name="btnChooseDirectory" Style="{StaticResource StdButton}" MaxHeight="24"
+						Command="{Binding CmdPickFolder}">
+					<Image Source="images/folder-yellow_open.png"/>
+				</Button>
 				<TextBox Style="{StaticResource TextInputTemplate}"
 					Text="{Binding Destination, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
 			</StackPanel>
+			<TextBlock Style="{StaticResource infoText}"
+					   Text="The destination entered is a Relative File Path. Files will be moved relative to their locations."
+					   Visibility="{Binding IsRelative, Converter={StaticResource BoolVisibility}}"
+			/>
 		</StackPanel>
 
 	</DataTemplate>

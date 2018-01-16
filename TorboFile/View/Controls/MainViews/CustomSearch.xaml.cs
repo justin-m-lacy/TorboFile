@@ -26,12 +26,21 @@ namespace TorboFile.View.Controls {
 
 		}
 
+		/// <summary>
+		/// Used to trigger ComboBox SelectedChanged events even if the selection hasn't changed.
+		/// This makes it easy to repeatedly add the same search criterion with a single mouse
+		/// press/release. (For example, multiple size restrictions, name contains, etc. )
+		/// TODO: possibly restore the selected index if no selection made?
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ComboBox_PreviewMouseDown( object sender, MouseButtonEventArgs e ) {
 
-			if( !( (ComboBox)sender ).IsDropDownOpen ) {
-				Console.WriteLine( "CHANGING SELECTED INDEX TO -1" );
-				( (ComboBox)sender ).SelectedIndex = -1;
+			ComboBox box = sender as ComboBox;
+			if( !box.IsDropDownOpen ) {
+				box.SelectedIndex = -1;
 			}
+
 		}
 
 	} // class
