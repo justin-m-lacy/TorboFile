@@ -11,7 +11,7 @@
                 Style="{StaticResource AppWindow}"
         Title="Edit Category" Height="214" Width="545">
    
-    <!-- Use with EditCategoryModel -->
+    <!-- Use with EditCategoryVM -->
 
     <Grid>
         <Grid.RowDefinitions>

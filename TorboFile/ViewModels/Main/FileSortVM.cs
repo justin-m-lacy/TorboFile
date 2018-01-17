@@ -8,17 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using Lemur.Utils;
 using TorboFile.Services;
-using TorboFile.View.Windows;
 using static Lemur.Debug.DebugUtils;
-using System.Windows;
-using System.Threading;
 using System.Windows.Input;
 using System.Collections.Specialized;
 using Lemur.Operations;
 using System.Diagnostics;
+using Lemur.Windows.Services;
 
 namespace TorboFile.ViewModels {
 
@@ -27,14 +23,14 @@ namespace TorboFile.ViewModels {
 	/// 
 	/// Made IDisposable for the DirectoryVisitor which listens to changes in the current Directory.
 	/// </summary>
-	public class FileSortModel : ViewModelBase, IDisposable {
+	public class FileSortVM : ViewModelBase, IDisposable {
 
-		~FileSortModel() {
+		~FileSortVM() {
 			DebugDestructor();
 		}
 		[Conditional( "DEBUG" )]
 		void DebugDestructor() {
-			Console.WriteLine( "FILE SORT MODEL DESTRUCTOR" );
+			Console.WriteLine( @"FILE SORT MODEL DESTRUCTOR" );
 		}
 
 		#region COMMANDS
@@ -210,7 +206,7 @@ namespace TorboFile.ViewModels {
 
 			InputBinder binder = this.GetService<InputBinder>();
 			if( binder == null ) {
-				Console.WriteLine( "ERROR: Can't find InputBinder service." );
+				Console.WriteLine( @"ERROR: Can't find InputBinder service." );
 				return;
 			}
 
@@ -225,7 +221,7 @@ namespace TorboFile.ViewModels {
 
 				case NotifyCollectionChangedAction.Add:
 
-					Console.WriteLine( "CategorySet ADD ACTION" );
+					Console.WriteLine( @"CategorySet ADD ACTION" );
 					foreach( FileCategory cat in e.NewItems ) {
 						InputBinding b = this.CategorySet.MakeCategoryBinding( this.CmdCategoryClick, cat );
 						if( b != null ) {
@@ -250,7 +246,7 @@ namespace TorboFile.ViewModels {
 
 					break;
 				case NotifyCollectionChangedAction.Reset:
-					Console.WriteLine( "RESET COLLECTION ACTION" );
+					Console.WriteLine( @"RESET COLLECTION ACTION" );
 					this.ClearKeyBindings();
 					this.ResetKeyBindings();
 					break;
@@ -259,7 +255,7 @@ namespace TorboFile.ViewModels {
 
 		} //
 
-		public FileSortModel( IServiceProvider services, CategoryManager manager ) : base( services ) {
+		public FileSortVM( IServiceProvider services, CategoryManager manager ) : base( services ) {
 
 			manager.PropertyChanged += Manager_PropertyChanged;
 			this.CategorySet = manager.Current;
@@ -273,7 +269,7 @@ namespace TorboFile.ViewModels {
 			// Used to listen for changes to the underlying view to reset the bindings.
 			// Necessary because the view isn't linked when the constructor is called.
 			// TODO: this isn't very good.
-			this.PropertyChanged += this.FileSortModel_PropertyChanged;
+			this.PropertyChanged += this.FileSortVM_PropertyChanged;
 
 
 		}
@@ -291,9 +287,9 @@ namespace TorboFile.ViewModels {
 
 		} //
 
-		private void FileSortModel_PropertyChanged( object sender, PropertyChangedEventArgs e ) {
+		private void FileSortVM_PropertyChanged( object sender, PropertyChangedEventArgs e ) {
 
-			if( e.PropertyName == "ViewElement" ) {
+			if( e.PropertyName == @"ViewElement" ) {
 				Console.WriteLine( "Sort: ViewElement changed" );
 				this.ClearKeyBindings();
 				this.SetUIKeys();
@@ -310,7 +306,7 @@ namespace TorboFile.ViewModels {
 		private void Manager_PropertyChanged( object sender, PropertyChangedEventArgs e ) {
 
 			if( e.PropertyName == CategoryManager.CurrentSetPropName ) {
-				Console.WriteLine( "FileSort: CategorySet changed." );
+				Console.WriteLine( @"FileSort: CategorySet changed." );
 				this.CategorySet = ( (CategoryManager)sender ).Current;
 			}
 
@@ -339,7 +335,7 @@ namespace TorboFile.ViewModels {
 					IEnumerable<InputBinding> bindings = this._categorySet.MakeCategoryBindings( this.CmdCategoryClick );
 					binder.AddBindings( this, bindings );
 				} else {
-					Console.WriteLine( "FileSortModel.ResetKeyBindings(): Error: No InputBinder" );
+					Console.WriteLine( "FileSortVM.ResetKeyBindings(): Error: No InputBinder" );
 				}
 
 			} else {
@@ -350,7 +346,7 @@ namespace TorboFile.ViewModels {
 
 		private void DirectoryPropertyChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e ) {
 
-			if( e.PropertyName == "CurrentDirectory" ) {
+			if( e.PropertyName == @"CurrentDirectory" ) {
 				//Log( "CHANGING DIRECTORY" );
 			} else if( e.PropertyName == "Current" ) {
 
@@ -368,7 +364,7 @@ namespace TorboFile.ViewModels {
 		private void DeleteCurrentFile() {
 
 			IMessageBox messageBox = (IMessageBox) this.ServiceProvider.GetService( typeof(IMessageBox) );
-			if( messageBox.ShowConfirm( this, "Confirm Delete", "Delete current file?" ) == MessageResult.Accept ) {
+			if( messageBox.ShowConfirm( this, @"Confirm Delete", @"Delete current file?" ) == MessageResult.Accept ) {
 
 				FileDeleteService deleter = this.GetService<FileDeleteService>();
 				if( deleter != null ) {
@@ -390,14 +386,14 @@ namespace TorboFile.ViewModels {
 		/// <param name="e"></param>
 		private void ShowDirectoryBrowser() {
 
-			CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-			dialog.IsFolderPicker = true;
-			dialog.Title = "Select directory...";
-			dialog.EnsureFileExists = true;
-			CommonFileDialogResult result = dialog.ShowDialog();
+			IFileDialogService dialog = this.GetService<IFileDialogService>();
+			if( dialog != null ) {
 
-			if( result == CommonFileDialogResult.Ok ) {
-				this.SetDirectory( dialog.FileName );
+				string new_dir = dialog.PickFolder( @"Select Directory...", this.visitor.CurrentDirectory );
+				if( !string.IsNullOrEmpty( new_dir ) ) {
+					this.SetDirectory( new_dir );
+				}
+
 			}
 
 		} //

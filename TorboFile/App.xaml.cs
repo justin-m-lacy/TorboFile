@@ -185,7 +185,7 @@ namespace TorboFile {
 			this.InitView( main, new MainVM() );
 
 			this.InitView( main.FindCopiesView, new FindCopiesVM() );
-			this.InitView( main.SortFilesView, new FileSortModel( this.services, this.CategoryManager ) );
+			this.InitView( main.SortFilesView, new FileSortVM( this.services, this.CategoryManager ) );
 			this.InitView( main.CleanFoldersView, new CleanFoldersModel() );
 			this.InitView( main.CustomSearchView, new CustomSearchVM( this.services ) );
 
@@ -227,7 +227,7 @@ namespace TorboFile {
 		public void InitFindCopiesView( FindCopiesVM model ) {
 			this.InitView( ( this.MainWindow as MainWindow).FindCopiesView , model );
 		}
-		public void InitSortView( FileSortModel model ) {
+		public void InitSortView( FileSortVM model ) {
 			this.InitView( ( this.MainWindow as MainWindow ).SortFilesView, model );
 		}
 		public void InitCustomSearchView( CustomSearchVM model ) {
@@ -337,7 +337,7 @@ namespace TorboFile {
 		/// <param name="editing">The FileCategory being edited, or null if creating a new Category.</param>
 		public void EditCategoryDialog( ViewModelBase parentModel, FileCategory editing=null ) {
 
-			EditCategoryModel newCategory = new EditCategoryModel( this.CategoryManager.Current, editing );
+			EditCategoryVM newCategory = new EditCategoryVM( this.CategoryManager.Current, editing );
 			EditCategoryWindow win = new EditCategoryWindow();
 
 			this.InitView( win, newCategory, parentModel );

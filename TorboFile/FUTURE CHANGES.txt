@@ -14,8 +14,8 @@ here is marked for a possible future change or update.
 
 * Vector Graphic button images.
 
-* File Sort opens to last file viewed.
-	- Within caching limitations.
+* Restore File Sort to last file viewed, not directory start.
+	- low priority.
 
 * KeyBindings for UI elements.
 	- Gradual rollouts.

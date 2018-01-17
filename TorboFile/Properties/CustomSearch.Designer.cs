@@ -58,5 +58,17 @@ namespace TorboFile.Properties {
                 this["recursive"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool saveLastSearch {
+            get {
+                return ((bool)(this["saveLastSearch"]));
+            }
+            set {
+                this["saveLastSearch"] = value;
+            }
+        }
     }
 }

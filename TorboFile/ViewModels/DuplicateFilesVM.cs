@@ -34,7 +34,7 @@ namespace TorboFile.ViewModels {
 		public void AddDuplicateInfo( FileDuplicateInfo info, bool isChecked=false ) {
 
 			this.duplicateInfos[info.Path] = info;
-			this.Items.Add( new ListItemModel<FileSystemInfo>( new FileInfo( info.Path ), isChecked ) );
+			this.Items.Add( new ListItemVM<FileSystemInfo>( new FileInfo( info.Path ), isChecked ) );
 
 		}
 

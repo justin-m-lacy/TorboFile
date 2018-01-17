@@ -13,7 +13,7 @@ namespace TorboFile.Services {
 	public interface ITorbViewMaker {
 
 		void InitFindCopiesView( FindCopiesVM model );
-		void InitSortView( FileSortModel model );
+		void InitSortView( FileSortVM model );
 		void InitCustomSearchView( CustomSearchVM model );
 		void InitCleanFoldersView( CleanFoldersModel model );
 

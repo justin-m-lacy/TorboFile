@@ -11,15 +11,16 @@ namespace TorboFile.ViewModels {
 
 	/// <summary>
 	/// TODO: Apply ViewModel to MainMenu Window.
+	/// TODO: Dynamically create sub-ViewModels.
 	/// </summary>
 	public class MainVM : ViewModelBase {
 
 		#region MAIN SECTION NAMES
 
-		static public readonly string SortFiles = "SortFilesSection";
-		static public readonly string FindCopies = "FindCopiesSection";
-		static public readonly string CustomSearch = "CustomSearchSection";
-		static public readonly string CleanFolders = "CleanFoldersSection";
+		static public readonly string SortFiles = @"SortFilesSection";
+		static public readonly string FindCopies = @"FindCopiesSection";
+		static public readonly string CustomSearch = @"CustomSearchSection";
+		static public readonly string CleanFolders = @"CleanFoldersSection";
 
 		#endregion
 
@@ -58,7 +59,7 @@ namespace TorboFile.ViewModels {
 			}
 		}
 
-		public FileSortModel FileSortVM { get => fileSortVM; set => fileSortVM = value; }
+		public FileSortVM FileSortVM { get => fileSortVM; set => fileSortVM = value; }
 		public CustomSearchVM CustomSearchVM { get => customSearchVM; set => customSearchVM = value; }
 		public CleanFoldersModel CleanFoldersVM { get => cleanFoldersVM; set => cleanFoldersVM = value; }
 		public FindCopiesVM FindCopiesVM { get => findCopiesVM; set => findCopiesVM = value; }
@@ -67,7 +68,7 @@ namespace TorboFile.ViewModels {
 
 		#region VIEW MODELS
 
-		private FileSortModel fileSortVM;
+		private FileSortVM fileSortVM;
 		private CustomSearchVM customSearchVM;
 		private CleanFoldersModel cleanFoldersVM;
 		private FindCopiesVM findCopiesVM;

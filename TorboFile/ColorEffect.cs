@@ -10,11 +10,14 @@ using System.Windows.Media.Effects;
 
 namespace TorboFile {
 
+	/// <summary>
+	/// CURRENTLY UNUSED
+	/// </summary>
 	public class ColorEffect : ShaderEffect {
 
 		private static PixelShader _pixShader = new PixelShader() {
 			UriSource = new Uri(
-				"pack://siteoforigin:,,,/assets/shaders/ForegroundShader.cso" ) };
+				@"pack://siteoforigin:,,,/assets/shaders/ForegroundShader.cso" ) };
 
 		private static Uri MakePackUri( string relativeFile ) { 
 

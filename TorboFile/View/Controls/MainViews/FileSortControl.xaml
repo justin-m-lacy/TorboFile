@@ -14,7 +14,7 @@
              xmlns:categories="clr-namespace:TorboFile.Categories"
              d:DesignHeight="340" d:DesignWidth="677" Loaded="UserControl_Loaded" Focusable="True">
 
-    <!-- Use with FileSortModel -->
+    <!-- Use with FileSortVM -->
     <UserControl.Resources>
 
         <GridLength x:Key="GridSplitterWidth">2</GridLength>

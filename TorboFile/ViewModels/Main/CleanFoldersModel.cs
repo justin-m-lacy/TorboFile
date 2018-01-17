@@ -28,11 +28,11 @@ namespace TorboFile.ViewModels {
 		}
 		[Conditional( "DEBUG" )]
 		void DebugDestructor() {
-			Console.WriteLine( "CLEAN FOLDERS MODEL DESTRUCTOR" );
+			Console.WriteLine( @"CLEAN FOLDERS MODEL DESTRUCTOR" );
 		}
 
-		private const string SUCCESS_STRING = "success";
-		private const string ERROR_STRING = "error";
+		private const string SUCCESS_STRING = @"success";
+		private const string ERROR_STRING = @"error";
 
 		private RelayCommand _cmdBeginSearch;
 		public RelayCommand CmdBeginSearch {
@@ -63,7 +63,7 @@ namespace TorboFile.ViewModels {
 					this._cmdBeginSearch.RaiseCanExecuteChanged();
 
 					if( !Directory.Exists( value ) ) {
-						throw new ValidationException( "Error: Target directory not found." );
+						throw new ValidationException( @"Error: Target directory not found." );
 
 					}
 

@@ -246,7 +246,7 @@ namespace TorboFile.ViewModels {
 			/// file selected change. show preview.
 			if( e.PropertyName == CheckListVM<FileDuplicateInfo>.SelectedPropertyName ) {
 
-				ListItemModel<FileSystemInfo> selectedData = this.ResultsList.SelectedItem;
+				ListItemVM<FileSystemInfo> selectedData = this.ResultsList.SelectedItem;
 				if( selectedData != null ) {
 					FilePreview.FilePath = selectedData.Item.FullName;
 				} else {

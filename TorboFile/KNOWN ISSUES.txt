@@ -6,16 +6,6 @@
 *************************************
 
 ***
-* Animated GIF previews do not play at the speeds encoded by the GIF.
-***
-
-I have not yet looked into querying the meta-data within a GIF in order
-to play an animated GIF at the intended speeds.
-
-This should be addressed in a future release.
-
-
-***
 * Systems running .NET framework versions lower than 4.6.2 ignore file paths
 * whose total character length is greater than 259.
 ***

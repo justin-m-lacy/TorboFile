@@ -12,7 +12,7 @@ using Lemur.Windows.Input;
 
 namespace TorboFile.ViewModels {
 
-	public class EditCategoryModel : ViewModelBase {
+	public class EditCategoryVM : ViewModelBase {
 
 		/// <summary>
 		/// Prevent duplicate category names.
@@ -140,7 +140,7 @@ namespace TorboFile.ViewModels {
 
 		}
 
-		public EditCategoryModel( CategorySet baseSet, FileCategory editing=null ) {
+		public EditCategoryVM( CategorySet baseSet, FileCategory editing=null ) {
 
 			this.EditCategory = editing;
 			this.categories = baseSet;

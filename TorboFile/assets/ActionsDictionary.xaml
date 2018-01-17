@@ -12,6 +12,8 @@
 		<ResourceDictionary Source="CommonDictionary.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 
+	<convert:StringToRegex x:Key="RegexConverter" />
+	
 	<DataTemplate x:Key="fileDeleteTemplate" DataType="{x:Type mvvm:DataObjectVM}">
 
 		<TextBlock Style="{StaticResource infoText}" Text="Matched Files and Directories will be deleted. This action cannot be undone." />
@@ -78,9 +80,9 @@
 					   replacement string." />
 
 			<StackPanel Orientation="Horizontal">
-				<TextBlock Style="{StaticResource infoText}" Text="Search for: "/>
-				<TextBox Name="fldSearch" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.ReplaceRule}" />
-				<TextBlock Style="{StaticResource infoText}" Text="Replace with: " />
+				<TextBlock Style="{StaticResource infoText}" Text="Search Expression: "/>
+				<TextBox Name="fldSearch" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.ReplaceRule, Converter={StaticResource RegexConverter}}" />
+				<TextBlock Style="{StaticResource infoText}" Text="Replace String: " />
 				<TextBox Name="fldReplace" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.ReplaceString}" />
 			</StackPanel>
 

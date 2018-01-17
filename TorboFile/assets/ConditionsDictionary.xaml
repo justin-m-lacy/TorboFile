@@ -5,16 +5,18 @@
     xmlns:controls="clr-namespace:Lemur.Windows.Controls"
     xmlns:rules="clr-namespace:Lemur.Windows.Validation"
     xmlns:convert="clr-namespace:Lemur.Windows.Converters"
+	xmlns:g="clr-namespace:System.Collections.Generic;assembly=mscorlib"
 	xmlns:models="clr-namespace:Lemur.Operations.FileMatching.Models"
 	xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
-    xmlns:local="clr-namespace:Lemur.Operations.FileMatching">
+    xmlns:local="clr-namespace:Lemur.Operations.FileMatching"
+	xmlns:system="clr-namespace:System;assembly=mscorlib">
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="CommonDictionary.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 	
 	<!-- DEFAULT/SAMPLE RESOURCES FOR WORKING WITH FILE MATCHING CONDITIONS -->
- 
+
 	<DataTemplate x:Key="baseConditionTemplate" DataType="{x:Type local:BaseCondition}">
 
 		<StackPanel Orientation="Horizontal">
@@ -32,20 +34,30 @@
 
 	</DataTemplate>
 
-	<DataTemplate x:Key="emptyDirTemplate" DataType="{x:Type models:FileTestVM}">
+	<DataTemplate x:Key="emptyDirTemplate" DataType="models:FileTestVM">
 
-        <TextBlock x:Name="fldText"
+		<DataTemplate.Resources>
+			<system:String x:Key="includeString">Empty directories will be included in the search.</system:String>
+			<system:String x:Key="excludeString">Empty directories will be excluded from the search.</system:String>
+		</DataTemplate.Resources>
+
+		<StackPanel>
+			<mvvm:StringSetter x:Name="TestName" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="EMPTY DIRECTORIES INCLUDED IN SEARCH" />
+			<mvvm:StringSetter x:Name="AnotherTest" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="EMPTY DIRECTORIES EXCLUDED FROM SEARCH" />
+
+			<TextBlock x:Name="fldText"
 				   Text="Empty directories will be included in the search." />
 
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding Path=Exclude}" Value="true">
-                <Setter TargetName="fldText" Property="Text"
-						Value="Empty directories will be excluded from the search.">
-                </Setter>
-            </DataTrigger>
-        </DataTemplate.Triggers>
 
-    </DataTemplate>
+		</StackPanel>
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding Path=Exclude}" Value="true">
+				<Setter TargetName="fldText" Property="Text"
+						Value="Empty directories will be excluded from the search.">
+				</Setter>
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
 
 	<DataTemplate x:Key="extensionTestTemplate" DataType="{x:Type models:FileTestVM}">
 		<StackPanel>
@@ -62,7 +74,7 @@
 		</StackPanel>
 	</DataTemplate>
 
-	<DataTemplate x:Key="fileCountTemplate" DataType="{x:Type models:FileTestVM}">
+	<DataTemplate x:Key="fileCountTemplate" DataType="models:FileTestVM">
 
 		<StackPanel>
 
@@ -116,7 +128,7 @@
 		</DataTemplate.Triggers>
 	</DataTemplate>
 
-	<DataTemplate x:Key="isDirectoryTemplate" DataType="{x:Type models:FileTestVM}">
+	<DataTemplate x:Key="isDirectoryTemplate" DataType="models:FileTestVM">
 
 		<StackPanel Orientation="Horizontal">
 			<TextBlock Name="lblInfo" Text="Only directories will be included in the search results."/>
@@ -207,6 +219,7 @@
         
     </DataTemplate>
 
+	
 	<DataTemplate x:Key="fileTestTemplate" DataType="{x:Type models:FileTestVM}">
 
 		<Border Style="{StaticResource listItemBorder}">
@@ -218,49 +231,39 @@
 
 			<CheckBox x:Name="chkExclude" Style="{StaticResource chkOption}" Content="Exclude Matches" IsChecked="{Binding Exclude}"
                   ToolTip="If checked, only items that do NOT match this requirement will be included in results."/>
-			<TextBlock x:Name="fldExclude" Text="{Binding Path=IncludeText}"/>
+			<TextBlock x:Name="fldIncludeText" Text="{Binding Path=IncludeText}"/>
 
-			<ContentPresenter Content="{Binding}">
-				<ContentPresenter.Style>
-					<Style TargetType="ContentPresenter">
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:SizeCondition}">
-								<Setter Property="ContentTemplate" Value="{StaticResource sizeMatchTemplate}"/>
-							</DataTrigger>
-								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:IsFile}">
-								<Setter Property="ContentTemplate" Value="{StaticResource isFileTemplate}"/>
-							</DataTrigger>
-								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:FileCount}">
-								<Setter Property="ContentTemplate" Value="{StaticResource fileCountTemplate}"/>
-							</DataTrigger>
-								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:ExtensionCondition}">
-								<Setter Property="ContentTemplate" Value="{StaticResource extensionTestTemplate}"/>
-							</DataTrigger>
-								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:IsDirectory}">
-								<Setter Property="ContentTemplate" Value="{StaticResource isDirectoryTemplate}"/>
-							</DataTrigger>
-								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:NameContains}">
-								<Setter Property="ContentTemplate" Value="{StaticResource nameContainsTemplate}"/>
-							</DataTrigger>
-								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:RegexTest}">
-								<Setter Property="ContentTemplate" Value="{StaticResource regexTestTemplate}"/>
-							</DataTrigger>
-								<DataTrigger Binding="{Binding DataType}" Value="{x:Type local:EmptyCondition}">
-								<Setter Property="ContentTemplate" Value="{StaticResource emptyDirTemplate}"/>
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</ContentPresenter.Style>
-			</ContentPresenter>
-			
-		</StackPanel>
+				<ContentPresenter Content="{Binding}">
+					<ContentPresenter.ContentTemplateSelector>
+						<mvvm:TypeTemplateSelector TestProperty="Data">
+
+							<mvvm:TypeTemplateSelector.Templates>
+
+								<mvvm:TemplateDictionary>
+
+									<system:String x:Key="{x:Type local:SizeCondition}">sizeMatchTemplate</system:String>
+									<system:String x:Key="{x:Type local:IsFile}">isFileTemplate</system:String>
+									<system:String x:Key="{x:Type local:FileCount}">fileCountTemplate</system:String>
+									<system:String x:Key="{x:Type local:ExtensionCondition}">extensionTestTemplate</system:String>
+									<system:String x:Key="{x:Type local:IsDirectory}">isDirectoryTemplate</system:String>
+									<system:String x:Key="{x:Type local:NameContains}">nameContainsTemplate</system:String>
+									<system:String x:Key="{x:Type local:RegexTest}">regexTestTemplate</system:String>
+									<system:String x:Key="{x:Type local:EmptyCondition}">emptyDirTemplate</system:String>
+									
+								</mvvm:TemplateDictionary>
+							</mvvm:TypeTemplateSelector.Templates>
+						</mvvm:TypeTemplateSelector>
+					</ContentPresenter.ContentTemplateSelector>
+				</ContentPresenter>
+
+			</StackPanel>
 
 
 		</Border>
 
 		<DataTemplate.Triggers>
 			<DataTrigger Binding="{Binding Exclude}" Value="true">
-				<Setter TargetName="fldExclude" Property="Text" Value="{Binding Path=ExcludeText}" />
+				<Setter TargetName="fldIncludeText" Property="Text" Value="{Binding Path=ExcludeText}" />
 			</DataTrigger>
 		</DataTemplate.Triggers>
 
