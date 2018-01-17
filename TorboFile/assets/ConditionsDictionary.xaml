@@ -36,15 +36,12 @@
 
 	<DataTemplate x:Key="emptyDirTemplate" DataType="models:FileTestVM">
 
-		<DataTemplate.Resources>
-			<system:String x:Key="includeString">Empty directories will be included in the search.</system:String>
-			<system:String x:Key="excludeString">Empty directories will be excluded from the search.</system:String>
-		</DataTemplate.Resources>
-
 		<StackPanel>
-			<mvvm:StringSetter x:Name="TestName" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="EMPTY DIRECTORIES INCLUDED IN SEARCH" />
+			
+			<!--<mvvm:StringSetter x:Name="TestName" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="EMPTY DIRECTORIES INCLUDED IN SEARCH" />
 			<mvvm:StringSetter x:Name="AnotherTest" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="EMPTY DIRECTORIES EXCLUDED FROM SEARCH" />
-
+-->
+			
 			<TextBlock x:Name="fldText"
 				   Text="Empty directories will be included in the search." />
 

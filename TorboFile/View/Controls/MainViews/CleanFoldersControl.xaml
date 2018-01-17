@@ -57,7 +57,7 @@
                     <TextBlock DockPanel.Dock="Bottom" Text="Begin Clean"/>
                 </DockPanel>
             </Button>
-            <CheckBox x:Name="ChkRecursiveEmpty" IsChecked="{Binding Source={x:Static prefs:FolderCleanSettings.Default }, Path=recursive}"
+            <CheckBox x:Name="ChkRecursiveEmpty" IsChecked="{Binding Source={x:Static prefs:FolderCleanSettings.Default}, Path=recursive}"
                       ToolTip="Include all subfolders of the chosen folder in the search."
                       Content="Recursive Clean" Margin="24,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="24" Width="193"/>
             <CheckBox x:Name="ChkDeleteEmpty" IsChecked="{Binding DeleteEmptyFiles}"

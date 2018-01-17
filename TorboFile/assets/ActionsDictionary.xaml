@@ -1,12 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					    xmlns:convert="clr-namespace:Lemur.Windows.Converters"
-	xmlns:models="clr-namespace:Lemur.Operations.FileMatching.Models"
-					xmlns:rules="clr-namespace:Lemur.Windows.Validation"
-					xmlns:actions="clr-namespace:Lemur.Operations.FileMatching.Actions"
-					xmlns:actionmodels="clr-namespace:Lemur.Operations.FileMatching.Models"
-					xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
-    xmlns:local="clr-namespace:Lemur.Operations.FileMatching">
+                    xmlns:actions="clr-namespace:Lemur.Operations.FileMatching.Actions"
+                    xmlns:actionmodels="clr-namespace:Lemur.Operations.FileMatching.Models"
+                    xmlns:convert="clr-namespace:Lemur.Windows.Converters"
+                    xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
+                    xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
+					xmlns:system="clr-namespace:System;assembly=mscorlib">
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="CommonDictionary.xaml"/>
@@ -60,14 +59,13 @@
 
 		<StackPanel>
 			<TextBlock Style="{StaticResource infoText}" Text="Rename all occurances of the given string in a file or directory name." />
-			
+
 			<StackPanel Orientation="Horizontal">
 				<TextBlock Style="{StaticResource infoText}" Text="Search: "/>
 				<TextBox Name="fldSearch" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.SearchString}" />
 				<TextBlock Style="{StaticResource infoText}" Text="Replace: " />
 				<TextBox Name="fldReplace" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.ReplaceString}" />
 			</StackPanel>
-			
 		</StackPanel>
 
 	</DataTemplate>
@@ -101,31 +99,29 @@
 					   Visibility="{Binding Path=Desc, Converter={StaticResource NonNullToVisible}}" />
 
 			<ContentPresenter Content="{Binding}">
-				<ContentPresenter.Style>
-					<Style TargetType="ContentPresenter">
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:FileDeleteAction}">
-								<Setter Property="ContentTemplate" Value="{StaticResource fileDeleteTemplate}"/>
-							</DataTrigger>
-							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:RecycleAction}">
-								<Setter Property="ContentTemplate" Value="{StaticResource recycleTemplate}"/>
-							</DataTrigger>
-							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:MoveFileAction}">
-								<Setter Property="ContentTemplate" Value="{StaticResource moveFileTemplate}"/>
-							</DataTrigger>
-							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:EmptyRecycleBin}">
-								<Setter Property="ContentTemplate" Value="{StaticResource emptyRecycleTemplate}"/>
-							</DataTrigger>
-							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:NameReplace}">
-								<Setter Property="ContentTemplate" Value="{StaticResource nameReplaceTemplate}"/>
-							</DataTrigger>
-							<DataTrigger Binding="{Binding DataType}" Value="{x:Type actions:RegexReplace}">
-								<Setter Property="ContentTemplate" Value="{StaticResource regexReplaceTemplate}"/>
-							</DataTrigger>
+					<ContentPresenter.ContentTemplateSelector>
+						<mvvm:TemplateSelector KeyPath="DataType">
+							<mvvm:TemplateSelector.Templates>
 
-						</Style.Triggers>
-					</Style>
-				</ContentPresenter.Style>
+								<collections:Hashtable>
+									<system:String x:Key="{x:Type actions:FileDeleteAction}">fileDeleteTemplate</system:String>
+									<system:String x:Key="{x:Type actions:RecycleAction}">recycleTemplate</system:String>
+
+									<system:String x:Key="{x:Type actions:MoveFileAction}">moveFileTemplate</system:String>
+
+									<system:String x:Key="{x:Type actions:EmptyRecycleBin}">emptyRecycleTemplate</system:String>
+
+									<system:String x:Key="{x:Type actions:NameReplace}">nameReplaceTemplate</system:String>
+
+									<system:String x:Key="{x:Type actions:RegexReplace}">regexReplaceTemplate</system:String>
+									
+								</collections:Hashtable>
+
+
+							</mvvm:TemplateSelector.Templates>
+						</mvvm:TemplateSelector>
+					</ContentPresenter.ContentTemplateSelector>
+	
 			</ContentPresenter>
 
 		</StackPanel>
