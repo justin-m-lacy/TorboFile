@@ -129,6 +129,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>CustomSearch.settings</DependentUpon>
     </Compile>
+    <Compile Include="Properties\CustomSearchStrings.zh.Designer.cs">
+      <DependentUpon>CustomSearchStrings.zh.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\CustomSearchStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomSearchStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\FolderCleanSettings.cs" />
     <Compile Include="Properties\PreviewSettings.cs" />
     <Compile Include="Properties\PreviewSettings.Designer.cs">
@@ -392,8 +402,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\CustomSearchStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomSearchStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\CustomSearchStrings.zh.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomSearchStrings.zh.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="assets\shaders\ForegroundShader.fx">

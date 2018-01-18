@@ -19,6 +19,8 @@ using TorboFile.ViewModels;
 using TorboFile.Properties;
 using Lemur.Windows;
 using Lemur.Windows.Services;
+using System.Threading;
+using System.Resources;
 
 namespace TorboFile {
 
@@ -44,18 +46,6 @@ namespace TorboFile {
 		public CategoryManager CategoryManager {
 			get { return this.categoryManager; }
 		}
-
-		/*private RelayCommand<string> _cmdOpenExternal;
-		/// <summary>
-		/// Opens a file externally.
-		/// </summary>
-		public RelayCommand<string> CmdOpenExternal {
-			get {
-				return this._cmdOpenExternal ?? ( this._cmdOpenExternal = new RelayCommand<string>(
-					this.OpenExternal
-				));
-			}
-		}*/
 
 		/// <summary>
 		// Attempts to open a file externally. All Exceptions are caught and ignored.
@@ -104,6 +94,9 @@ namespace TorboFile {
 		}
 
 		private void Application_Startup( object sender, StartupEventArgs e ) {
+
+			//Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo( "zh" );
+			//Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo( "zh" );
 
 			App._Instance = this;
 			this.categoryManager = CategoryManager.Instance;

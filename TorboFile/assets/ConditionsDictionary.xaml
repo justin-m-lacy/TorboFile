@@ -6,6 +6,7 @@
     xmlns:rules="clr-namespace:Lemur.Windows.Validation"
     xmlns:convert="clr-namespace:Lemur.Windows.Converters"
 	xmlns:g="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+	xmlns:r="clr-namespace:TorboFile.Properties"
 	xmlns:models="clr-namespace:Lemur.Operations.FileMatching.Models"
 	xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
     xmlns:local="clr-namespace:Lemur.Operations.FileMatching"
@@ -37,20 +38,20 @@
 	<DataTemplate x:Key="emptyDirTemplate" DataType="models:FileTestVM">
 
 		<StackPanel>
-			
-			<!--<mvvm:StringSetter x:Name="TestName" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="EMPTY DIRECTORIES INCLUDED IN SEARCH" />
+
+		<!--<mvvm:StringSetter x:Name="TestName" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="EMPTY DIRECTORIES INCLUDED IN SEARCH" />
 			<mvvm:StringSetter x:Name="AnotherTest" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="EMPTY DIRECTORIES EXCLUDED FROM SEARCH" />
 -->
 			
 			<TextBlock x:Name="fldText"
-				   Text="Empty directories will be included in the search." />
+				   Text="{x:Static r:CustomSearchStrings.match_empty_dir_include}" />
 
 
 		</StackPanel>
 		<DataTemplate.Triggers>
 			<DataTrigger Binding="{Binding Path=Exclude}" Value="true">
 				<Setter TargetName="fldText" Property="Text"
-						Value="Empty directories will be excluded from the search.">
+						Value="{x:Static r:CustomSearchStrings.match_empty_dir_exclude}">
 				</Setter>
 			</DataTrigger>
 		</DataTemplate.Triggers>
@@ -58,7 +59,7 @@
 
 	<DataTemplate x:Key="extensionTestTemplate" DataType="{x:Type models:FileTestVM}">
 		<StackPanel>
-			<TextBlock Style="{StaticResource infoText}" Text="Allowed File Extensions: " ToolTip="Separate extensions with ';'" />
+			<TextBlock Style="{StaticResource infoText}" Text="{x:Static CustomSearchStrings.match_ext_prompt}" ToolTip="{x:Static CustomSearchStrings.match_ext_tip}" />
 			<TextBox x:Name="fldExtensionList" Style="{StaticResource SimpleTextInput}">
 				<TextBox.Text>
 					<Binding ValidatesOnExceptions="True" Path="Data.Extensions" Converter="{StaticResource stringSplitter}">
@@ -76,16 +77,16 @@
 		<StackPanel>
 
 			<TextBlock Style="{StaticResource infoText}"
-					   Text="Matches directories which contain a given number of sub-files.&#x0a;Files are also included in the search, unless a Directory-Only condition is added." />
+					   Text="{x:Static CustomSearchStrings.match_count_prompt}" />
 			
-			<CheckBox Name="chkIncludeDirs" Style="{StaticResource chkOption}" Content="Subdirectories count against total." IsChecked="{Binding Data.CountSubDirs}"/>
+			<CheckBox Name="chkIncludeDirs" Style="{StaticResource chkOption}" Content="{x:Static CustomSearchStrings.match_count_subdir_opt}" IsChecked="{Binding Data.CountSubDirs}"/>
 
 			<StackPanel Orientation="Horizontal">
 
-				<TextBlock Style="{StaticResource infoText}" Text="Min Files: "/>
+				<TextBlock Style="{StaticResource infoText}" Text="{x:Static CustomSearchStrings.match_count_min_prompt}"/>
 
 				<TextBox Name="fldMinCount" Style="{StaticResource intInput}"
-						 ToolTip="Directories containing fewer files will not be matched.">
+						 ToolTip="{x:Static CustomSearchStrings.match_count_min_tip}">
 					<TextBox.Text>
 						<Binding ValidatesOnExceptions="True" Path="Data.MinFiles">
 							<Binding.ValidationRules>
@@ -97,9 +98,9 @@
 			</StackPanel>
 
 			<StackPanel Orientation="Horizontal">
-				
-			<TextBlock Style="{StaticResource infoText}" Text="Max Files: " />
-				<TextBox Name="fldMaxCount" Style="{StaticResource intInput}" ToolTip="Directories containing more files will not be matched.">
+
+				<TextBlock Style="{StaticResource infoText}" Text={x:Static CustomSearchStrings.match_count_max_prompt}" />
+				<TextBox Name="fldMaxCount" Style="{StaticResource intInput}" ToolTip="{x:Static CustomSearchStrings.match_count_max_tip}">
 				<TextBox.Text>
 					<Binding ValidatesOnExceptions="True" Path="Data.MaxFiles">
 						<Binding.ValidationRules>
@@ -116,11 +117,11 @@
 
 	<DataTemplate x:Key="isFileTemplate" DataType="{x:Type models:FileTestVM}">
 
-		<TextBlock Name="fldInfo" Text="Directories will be excluded from the search results."/>
+		<TextBlock Name="fldInfo" Text="{x:Static CustomSearchString.is_file_include}"/>
 
 		<DataTemplate.Triggers>
 			<DataTrigger Binding="{Binding Exclude}" Value="true">
-				<Setter TargetName="fldInfo" Property="Text" Value="Only directories will be included in the search results."/>
+				<Setter TargetName="fldInfo" Property="Text" Value="{x:Static CustomSearchString.is_file_exclude}"/>
 			</DataTrigger>
 		</DataTemplate.Triggers>
 	</DataTemplate>
@@ -128,12 +129,12 @@
 	<DataTemplate x:Key="isDirectoryTemplate" DataType="models:FileTestVM">
 
 		<StackPanel Orientation="Horizontal">
-			<TextBlock Name="lblInfo" Text="Only directories will be included in the search results."/>
+			<TextBlock Name="lblInfo" Text="{x:Static CustomSearchStrings.is_file_exclude}"/>
 		</StackPanel>
 
 		<DataTemplate.Triggers>
 			<DataTrigger Binding="{Binding Exclude}" Value="true">
-				<Setter TargetName="lblInfo" Property="Text" Value="Directories will be excluded from the search results." />
+				<Setter TargetName="lblInfo" Property="Text" Value="{x:Static CustomSearchStrings.is_file_include}" />
 			</DataTrigger>
 		</DataTemplate.Triggers>
 	</DataTemplate>
@@ -226,8 +227,8 @@
 			<TextBlock x:Name="fldOpName" Style="{StaticResource BoldText}" Text="{Binding Path=DisplayName}" Visibility="{Binding Path=DisplayName, Converter={StaticResource NonNullToVisible}}"/>
 			<TextBlock x:Name="fldDesc" Style="{StaticResource minorText}" Text="{Binding Path=Desc}" Visibility="{Binding Path=Desc, Converter={StaticResource NonNullToVisible}}"/>
 
-			<CheckBox x:Name="chkExclude" Style="{StaticResource chkOption}" Content="Exclude Matches" IsChecked="{Binding Exclude}"
-                  ToolTip="If checked, only items that do NOT match this requirement will be included in results."/>
+			<CheckBox x:Name="chkExclude" Style="{StaticResource chkOption}" Content="{x:Static r:CustomSearchStrings.exclude_option}" IsChecked="{Binding Exclude}"
+                  ToolTip="{x:Static r:CustomSearchStrings.exclude_tip}"/>
 			<TextBlock x:Name="fldIncludeText" Text="{Binding Path=IncludeText}"/>
 
 				<ContentPresenter Content="{Binding}">
