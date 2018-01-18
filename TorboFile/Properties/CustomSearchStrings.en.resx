@@ -117,46 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="action_delete_msg" xml:space="preserve">
-    <value>Matched Files and Directories will be deleted. This action cannot be undone.</value>
-  </data>
-  <data name="action_empty_recycle_msg" xml:space="preserve">
-    <value>The Recycle Bin will be emptied. This action cannot be undone.</value>
-  </data>
-  <data name="action_move_create_opt" xml:space="preserve">
-    <value>Create Directories</value>
-  </data>
-  <data name="action_move_create_tip" xml:space="preserve">
-    <value>Create any missing destination folders.</value>
-  </data>
-  <data name="action_move_msg" xml:space="preserve">
-    <value>Moves Files and Directories to the given location.</value>
-  </data>
-  <data name="action_move_rel_msg" xml:space="preserve">
-    <value>The destination entered is a Relative File Path. Files will be moved relative to their locations.</value>
-  </data>
-  <data name="action_recycle_msg" xml:space="preserve">
-    <value>Matched Files and Directories will be moved to the Recycle Bin.</value>
-  </data>
-  <data name="action_regex_dst" xml:space="preserve">
-    <value>Replace String:</value>
-  </data>
-  <data name="action_regex_msg" xml:space="preserve">
-    <value>Rename all matches of the regular expression in the file or directory name by the given replacement string.</value>
-  </data>
-  <data name="action_regex_src" xml:space="preserve">
-    <value>Search Expression:</value>
-  </data>
-  <data name="action_rename_dst" xml:space="preserve">
-    <value>Replace:</value>
-  </data>
-  <data name="action_rename_msg" xml:space="preserve">
-    <value>Rename all occurances of the given string in a file or directory name.</value>
-    <comment>Simple string replace</comment>
-  </data>
-  <data name="action_rename_src" xml:space="preserve">
-    <value>Search:</value>
-  </data>
   <data name="exclude_option" xml:space="preserve">
     <value>Exclude Matches</value>
   </data>
@@ -211,17 +171,5 @@
   </data>
   <data name="match_name_prompt" xml:space="preserve">
     <value>File/Dictory Name contains:</value>
-  </data>
-  <data name="match_reg_mode_opt" xml:space="preserve">
-    <value>Test Mode:</value>
-  </data>
-  <data name="match_reg_prompt" xml:space="preserve">
-    <value>Test Expression:</value>
-  </data>
-  <data name="match_size_max_prompt" xml:space="preserve">
-    <value>Max Size (bytes):</value>
-  </data>
-  <data name="match_size_min_prompt" xml:space="preserve">
-    <value>Min Size (bytes):</value>
   </data>
 </root>

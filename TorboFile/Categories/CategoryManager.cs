@@ -166,7 +166,7 @@ namespace TorboFile.Categories {
 		private CategoryManager() {
 
 			this.AvailableSets = new List<CategorySetInfo >( CategoryManager.GetIsolatedSets() );
-			Console.WriteLine( "SET COUNT: " + this.availableSets.Count );
+			//Console.WriteLine( "CategoryManager.cs : #CATEGORY SETS: " + this.availableSets.Count );
 
 			this.RestoreLastSet();
 
@@ -235,7 +235,7 @@ namespace TorboFile.Categories {
 			CategorySetInfo info = this.GetSetInfo( set.Name );
 			if ( info != null ) {
 				info.IsLoaded = true;
-				Console.WriteLine( "activating: " + set.Name );
+				Console.WriteLine( "CategoryManager : Activating Set: " + set.Name );
 			}
 
 		} //

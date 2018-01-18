@@ -129,6 +129,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>CustomSearch.settings</DependentUpon>
     </Compile>
+    <Compile Include="Properties\CustomSearchStrings.en.Designer.cs">
+      <DependentUpon>CustomSearchStrings.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Properties\CustomSearchStrings.zh.Designer.cs">
       <DependentUpon>CustomSearchStrings.zh.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -402,6 +407,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\CustomSearchStrings.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomSearchStrings.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\CustomSearchStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CustomSearchStrings.Designer.cs</LastGenOutput>

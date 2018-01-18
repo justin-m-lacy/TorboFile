@@ -39,6 +39,7 @@ namespace TorboFile.Model {
 		/// Empties all conditions and actions from the search.
 		/// </summary>
 		public void Clear() {
+
 			this._conditions.Clear();
 			this._actions.Clear();
 		}

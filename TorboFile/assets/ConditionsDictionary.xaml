@@ -18,23 +18,6 @@
 	
 	<!-- DEFAULT/SAMPLE RESOURCES FOR WORKING WITH FILE MATCHING CONDITIONS -->
 
-	<DataTemplate x:Key="baseConditionTemplate" DataType="{x:Type local:BaseCondition}">
-
-		<StackPanel Orientation="Horizontal">
-			<CheckBox x:Name="chkExclude" Content="Exclusion Condition" IsChecked="{Binding Exclude, Mode=TwoWay}"
-                  ToolTip="If checked, only items that do NOT match this requirement will be included in results."/>
-			<TextBlock x:Name="fldExclude" Text="Items matching this condition will be included in the search."/>
-		</StackPanel>
-
-		<DataTemplate.Triggers>
-			<DataTrigger Binding="{Binding Exclude}" Value="true">
-				<Setter TargetName="fldExclude" Property="Text"
-						Value="Items matching this condition will be excluded from the search." />
-			</DataTrigger>
-		</DataTemplate.Triggers>
-
-	</DataTemplate>
-
 	<DataTemplate x:Key="emptyDirTemplate" DataType="models:FileTestVM">
 
 		<StackPanel>
@@ -59,7 +42,7 @@
 
 	<DataTemplate x:Key="extensionTestTemplate" DataType="{x:Type models:FileTestVM}">
 		<StackPanel>
-			<TextBlock Style="{StaticResource infoText}" Text="{x:Static CustomSearchStrings.match_ext_prompt}" ToolTip="{x:Static CustomSearchStrings.match_ext_tip}" />
+			<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.match_ext_prompt}" ToolTip="{x:Static r:CustomSearchStrings.match_ext_tip}" />
 			<TextBox x:Name="fldExtensionList" Style="{StaticResource SimpleTextInput}">
 				<TextBox.Text>
 					<Binding ValidatesOnExceptions="True" Path="Data.Extensions" Converter="{StaticResource stringSplitter}">
@@ -77,16 +60,16 @@
 		<StackPanel>
 
 			<TextBlock Style="{StaticResource infoText}"
-					   Text="{x:Static CustomSearchStrings.match_count_prompt}" />
-			
-			<CheckBox Name="chkIncludeDirs" Style="{StaticResource chkOption}" Content="{x:Static CustomSearchStrings.match_count_subdir_opt}" IsChecked="{Binding Data.CountSubDirs}"/>
+					   Text="{x:Static r:CustomSearchStrings.match_count_prompt}" />
+
+			<CheckBox Name="chkIncludeDirs" Style="{StaticResource chkOption}" Content="{x:Static r:CustomSearchStrings.match_count_subdir_opt}" IsChecked="{Binding Data.CountSubDirs}"/>
 
 			<StackPanel Orientation="Horizontal">
 
-				<TextBlock Style="{StaticResource infoText}" Text="{x:Static CustomSearchStrings.match_count_min_prompt}"/>
+				<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.match_count_min_prompt}"/>
 
 				<TextBox Name="fldMinCount" Style="{StaticResource intInput}"
-						 ToolTip="{x:Static CustomSearchStrings.match_count_min_tip}">
+						 ToolTip="{x:Static r:CustomSearchStrings.match_count_min_tip}">
 					<TextBox.Text>
 						<Binding ValidatesOnExceptions="True" Path="Data.MinFiles">
 							<Binding.ValidationRules>
@@ -99,8 +82,8 @@
 
 			<StackPanel Orientation="Horizontal">
 
-				<TextBlock Style="{StaticResource infoText}" Text={x:Static CustomSearchStrings.match_count_max_prompt}" />
-				<TextBox Name="fldMaxCount" Style="{StaticResource intInput}" ToolTip="{x:Static CustomSearchStrings.match_count_max_tip}">
+				<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.match_count_max_prompt}" />
+				<TextBox Name="fldMaxCount" Style="{StaticResource intInput}" ToolTip="{x:Static r:CustomSearchStrings.match_count_max_tip}">
 				<TextBox.Text>
 					<Binding ValidatesOnExceptions="True" Path="Data.MaxFiles">
 						<Binding.ValidationRules>
@@ -117,11 +100,11 @@
 
 	<DataTemplate x:Key="isFileTemplate" DataType="{x:Type models:FileTestVM}">
 
-		<TextBlock Name="fldInfo" Text="{x:Static CustomSearchString.is_file_include}"/>
+		<TextBlock Name="fldInfo" Text="{x:Static r:CustomSearchStrings.is_file_include}"/>
 
 		<DataTemplate.Triggers>
 			<DataTrigger Binding="{Binding Exclude}" Value="true">
-				<Setter TargetName="fldInfo" Property="Text" Value="{x:Static CustomSearchString.is_file_exclude}"/>
+				<Setter TargetName="fldInfo" Property="Text" Value="{x:Static r:CustomSearchStrings.is_file_exclude}"/>
 			</DataTrigger>
 		</DataTemplate.Triggers>
 	</DataTemplate>
@@ -129,12 +112,12 @@
 	<DataTemplate x:Key="isDirectoryTemplate" DataType="models:FileTestVM">
 
 		<StackPanel Orientation="Horizontal">
-			<TextBlock Name="lblInfo" Text="{x:Static CustomSearchStrings.is_file_exclude}"/>
+			<TextBlock Name="lblInfo" Text="{x:Static r:CustomSearchStrings.is_file_exclude}"/>
 		</StackPanel>
 
 		<DataTemplate.Triggers>
 			<DataTrigger Binding="{Binding Exclude}" Value="true">
-				<Setter TargetName="lblInfo" Property="Text" Value="{x:Static CustomSearchStrings.is_file_include}" />
+				<Setter TargetName="lblInfo" Property="Text" Value="{x:Static r:CustomSearchStrings.is_file_include}" />
 			</DataTrigger>
 		</DataTemplate.Triggers>
 	</DataTemplate>
@@ -143,11 +126,11 @@
 
 		<StackPanel>
 
-			<CheckBox Name="chkFullPath" Content="Search Full Path" IsChecked="{Binding Data.FullPath}"
-						  ToolTip="If checked, the entire file path is searched for the match string."/>
+			<CheckBox Name="chkFullPath" Content="{x:Static r:CustomSearchStrings.match_name_full_opt}" IsChecked="{Binding Data.FullPath}"
+						  ToolTip="{x:Static r:CustomSearchStrings.match_name_full_tip}"/>
 			<StackPanel Orientation="Horizontal">
 
-				<TextBlock Style="{StaticResource infoText}" Text="File/Dictory Name contains: "/>
+				<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.match_name_prompt}"/>
 				<TextBox Style="{StaticResource SimpleTextInput}" Text="{Binding Path=Data.MatchString}" />
 				
 			</StackPanel>
@@ -161,14 +144,14 @@
 		<StackPanel>
 
 			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="Test Mode: " Style="{StaticResource infoText}" />
+				<TextBlock Text="{x:Static r:CustomSearchStrings.match_reg_mode_opt}" Style="{StaticResource infoText}" />
 				<ComboBox Name="comboTestMode" ItemsSource="{mvvm:EnumSource EnumType={x:Type local:FileNameSearchMode} }"
 					  SelectedItem="{Binding Data.Mode}"/>
 			</StackPanel>
 
 			<StackPanel Orientation="Vertical">
 
-			<TextBlock Style="{StaticResource infoText}" Text="Test Expression: "/>
+			<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.match_reg_prompt}"/>
 			<TextBox Style="{StaticResource SimpleTextInput}" Text="{Binding Path=Data.TestExpression}" MinWidth="240"/>
 		</StackPanel>
 
@@ -182,7 +165,7 @@
 
 			<StackPanel x:Name="ContentSizeRange" Orientation="Horizontal" Margin="16,4,0,8">
                 <StackPanel x:Name="MinSizePanel">
-					<TextBlock x:Name="LblMinSize" Style="{StaticResource infoText}" Text="Min Size (bytes): "/>
+					<TextBlock x:Name="LblMinSize" Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.match_size_min_prompt}"/>
 					<TextBox Style="{StaticResource SimpleTextInput}" Width="120" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
 						<TextBox.Text>
 							<Binding ValidatesOnExceptions="true" Converter="{StaticResource SizeToString}" Path="Data.MinSize">
@@ -196,7 +179,7 @@
 
 				</StackPanel>
                 <StackPanel Margin="32,0,0,0">
-                    <TextBlock x:Name="LblMaxSize" Style="{StaticResource infoText}" Text="Max Size (bytes): "/>
+					<TextBlock x:Name="LblMaxSize" Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.match_size_max_prompt}"/>
 					<TextBox Style="{StaticResource SimpleTextInput}" Width="120" MaxLines="1"
                  Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
 						<TextBox.Text>
@@ -217,6 +200,24 @@
         
     </DataTemplate>
 
+	<mvvm:TypeTemplateSelector x:Key="matchTemplateSelector" TestProperty="Data">
+
+		<mvvm:TypeTemplateSelector.Templates>
+
+			<mvvm:TemplateDictionary>
+
+				<system:String x:Key="{x:Type local:SizeCondition}">sizeMatchTemplate</system:String>
+				<system:String x:Key="{x:Type local:IsFile}">isFileTemplate</system:String>
+				<system:String x:Key="{x:Type local:FileCount}">fileCountTemplate</system:String>
+				<system:String x:Key="{x:Type local:ExtensionCondition}">extensionTestTemplate</system:String>
+				<system:String x:Key="{x:Type local:IsDirectory}">isDirectoryTemplate</system:String>
+				<system:String x:Key="{x:Type local:NameContains}">nameContainsTemplate</system:String>
+				<system:String x:Key="{x:Type local:RegexTest}">regexTestTemplate</system:String>
+				<system:String x:Key="{x:Type local:EmptyCondition}">emptyDirTemplate</system:String>
+
+			</mvvm:TemplateDictionary>
+		</mvvm:TypeTemplateSelector.Templates>
+	</mvvm:TypeTemplateSelector>
 	
 	<DataTemplate x:Key="fileTestTemplate" DataType="{x:Type models:FileTestVM}">
 
@@ -231,28 +232,7 @@
                   ToolTip="{x:Static r:CustomSearchStrings.exclude_tip}"/>
 			<TextBlock x:Name="fldIncludeText" Text="{Binding Path=IncludeText}"/>
 
-				<ContentPresenter Content="{Binding}">
-					<ContentPresenter.ContentTemplateSelector>
-						<mvvm:TypeTemplateSelector TestProperty="Data">
-
-							<mvvm:TypeTemplateSelector.Templates>
-
-								<mvvm:TemplateDictionary>
-
-									<system:String x:Key="{x:Type local:SizeCondition}">sizeMatchTemplate</system:String>
-									<system:String x:Key="{x:Type local:IsFile}">isFileTemplate</system:String>
-									<system:String x:Key="{x:Type local:FileCount}">fileCountTemplate</system:String>
-									<system:String x:Key="{x:Type local:ExtensionCondition}">extensionTestTemplate</system:String>
-									<system:String x:Key="{x:Type local:IsDirectory}">isDirectoryTemplate</system:String>
-									<system:String x:Key="{x:Type local:NameContains}">nameContainsTemplate</system:String>
-									<system:String x:Key="{x:Type local:RegexTest}">regexTestTemplate</system:String>
-									<system:String x:Key="{x:Type local:EmptyCondition}">emptyDirTemplate</system:String>
-									
-								</mvvm:TemplateDictionary>
-							</mvvm:TypeTemplateSelector.Templates>
-						</mvvm:TypeTemplateSelector>
-					</ContentPresenter.ContentTemplateSelector>
-				</ContentPresenter>
+				<ContentPresenter Content="{Binding}" ContentTemplateSelector="{StaticResource matchTemplateSelector}"/>
 
 			</StackPanel>
 

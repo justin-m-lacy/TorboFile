@@ -61,6 +61,123 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Matched Files and Directories will be deleted. This action cannot be undone..
+        /// </summary>
+        public static string action_delete_msg {
+            get {
+                return ResourceManager.GetString("action_delete_msg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Recycle Bin will be emptied. This action cannot be undone..
+        /// </summary>
+        public static string action_empty_recycle_msg {
+            get {
+                return ResourceManager.GetString("action_empty_recycle_msg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Directories.
+        /// </summary>
+        public static string action_move_create_opt {
+            get {
+                return ResourceManager.GetString("action_move_create_opt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create any missing destination folders..
+        /// </summary>
+        public static string action_move_create_tip {
+            get {
+                return ResourceManager.GetString("action_move_create_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moves Files and Directories to the given location..
+        /// </summary>
+        public static string action_move_msg {
+            get {
+                return ResourceManager.GetString("action_move_msg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The destination entered is a Relative File Path. Files will be moved relative to their locations..
+        /// </summary>
+        public static string action_move_rel_msg {
+            get {
+                return ResourceManager.GetString("action_move_rel_msg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Matched Files and Directories will be moved to the Recycle Bin..
+        /// </summary>
+        public static string action_recycle_msg {
+            get {
+                return ResourceManager.GetString("action_recycle_msg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace String:.
+        /// </summary>
+        public static string action_regex_dst {
+            get {
+                return ResourceManager.GetString("action_regex_dst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename all matches of the regular expression in the file or directory name by the given replacement string..
+        /// </summary>
+        public static string action_regex_msg {
+            get {
+                return ResourceManager.GetString("action_regex_msg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Expression:.
+        /// </summary>
+        public static string action_regex_src {
+            get {
+                return ResourceManager.GetString("action_regex_src", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace:.
+        /// </summary>
+        public static string action_rename_dst {
+            get {
+                return ResourceManager.GetString("action_rename_dst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename all occurances of the given string in a file or directory name..
+        /// </summary>
+        public static string action_rename_msg {
+            get {
+                return ResourceManager.GetString("action_rename_msg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search:.
+        /// </summary>
+        public static string action_rename_src {
+            get {
+                return ResourceManager.GetString("action_rename_src", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exclude Matches.
         /// </summary>
         public static string exclude_option {
@@ -192,6 +309,69 @@ namespace TorboFile.Properties {
         public static string match_ext_tip {
             get {
                 return ResourceManager.GetString("match_ext_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Full Path.
+        /// </summary>
+        public static string match_name_full_opt {
+            get {
+                return ResourceManager.GetString("match_name_full_opt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If checked, the entire file path is searched for the match string..
+        /// </summary>
+        public static string match_name_full_tip {
+            get {
+                return ResourceManager.GetString("match_name_full_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File/Dictory Name contains:.
+        /// </summary>
+        public static string match_name_prompt {
+            get {
+                return ResourceManager.GetString("match_name_prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Mode:.
+        /// </summary>
+        public static string match_reg_mode_opt {
+            get {
+                return ResourceManager.GetString("match_reg_mode_opt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Expression:.
+        /// </summary>
+        public static string match_reg_prompt {
+            get {
+                return ResourceManager.GetString("match_reg_prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Size (bytes):.
+        /// </summary>
+        public static string match_size_max_prompt {
+            get {
+                return ResourceManager.GetString("match_size_max_prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Size (bytes):.
+        /// </summary>
+        public static string match_size_min_prompt {
+            get {
+                return ResourceManager.GetString("match_size_min_prompt", resourceCulture);
             }
         }
     }

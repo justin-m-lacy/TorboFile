@@ -47,8 +47,8 @@ namespace TorboFile.Properties {
 				this.lastDirectory = string.Empty;
 			}
 			
-			Console.WriteLine( "DELETE RANGE: " + deleteRange.MinSize + " -> " + deleteRange.MaxSize );
-			Console.WriteLine( "PRESERVE RANGE: " + preserveRange.MinSize + " -> " + preserveRange.MaxSize );
+			//Console.WriteLine( "DELETE RANGE: " + deleteRange.MinSize + " -> " + deleteRange.MaxSize );
+			//Console.WriteLine( "PRESERVE RANGE: " + preserveRange.MinSize + " -> " + preserveRange.MaxSize );
 
 		}
 

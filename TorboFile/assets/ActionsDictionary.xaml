@@ -3,6 +3,7 @@
                     xmlns:actions="clr-namespace:Lemur.Operations.FileMatching.Actions"
                     xmlns:actionmodels="clr-namespace:Lemur.Operations.FileMatching.Models"
                     xmlns:convert="clr-namespace:Lemur.Windows.Converters"
+					xmlns:r="clr-namespace:TorboFile.Properties"
                     xmlns:mvvm="clr-namespace:Lemur.Windows.MVVM"
                     xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
 					xmlns:system="clr-namespace:System;assembly=mscorlib">
@@ -15,13 +16,13 @@
 	
 	<DataTemplate x:Key="fileDeleteTemplate" DataType="{x:Type mvvm:DataObjectVM}">
 
-		<TextBlock Style="{StaticResource infoText}" Text="Matched Files and Directories will be deleted. This action cannot be undone." />
+		<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.action_delete_msg}" />
 
 	</DataTemplate>
 
 	<DataTemplate x:Key="recycleTemplate" DataType="{x:Type mvvm:DataObjectVM}">
 
-		<TextBlock Style="{StaticResource infoText}" Text="Matched Files and Directories will be moved to the Recycle Bin." />
+		<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.action_recycle_msg}" />
 
 	</DataTemplate>
 
@@ -29,10 +30,10 @@
 
 		<StackPanel>
 
-			<TextBlock Style="{StaticResource infoText}" Text="Moves Files and Directories to the given location." />
+			<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.action_move_msg}" />
 
-			<CheckBox Style="{StaticResource chkOption}" IsChecked="{Binding Property[CreateDirs]}" Content="Create Directories"
-					  ToolTip="Create any missing destination folders."/>
+			<CheckBox Style="{StaticResource chkOption}" IsChecked="{Binding Property[CreateDirs]}" Content="{x:Static r:CustomSearchStrings.action_move_create_opt}"
+					  ToolTip="{x:Static r:CustomSearchStrings.action_move_create_tip}"/>
 
 			<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 				<!--<TextBlock Style="{StaticResource infoText}" Text="Destination: " />-->
@@ -44,7 +45,7 @@
 					Text="{Binding Destination, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
 			</StackPanel>
 			<TextBlock Style="{StaticResource infoText}"
-					   Text="The destination entered is a Relative File Path. Files will be moved relative to their locations."
+					   Text="{x:Static r:CustomSearchStrings.action_move_rel_msg}"
 					   Visibility="{Binding IsRelative, Converter={StaticResource BoolVisibility}}"
 			/>
 		</StackPanel>
@@ -52,18 +53,18 @@
 	</DataTemplate>
 
 	<DataTemplate x:Key="emptyRecycleTemplate" DataType="{x:Type mvvm:DataObjectVM}">
-		<TextBlock Style="{StaticResource infoText}" Text="The Recycle Bin will be emptied. This action cannot be undone." />
+		<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.action_empty_recycle_msg}" />
 	</DataTemplate>
 	
 	<DataTemplate x:Key="nameReplaceTemplate" DataType="{x:Type mvvm:DataObjectVM}">
 
 		<StackPanel>
-			<TextBlock Style="{StaticResource infoText}" Text="Rename all occurances of the given string in a file or directory name." />
+			<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.action_rename_msg}" />
 
 			<StackPanel Orientation="Horizontal">
-				<TextBlock Style="{StaticResource infoText}" Text="Search: "/>
+				<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.action_rename_src}"/>
 				<TextBox Name="fldSearch" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.SearchString}" />
-				<TextBlock Style="{StaticResource infoText}" Text="Replace: " />
+				<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.action_rename_dst}" />
 				<TextBox Name="fldReplace" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.ReplaceString}" />
 			</StackPanel>
 		</StackPanel>
@@ -74,13 +75,12 @@
 
 		<StackPanel>
 			<TextBlock Style="{StaticResource infoText}"
-					   Text="Rename all matches of the regular expression in the file or directory name by the given
-					   replacement string." />
+					   Text="{x:Static r:CustomSearchStrings.action_regex_msg}" />
 
 			<StackPanel Orientation="Horizontal">
-				<TextBlock Style="{StaticResource infoText}" Text="Search Expression: "/>
+				<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.action_regex_src}"/>
 				<TextBox Name="fldSearch" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.ReplaceRule, Converter={StaticResource RegexConverter}}" />
-				<TextBlock Style="{StaticResource infoText}" Text="Replace String: " />
+				<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.action_regex_dst}" />
 				<TextBox Name="fldReplace" Style="{StaticResource TextInputTemplate}" Text="{Binding Data.ReplaceString}" />
 			</StackPanel>
 
@@ -88,6 +88,27 @@
 
 	</DataTemplate>
 
+	<mvvm:TemplateSelector x:Key="actionTemplateSelector" KeyPath="DataType">
+		<mvvm:TemplateSelector.Templates>
+
+			<collections:Hashtable>
+				<system:String x:Key="{x:Type actions:FileDeleteAction}">fileDeleteTemplate</system:String>
+				<system:String x:Key="{x:Type actions:RecycleAction}">recycleTemplate</system:String>
+
+				<system:String x:Key="{x:Type actions:MoveFileAction}">moveFileTemplate</system:String>
+
+				<system:String x:Key="{x:Type actions:EmptyRecycleBin}">emptyRecycleTemplate</system:String>
+
+				<system:String x:Key="{x:Type actions:NameReplace}">nameReplaceTemplate</system:String>
+
+				<system:String x:Key="{x:Type actions:RegexReplace}">regexReplaceTemplate</system:String>
+
+			</collections:Hashtable>
+
+
+		</mvvm:TemplateSelector.Templates>
+	</mvvm:TemplateSelector>
+	
 	<DataTemplate x:Key="fileActionTemplate" DataType="{x:Type mvvm:DataObjectVM}">
 
 		<Border Style="{StaticResource listItemBorder}">
@@ -98,31 +119,9 @@
 			<TextBlock x:Name="fldDesc" Text="{Binding Path=Desc}"
 					   Visibility="{Binding Path=Desc, Converter={StaticResource NonNullToVisible}}" />
 
-			<ContentPresenter Content="{Binding}">
-					<ContentPresenter.ContentTemplateSelector>
-						<mvvm:TemplateSelector KeyPath="DataType">
-							<mvvm:TemplateSelector.Templates>
+				<ContentPresenter Content="{Binding}" ContentTemplateSelector="{StaticResource actionTemplateSelector}">
 
-								<collections:Hashtable>
-									<system:String x:Key="{x:Type actions:FileDeleteAction}">fileDeleteTemplate</system:String>
-									<system:String x:Key="{x:Type actions:RecycleAction}">recycleTemplate</system:String>
-
-									<system:String x:Key="{x:Type actions:MoveFileAction}">moveFileTemplate</system:String>
-
-									<system:String x:Key="{x:Type actions:EmptyRecycleBin}">emptyRecycleTemplate</system:String>
-
-									<system:String x:Key="{x:Type actions:NameReplace}">nameReplaceTemplate</system:String>
-
-									<system:String x:Key="{x:Type actions:RegexReplace}">regexReplaceTemplate</system:String>
-									
-								</collections:Hashtable>
-
-
-							</mvvm:TemplateSelector.Templates>
-						</mvvm:TemplateSelector>
-					</ContentPresenter.ContentTemplateSelector>
-	
-			</ContentPresenter>
+				</ContentPresenter>
 
 		</StackPanel>
 		</Border>
