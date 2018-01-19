@@ -185,7 +185,6 @@ namespace TorboFile.ViewModels.Main {
 			} else {
 				//Console.WriteLine( "FOUND RESULTS" );
 			}
-
 		} //
 
 		private void MatchFinder_OnMatchFound( FileSystemInfo obj ) {

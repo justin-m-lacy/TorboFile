@@ -8,8 +8,7 @@
              xmlns:convert="clr-namespace:Lemur.Windows.Converters"
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:TorboFile.View.Controls"
-             xmlns:model="clr-namespace:TorboFile.ViewModels"
-             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+			 xmlns:r="clr-namespace:TorboFile.Properties"
              xmlns:settings="clr-namespace:TorboFile.Properties"
             >
 
@@ -67,12 +66,12 @@
         <!-- GRID LEFT SIDE -->
         <DockPanel Name="GridLeftPanel" Grid.Column="0" Grid.Row="0" Margin="0,0,0,8">
 
-            <TextBlock x:Name="LblOptions" Text="Search Options:" FontSize="16" DockPanel.Dock="Top" />
+            <TextBlock x:Name="LblOptions" Text="{x:Static r:MainStrings.COPIES_OPTIONS_MSG}" FontSize="16" DockPanel.Dock="Top" />
 
             <DockPanel Name="SettingsPanel" DataContext="{x:Static settings:FindCopiesSettings.Default}"
                       DockPanel.Dock="Top" Margin="0,4,0,4" >
 
-                <CheckBox x:Name="ChkUseSizeRange" Content="Use Size Range" DockPanel.Dock="Top"
+				<CheckBox x:Name="ChkUseSizeRange" Content="{x:Static r:MainStrings.COPIES_SIZE_OPT}" DockPanel.Dock="Top"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Width="110"
                   IsChecked="{Binding useSizeRange}" />
 
@@ -80,11 +79,11 @@
                             Margin="16,4,0,8" DockPanel.Dock="Top"
                     Visibility="{Binding ElementName=ChkUseSizeRange, Path=IsChecked, Converter={StaticResource BoolVisibility}}">
                     <StackPanel x:Name="MinSizePanel">
-                        <Label x:Name="LblMinSize" Content="Min Size (bytes):" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
+						<Label x:Name="LblMinSize" Content="{x:Static r:MainStrings.COPIES_SIZE_MIN}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
                         <lerp:ByteTextBox x:Name="FldMinSize" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" MaxLength="0" IsUndoEnabled="True" UndoLimit="3"/>
                     </StackPanel>
                     <StackPanel Margin="32,0,0,0">
-                        <Label x:Name="LblMaxSize" Content="Max Size (bytes):" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
+						<Label x:Name="LblMaxSize" Content="{x:Static r:MainStrings.COPIES_SIZE_MAX}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
                         <lerp:ByteTextBox x:Name="FldMaxSize" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" />
                     </StackPanel>
 
@@ -92,16 +91,16 @@
 
                 <StackPanel DockPanel.Dock="Top" Margin="0,4,0,4">
 
-                    <TextBlock x:Name="LblInclude" Text="Only Include these file types: (separate file extensions with ';')" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332"/>
+                    <TextBlock x:Name="LblInclude" Text="{x:Static r:MainStrings.COPIES_INCLUDE_PROMPT}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332"/>
                     <TextBox x:Name="FldInclude" Height="23" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"
                          Text="{Binding IncludeExtensions}"
-                         TextWrapping="NoWrap" Width="332" ToolTip="Separate each file extension with &quot;;&quot;">
+                         TextWrapping="NoWrap" Width="332" ToolTip="{x:Static r:MainStrings.COPIES_EXT_TIP}">
                     </TextBox>
 
-                    <Label x:Name="LblExclude" Content="Exclude these file types: (separate file extensions with ';')" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332"/>
+					<Label x:Name="LblExclude" Content="{x:Static r:MainStrings.COPIES_EXCLUDE_PROMPT}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332"/>
                     <TextBox x:Name="FldExclude" Height="23" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"
                          Text="{Binding ExcludeExtensions}"
-                         TextWrapping="Wrap" Width="332" ToolTip="Separate each file extension with &quot;;&quot;">
+                         TextWrapping="Wrap" Width="332" ToolTip="{x:Static r:MainStrings.COPIES_EXT_TIP}">
                     </TextBox>
 
                 </StackPanel>

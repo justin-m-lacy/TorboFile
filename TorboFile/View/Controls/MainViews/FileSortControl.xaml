@@ -6,11 +6,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TorboFile.View.Controls"
              mc:Ignorable="d"
-             xmlns:models="clr-namespace:TorboFile.ViewModels"
-             xmlns:controls="clr-namespace:TorboFile.View.Controls"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:mime="clr-namespace:Lemur.Windows"
-             xmlns:effects="clr-namespace:TorboFile"
              xmlns:categories="clr-namespace:TorboFile.Categories"
              d:DesignHeight="340" d:DesignWidth="677" Loaded="UserControl_Loaded" Focusable="True">
 
@@ -153,7 +148,7 @@
                     <Image Source="/TorboFile;component/assets/images/document-preview.png"/>
 
                 </Button>
-                <Button x:Name="BtnShowExternal" Style="{StaticResource StdButton}" Command="{Binding FilePreview.CmdShowExternal}"
+                <Button x:Name="BtnShowExternal" Style="{StaticResource StdButton}" Command="{Binding FilePreview.CmdShowLocation}"
                         ToolTip="Show in Explorer" Margin="2,0,4,0">
 
                     <Image Source="/TorboFile;component/assets/images/large/folder.png"/>

@@ -1,20 +1,20 @@
-﻿using Lemur.Windows;
-using Lemur.Windows.MVVM;
+﻿using Lemur.Windows.MVVM;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+using System.IO;
+using Lemur.Windows;
 
 namespace TorboFile.ViewModels {
 
 	/// <summary>
-	/// Model for previwing a File.
+	/// CURRENTLY UNFINISHED.
+	/// Wraps a string file path with additional properties.
+	/// Supposed to be more usable than FileSystemInfo.
 	/// </summary>
-	public class FilePreviewVM : ViewModelBase {
+	public class FileVM : DataObjectVM {
 
 		#region COMMANDS
 
@@ -23,12 +23,13 @@ namespace TorboFile.ViewModels {
 		/// Open the previewed file in the System explorer.
 		/// </summary>
 		public RelayCommand CmdOpenExternal {
-			get { return this._cmdOpenExternal ?? ( this._cmdOpenExternal = new RelayCommand(
-				() => {
+			get {
+				return this._cmdOpenExternal ?? ( this._cmdOpenExternal = new RelayCommand(
+			  () => {
 
-					App.Instance.OpenExternalAsync( this.FilePath );
+				  App.Instance.OpenExternalAsync( this.FullPath );
 
-				} ) );
+			  } ) );
 			}
 		} //
 
@@ -41,7 +42,7 @@ namespace TorboFile.ViewModels {
 				return this._CmdShowLocation ?? ( this._CmdShowLocation = new RelayCommand(
 			  () => {
 
-				  AppUtils.ShowExternalAsync( this.FilePath );
+				  AppUtils.ShowExternalAsync( this.FullPath );
 
 			  } ) );
 			}
@@ -60,7 +61,7 @@ namespace TorboFile.ViewModels {
 						this.MimeRoot = MimeUtils.Unknown;
 					}
 				) );
-	
+
 			}
 
 		}
@@ -70,17 +71,21 @@ namespace TorboFile.ViewModels {
 		/// Changes the MimeRoot to attempt viewing the file as a different type.
 		/// </summary>
 		public RelayCommand<string> CommandViewAs {
-			get { return this._cmdViewAs ?? ( this._cmdViewAs = new RelayCommand<string>(
+			get {
+				return this._cmdViewAs ?? ( this._cmdViewAs = new RelayCommand<string>(
 
-				( string s ) => {
-					this.MimeRoot = s; }
+			  ( string s ) => {
+				  this.MimeRoot = s;
+			  }
 
-			) ); }
+		  ) );
+			}
 		}
 
 		#endregion
 
-		private string mimeStem;
+		#region PROPERTIES
+
 		/// <summary>
 		/// Stem portion of a Mimetype: root/stem
 		/// </summary>
@@ -93,8 +98,8 @@ namespace TorboFile.ViewModels {
 				}
 			}
 		}
+		private string mimeStem;
 
-		private string mimeRoot;
 		/// <summary>
 		/// Root portion of a mime-type: root/stem
 		/// </summary>
@@ -109,12 +114,12 @@ namespace TorboFile.ViewModels {
 					//Console.WriteLine( "Mime Change notification." );
 					this.NotifyPropertyChanged();
 				}
-				
+
 			}
 
 		}
+		private string mimeRoot;
 
-		private string mime;
 		/// <summary>
 		/// The complete mime-type string of the file being viewed.
 		/// </summary>
@@ -127,7 +132,7 @@ namespace TorboFile.ViewModels {
 
 					this.mime = value;
 					if( string.IsNullOrEmpty( value ) ) {
-					
+
 						this.MimeRoot = this.MimeStem = string.Empty;
 					} else {
 
@@ -142,13 +147,15 @@ namespace TorboFile.ViewModels {
 				}
 				this.NotifyPropertyChanged();
 			}
+
 		}
+		private string mime;
 
 		/// <summary>
 		/// Returns the extension portion of the file name.
 		/// </summary>
 		public string Extension {
-			get { return Path.GetExtension( this._filePath ); }
+			get { return Path.GetExtension( this._fullPath ); }
 		}
 
 		/// <summary>
@@ -156,48 +163,31 @@ namespace TorboFile.ViewModels {
 		/// </summary>
 		public string FileName {
 			get {
-				return Path.GetFileName( this._filePath );
+				return Path.GetFileName( this._fullPath );
 			}
 		}
 
-		/*private bool _triggerClose;
-		public bool TriggerClose {
-			get { return this._triggerClose; }
-			set {
-				if( value == true ) {
-					this._triggerClose = true;
-					this.NotifyPropertyChanged();
-					this._triggerClose = false;
-				}
-			}
-		}*/
+		#endregion
 
 		/// <summary>
 		/// Name of the FilePath property.
 		/// </summary>
 		public const string FilePathPropertyName = "FilePath";
+		
 
 		/// <summary>
-		/// Path to the file being previewed.
+		/// Complete path to the file or directory.
 		/// </summary>
-		private string _filePath;
-
-		/// <summary>
-		/// File path of the file being previewed.
-		/// Setting the path attempts to update the preview with the new file.
-		/// </summary>
-		public string FilePath {
+		public string FullPath {
 			get {
-				return this._filePath;
+				return this._fullPath;
 			}
 			set {
 
-				if( value != this._filePath ) {
-	
-					this._filePath = value;
-					this.FileMime = MimeUtils.GetFileMime( this._filePath, null );
+				if( value != this._fullPath ) {
 
-					//Console.WriteLine( "FilePreviewModel: File Path: " + value );
+					this._fullPath = value;
+					this.FileMime = MimeUtils.GetFileMime( this._fullPath, null );
 
 					this.NotifyPropertyChanged( "FileName" );
 					this.NotifyPropertyChanged();
@@ -208,30 +198,124 @@ namespace TorboFile.ViewModels {
 				}
 
 			} // set()
+
+		}
+
+		private string _fullPath;
+
+		/// <summary>
+		/// Underlying file attributes.
+		/// </summary>
+		private FileAttributes _attrs;
+		/// <summary>
+		/// Mark that attributes were read.
+		/// </summary>
+		private bool _readAttrs;
+
+		/// <summary>
+		/// FileSystemInfo at the path.
+		/// </summary>
+		private FileSystemInfo _info;
+
+		public long Size {
+
+			get {
+
+				long size;
+				if( !this.TryGetCache( "Size", out size ) ) {
+
+					if( this.IsDirectory ) {
+						size = 0;
+					} else {
+						size = new FileInfo( this._fullPath ).Length;
+					}
+					
+					this.CacheProp( "Size", size );
+
+				}
+				return size;
+
+			}
+
+		}
+
+		/// <summary>
+		/// IsFile Property.
+		/// </summary>
+		public bool IsFile {
+
+			get {
+
+				if( !this._readAttrs ) {
+					this.ReadAttributes();
+				}
+				return !this._attrs.HasFlag( FileAttributes.Directory );
+
+			}
+
+		}
+
+		/// <summary>
+		/// IsDirectory Property.
+		/// </summary>
+		public bool IsDirectory {
+
+			get {
+
+				if( !this._readAttrs ) {
+					this.ReadAttributes();
+				}
+				return this._attrs.HasFlag( FileAttributes.Directory );
+
+			}
+
 		}
 
 		/// <summary>
 		/// Returns the text of the current file.
 		/// </summary>
 		public string Text {
-			get { return this.TryReadFile(); }
+
+			get {
+
+				string text;
+				if( !this.TryGetCache( "Text", out text ) ) {
+					text = this.ReadText();
+					this.CacheProp( "Text", text );
+				}
+
+				return text;
+
+			}
+
 		}
 
-		private string TryReadFile() {
+		private void ReadAttributes() {
+			this._attrs = File.GetAttributes( this._fullPath );
+			this._readAttrs = true;
+		}
 
-			if( string.IsNullOrEmpty( this._filePath ) ) {
+		private string ReadText() {
+
+			if( string.IsNullOrEmpty( this._fullPath ) ) {
 				return string.Empty;
 			}
 
 			try {
 
-				string text = File.ReadAllText( this._filePath );
+				string text = File.ReadAllText( this._fullPath );
 				return text;
 
 			} catch( Exception ) {
 			}
 
 			return string.Empty;
+
+		}
+
+		public FileVM( string path ) : base( path, true ) {
+
+			this._fullPath = path;
 
 		}
 

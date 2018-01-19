@@ -250,7 +250,7 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Match directories which contain a given number of sub-files.&amp;#x0a;Files are also matched, unless a Directory-Only condition is added..
+        ///   Looks up a localized string similar to Match directories which contain a given number of sub-files. Files are also matched, unless a Directory-Only condition is added..
         /// </summary>
         public static string match_count_prompt {
             get {

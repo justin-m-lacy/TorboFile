@@ -85,7 +85,7 @@
                 <Label Style="{StaticResource SettingHeader}">Recursive Search:</Label>
                 <CheckBox x:Name="ChkDuplicateRecursive" Content="Search All Subfolders" Style="{StaticResource SettingControl}" IsChecked="{Binding recursive}" />
                 <Label Style="{StaticResource SettingHeader}">Search File Extensions:</Label>
-                <CheckBox x:Name="ChkDuplicateSaveExtensions" Style="{StaticResource SettingControl}" IsChecked="{Binding rememberExtensions}">Save Search File Extensions</CheckBox>
+                <CheckBox x:Name="ChkDuplicateSaveExtensions" Style="{StaticResource SettingControl}" IsChecked="{Binding rememberExtensions}">Remember Search File Extensions</CheckBox>
                 </StackPanel>
             </TabItem>
         

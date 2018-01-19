@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:TorboFile.View.Controls"
              xmlns:categories="clr-namespace:TorboFile.Categories"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:r="clr-namespace:TorboFile.Properties"
              xmlns:convert="clr-namespace:Lemur.Windows.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="200" Height="Auto">
@@ -65,7 +66,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Set Name" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="{x:Static r:MainStrings.SET_NAME_HEADER}" DisplayMemberBinding="{Binding Name}" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -100,9 +101,9 @@
                          SelectionMode="Single">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Category Name" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Category Path" DisplayMemberBinding="{Binding DirectoryPath}"/>
-                        <GridViewColumn Header="Key Binding" DisplayMemberBinding="{Binding Gesture}" />
+                        <GridViewColumn Header="{x:Static r:MainStrings.CATEGORY_NAME}" DisplayMemberBinding="{Binding Name}" />
+						<GridViewColumn Header="{x:Static r:MainStrings.CATEGORY_PATH}" DisplayMemberBinding="{Binding DirectoryPath}"/>
+						<GridViewColumn Header="{x:Static r:MainStrings.KEY_BINDING_HEADER}" DisplayMemberBinding="{Binding Gesture}" />
                     </GridView>
                 </ListView.View>
                 <i:Interaction.Triggers>

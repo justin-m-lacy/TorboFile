@@ -268,7 +268,7 @@ namespace TorboFile.ViewModels {
 
 				foreach( FileMatchGroup group in e.NewItems ) {
 
-					Console.WriteLine( "Adding group: " + group.FileSize );
+					//Console.WriteLine( "Adding group: " + group.FileSize );
 					long groupFileSize = group.FileSize;
 
 					// Check all but the first element.

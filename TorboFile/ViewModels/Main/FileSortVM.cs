@@ -69,11 +69,11 @@ namespace TorboFile.ViewModels {
 			}
 		}
 
-		private RelayCommand _cmdShowExternal;
-		public RelayCommand CmdShowExternal {
+		private RelayCommand _CmdShowLocation;
+		public RelayCommand CmdShowLocation {
 
 			get {
-				return this._cmdShowExternal ?? ( this._cmdShowExternal = new RelayCommand(
+				return this._CmdShowLocation ?? ( this._CmdShowLocation = new RelayCommand(
 					() => { AppUtils.ShowExternalAsync( this.CurrentPath ); }
 				) );
 			}

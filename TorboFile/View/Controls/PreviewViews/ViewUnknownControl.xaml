@@ -4,49 +4,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TorboFile.View.Controls"
+             xmlns:r="clr-namespace:TorboFile.Properties"
              mc:Ignorable="d" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">Unknown File Type</TextBlock>
+		<TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{x:Static r:MainStrings.PREVIEW_UNKNOWN_MSG}"/>
+		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+			<TextBlock Text="{x:Static r:MainStrings.FILE_NAME_MSG}"/>
+			<TextBlock Text="{Binding FileName}" />
+		</StackPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Label>File:</Label>
-            <Label Content="{Binding FileName}"></Label>
-        </StackPanel>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Label>Mime Type:</Label>
-            <Label Content="{Binding FileMime}" />
+			<TextBlock Text="{x:Static r:MainStrings.PREVIEW_MIME_MSG}" />
+            <TextBlock Text="{Binding FileMime}" />
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" Margin="0,32,0,32">
-            <TextBlock HorizontalAlignment="Center" Margin="0,4,0,4" Text="Try View As:"/>
+			<TextBlock HorizontalAlignment="Center" Margin="0,4,0,4" Text="{x:Static r:MainStrings.PREVIEW_TRY_VIEW_PROMPT}"/>
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource StdButton}" Command="{Binding CommandViewAs}" CommandParameter="video" Margin="2,0,2,0">
                     <DockPanel>
                         <Image DockPanel.Dock="Top"  Source="/TorboFile;component/assets/images/video-x-generic.png" Stretch="Uniform"/>
-                        <TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" DockPanel.Dock="Bottom" Text="Video"/>
+                        <TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" DockPanel.Dock="Bottom" Text="{x:Static r:MainStrings.VIDEO_TYPE_NAME}"/>
                     </DockPanel>
                 </Button>
                 <Button Style="{StaticResource StdButton}" Command="{Binding CommandViewAs}" CommandParameter="audio" Margin="2,0,2,0">
                     <DockPanel>
                         <Image DockPanel.Dock="Top"  Source="/TorboFile;component/assets/images/audio-x-generic.png"  Stretch="Uniform"/>
-                        <TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" DockPanel.Dock="Bottom" Text="Audio"/>
+						<TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" DockPanel.Dock="Bottom" Text="{x:Static r:MainStrings.AUDIO_TYPE_NAME}"/>
                     </DockPanel>
                 </Button>
                 <Button Style="{StaticResource StdButton}" Command="{Binding CommandViewAs}" CommandParameter="image" Margin="2,0,2,0">
                     <DockPanel>
                         <Image DockPanel.Dock="Top"  Source="/TorboFile;component/assets/images/image-x-generic.png" Stretch="Uniform"/>
-                        <TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" DockPanel.Dock="Bottom" Text="Image"/>
+						<TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" DockPanel.Dock="Bottom" Text="{x:Static r:MainStrings.IMAGE_TYPE_NAME}"/>
                     </DockPanel>
                 </Button>
                 <Button Style="{StaticResource StdButton}" Command="{Binding CommandViewAs}" CommandParameter="text" Margin="2,0,2,0">
                     <DockPanel>
                         <Image DockPanel.Dock="Top"  Source="/TorboFile;component/assets/images/text-x-generic.png" Stretch="Uniform"/>
-                        <TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" DockPanel.Dock="Bottom" Text="Text"/>
+						<TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" DockPanel.Dock="Bottom" Text="{x:Static r:MainStrings.TEXT_TYPE_NAME}"/>
                     </DockPanel>
                 </Button>
                 <Button Style="{StaticResource StdButton}" Command="{Binding CmdOpenExternal}" Margin="2,0,2,0">
                     <DockPanel>
                         <Image DockPanel.Dock="Top" Source="/TorboFile;component/assets/images/document-preview.png" Stretch="Uniform" Width="64" Height="64"/>
-                        <TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" DockPanel.Dock="Bottom" Text="Open External..."/>
+						<TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" DockPanel.Dock="Bottom" Text="{x:Static r:MainStrings.OPEN_EXTERNAL_PROMPT}"/>
                     </DockPanel>
                 </Button>
             </StackPanel>

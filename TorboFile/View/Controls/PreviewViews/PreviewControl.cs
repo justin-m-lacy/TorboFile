@@ -8,7 +8,10 @@ using System.Windows.Controls;
 
 namespace TorboFile.View.Controls {
 
-	public class PreviewControl : UserControl {
+	/// <summary>
+	/// Appears to be a base class for the various preview controls.
+	/// </summary>
+	public abstract class PreviewControl : UserControl {
 
 	/*	static public readonly DependencyProperty MediaShouldCloseProperty = DependencyProperty.Register(
 	"MediaShouldClose", typeof( bool ), typeof( PreviewControl ),

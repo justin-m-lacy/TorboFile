@@ -117,111 +117,137 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="action_delete_msg" xml:space="preserve">
-    <value>Matched Files and Directories will be deleted. This action cannot be undone.</value>
+  <data name="AUDIO_TYPE_NAME" xml:space="preserve">
+    <value>Audio</value>
   </data>
-  <data name="action_empty_recycle_msg" xml:space="preserve">
-    <value>The Recycle Bin will be emptied. This action cannot be undone.</value>
+  <data name="CATEGORIES_HEADER" xml:space="preserve">
+    <value>Categories:</value>
   </data>
-  <data name="action_move_create_opt" xml:space="preserve">
-    <value>Create Directories</value>
+  <data name="CATEGORY_HEADER" xml:space="preserve">
+    <value>Category</value>
   </data>
-  <data name="action_move_create_tip" xml:space="preserve">
-    <value>Create any missing destination folders.</value>
+  <data name="CATEGORY_NAME" xml:space="preserve">
+    <value>Category Name</value>
   </data>
-  <data name="action_move_msg" xml:space="preserve">
-    <value>Moves Files and Directories to the given location.</value>
+  <data name="CATEGORY_PATH" xml:space="preserve">
+    <value>Category Path</value>
   </data>
-  <data name="action_move_rel_msg" xml:space="preserve">
-    <value>The destination entered is a Relative File Path. Files will be moved relative to their locations.</value>
+  <data name="CATEGORY_SETS_HEADER" xml:space="preserve">
+    <value>Sets:</value>
   </data>
-  <data name="action_recycle_msg" xml:space="preserve">
-    <value>Matched Files and Directories will be moved to the Recycle Bin.</value>
+  <data name="CLEAN_DIRS_BEGIN_PROMPT" xml:space="preserve">
+    <value>Begin Clean</value>
   </data>
-  <data name="action_regex_dst" xml:space="preserve">
-    <value>Replace String:</value>
+  <data name="CLEAN_DIRS_EMPTY_OPT" xml:space="preserve">
+    <value>Remove Empty Files</value>
+    <comment>Remove empty files.</comment>
   </data>
-  <data name="action_regex_msg" xml:space="preserve">
-    <value>Rename all matches of the regular expression in the file or directory name by the given replacement string.</value>
+  <data name="CLEAN_DIRS_EMPTY_TIP" xml:space="preserve">
+    <value>Remove any files of Size 0. (File contains no data)</value>
   </data>
-  <data name="action_regex_src" xml:space="preserve">
-    <value>Search Expression:</value>
+  <data name="CLEAN_DIRS_MAX_MSG" xml:space="preserve">
+    <value>Max Size:</value>
   </data>
-  <data name="action_rename_dst" xml:space="preserve">
-    <value>Replace:</value>
+  <data name="CLEAN_DIRS_MIN_MSG" xml:space="preserve">
+    <value>Min Size:</value>
   </data>
-  <data name="action_rename_msg" xml:space="preserve">
-    <value>Rename all occurances of the given string in a file or directory name.</value>
-    <comment>Simple string replace</comment>
+  <data name="CLEAN_DIRS_MSG" xml:space="preserve">
+    <value>Select a folder to delete all empty sub-folders. If recursive is checked, folders containing only other folders, or unwanted files, are also removed.</value>
   </data>
-  <data name="action_rename_src" xml:space="preserve">
-    <value>Search:</value>
+  <data name="CLEAN_DIRS_RECURSIVE_OPT" xml:space="preserve">
+    <value>Recursive Clean</value>
   </data>
-  <data name="exclude_option" xml:space="preserve">
-    <value>Exclude Matches</value>
+  <data name="CLEAN_DIRS_RECURSIVE_TIP" xml:space="preserve">
+    <value>Include all subfolders of the chosen folder in the search.</value>
   </data>
-  <data name="exclude_tip" xml:space="preserve">
-    <value>If checked, only items that do NOT match this requirement will be included in results.</value>
+  <data name="CLEAN_DIRS_SIZE_OPT" xml:space="preserve">
+    <value>Delete files of size:</value>
   </data>
-  <data name="is_file_exclude" xml:space="preserve">
-    <value>Only directories will be included in the search results.</value>
+  <data name="CLEAN_DIRS_SIZE_TIP" xml:space="preserve">
+    <value>Check to delete any files found within the specified size range.</value>
   </data>
-  <data name="is_file_include" xml:space="preserve">
-    <value>Directories will be excluded from the search results.</value>
+  <data name="COPIES_DELETE_HEADER" xml:space="preserve">
+    <value>Deleted Files:</value>
   </data>
-  <data name="match_count_max_prompt" xml:space="preserve">
-    <value>Max Files:</value>
+  <data name="COPIES_DELETE_OPT" xml:space="preserve">
+    <value>Delete Permanently</value>
   </data>
-  <data name="match_count_max_tip" xml:space="preserve">
-    <value>Directories containing more files will not be matched."</value>
+  <data name="COPIES_EXCLUDE_PROMPT" xml:space="preserve">
+    <value>Exclude these file types: ( separate file extensions with ';' or ',' )</value>
   </data>
-  <data name="match_count_min_prompt" xml:space="preserve">
-    <value>Min Files:</value>
+  <data name="COPIES_EXT_HEADER" xml:space="preserve">
+    <value>Search File Extensions:</value>
   </data>
-  <data name="match_count_min_tip" xml:space="preserve">
-    <value>Directories containing fewer files will not be matched.</value>
+  <data name="COPIES_EXT_TIP" xml:space="preserve">
+    <value>List of file extensions separated by ';' or ','</value>
   </data>
-  <data name="match_count_prompt" xml:space="preserve">
-    <value>Match directories which contain a given number of sub-files. Files are also matched, unless a Directory-Only condition is added.</value>
+  <data name="COPIES_INCLUDE_PROMPT" xml:space="preserve">
+    <value>Only Include these file types: ( separate file extensions with ';' or ',' )</value>
   </data>
-  <data name="match_count_subdir_opt" xml:space="preserve">
-    <value>Subdirectories count against total.</value>
+  <data name="COPIES_MOVE_RECYCLE_OPT" xml:space="preserve">
+    <value>Move To Recycle Bin</value>
   </data>
-  <data name="match_empty_dir_exclude" xml:space="preserve">
-    <value>Empty directories will be excluded from the search.</value>
+  <data name="COPIES_OPTIONS_MSG" xml:space="preserve">
+    <value>Search Options:</value>
   </data>
-  <data name="match_empty_dir_include" xml:space="preserve">
-    <value>Empty directories will be included in the search.</value>
+  <data name="COPIES_RECURSIVE_HEADER" xml:space="preserve">
+    <value>Recursive Search:</value>
   </data>
-  <data name="match_empty_dir_title" xml:space="preserve">
-    <value>Empty Directories</value>
-    <comment>Match Empty Directories</comment>
+  <data name="COPIES_RECURSIVE_OPT" xml:space="preserve">
+    <value>Search Subfolders</value>
   </data>
-  <data name="match_ext_prompt" xml:space="preserve">
-    <value>Allowed File Extensions:</value>
+  <data name="COPIES_SAVE_EXT_OPT" xml:space="preserve">
+    <value>Remember Search File Extensions</value>
   </data>
-  <data name="match_ext_tip" xml:space="preserve">
-    <value>Separate extensions with ';' or ','</value>
-  </data>
-  <data name="match_name_full_opt" xml:space="preserve">
-    <value>Search Full Path</value>
-  </data>
-  <data name="match_name_full_tip" xml:space="preserve">
-    <value>If checked, the entire file path is searched for the match string.</value>
-  </data>
-  <data name="match_name_prompt" xml:space="preserve">
-    <value>File/Dictory Name contains:</value>
-  </data>
-  <data name="match_reg_mode_opt" xml:space="preserve">
-    <value>Test Mode:</value>
-  </data>
-  <data name="match_reg_prompt" xml:space="preserve">
-    <value>Test Expression:</value>
-  </data>
-  <data name="match_size_max_prompt" xml:space="preserve">
+  <data name="COPIES_SIZE_MAX" xml:space="preserve">
     <value>Max Size (bytes):</value>
   </data>
-  <data name="match_size_min_prompt" xml:space="preserve">
+  <data name="COPIES_SIZE_MIN" xml:space="preserve">
     <value>Min Size (bytes):</value>
+  </data>
+  <data name="COPIES_SIZE_OPT" xml:space="preserve">
+    <value>Use Size Range</value>
+  </data>
+  <data name="FILE_NAME_HEADER" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="FILE_NAME_MSG" xml:space="preserve">
+    <value>File:</value>
+  </data>
+  <data name="FILE_PATH_HEADER" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="FILE_SIZE_HEADER" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="IMAGE_TYPE_NAME" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="KEY_BINDING_HEADER" xml:space="preserve">
+    <value>Key Binding</value>
+  </data>
+  <data name="OPEN_EXTERNAL_PROMPT" xml:space="preserve">
+    <value>Open External...</value>
+  </data>
+  <data name="PREVIEW_MIME_MSG" xml:space="preserve">
+    <value>Mime Type:</value>
+  </data>
+  <data name="PREVIEW_TRY_VIEW_PROMPT" xml:space="preserve">
+    <value>Try View As:</value>
+  </data>
+  <data name="PREVIEW_UNKNOWN_MSG" xml:space="preserve">
+    <value>Unknown File Type</value>
+  </data>
+  <data name="SET_NAME_HEADER" xml:space="preserve">
+    <value>Set Name</value>
+  </data>
+  <data name="SET_NAME_PROMPT" xml:space="preserve">
+    <value>Set Name:</value>
+  </data>
+  <data name="TEXT_TYPE_NAME" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="VIDEO_TYPE_NAME" xml:space="preserve">
+    <value>Video</value>
   </data>
 </root>

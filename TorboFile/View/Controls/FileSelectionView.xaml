@@ -8,7 +8,8 @@
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              xmlns:convert="clr-namespace:Lemur.Windows.Converters"
              xmlns:models="clr-namespace:TorboFile.ViewModels"
-             mc:Ignorable="d" 
+			 xmlns:controls="clr-namespace:Lemur.Windows.Controls"
+			 mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
 	<Control.Resources>
@@ -28,7 +29,7 @@
             </Button>
             <Button DockPanel.Dock="Bottom" x:Name="BtnShow" Style="{StaticResource StdButton}"
                 MinHeight="32" MinWidth="32" Margin="2,0,2,2"
-                ToolTip="Show in Explorer" Command="{Binding CmdShowExternal}"
+                ToolTip="Show in Explorer" Command="{Binding CmdShowLocation}"
                 VerticalAlignment="Bottom" HorizontalAlignment="Right">
                 <Image Source="/TorboFile;component/assets/images/large/folder.png" MaxHeight="28" MaxWidth="28"  />
             </Button>
@@ -40,12 +41,12 @@
             </Button>
         </StackPanel>
 
-        <ListView DockPanel.Dock="Top" x:Name="ListResults" ItemsSource="{Binding Items, diag:PresentationTraceSources.TraceLevel=Low}"
+        <ListView DockPanel.Dock="Top" x:Name="ListResults" ItemsSource="{Binding Items}"
  GridViewColumnHeader.Click="ListResults_Click"
                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedItem}">
 
             <ListView.View>
-                <GridView>
+                <controls:CustomGridView AllowsColumnReorder="True">
                     <GridViewColumn Width="Auto">
 						<GridViewColumn.CellTemplate>
 							<DataTemplate>
@@ -53,9 +54,9 @@
 							</DataTemplate>
 						</GridViewColumn.CellTemplate>
 					</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Item.FullName}" Header="File" Width="Auto"></GridViewColumn>
+					<GridViewColumn DisplayMemberBinding="{Binding Item.FullName}" Header="File" Width="Auto" controls:CustomGridView.Visible="true"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Item.Length, Converter={StaticResource SizeToString}}" Header="Size" Width="Auto"></GridViewColumn>
-                </GridView>
+                </controls:CustomGridView>
             </ListView.View>
         </ListView>
 
