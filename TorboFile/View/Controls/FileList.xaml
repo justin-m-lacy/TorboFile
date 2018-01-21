@@ -7,32 +7,20 @@
 			 xmlns:controls="clr-namespace:Lemur.Windows.Controls"
 			 mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-	
+
 	<!-- Replaces FileSelectionView with a more versatile control. -->
 	<!-- Use FileListVM (or make this a template? ) -->
 
 	<DockPanel>
-		<StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+		<ItemsControl DockPanel.Dock="Bottom"
+					  ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=local:FileList}, Path=Buttons}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+		</ItemsControl>
 
-			<Button DockPanel.Dock="Bottom" x:Name="BtnOpen" Style="{StaticResource StdButton}"
-                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
-                ToolTip="Open in Explorer" Command="{Binding CmdOpenChecked}" Visibility="{Binding ShowOpenCmd, Converter={StaticResource BoolVisibility}}"
-                VerticalAlignment="Bottom" HorizontalAlignment="Right">
-				<Image Source="/TorboFile;component/assets/images/document-preview.png" MaxHeight="28" MaxWidth="28" />
-			</Button>
-			<Button DockPanel.Dock="Bottom" x:Name="BtnShow" Style="{StaticResource StdButton}"
-                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
-                ToolTip="Show in Explorer" Command="{Binding CmdShowLocation}" Visibility="{Binding ShowOpenLocationCmd, Converter={StaticResource BoolVisibility}}"
-                VerticalAlignment="Bottom" HorizontalAlignment="Right">
-				<Image Source="/TorboFile;component/assets/images/large/folder.png" MaxHeight="28" MaxWidth="28"  />
-			</Button>
-			<Button DockPanel.Dock="Bottom" x:Name="BtnDelete" Style="{StaticResource StdButton}"
-                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
-                ToolTip="Delete Selected" Command="{Binding CmdDelete}" Visibility="{Binding ShowDeleteCmd, Converter={StaticResource BoolVisibility}}"
-                VerticalAlignment="Bottom" HorizontalAlignment="Right">
-				<Image Source="/TorboFile;component/assets/images/dialog-close.png" MaxHeight="28" MaxWidth="28" />
-			</Button>
-		</StackPanel>
 
 		<ListView DockPanel.Dock="Top" x:Name="ListResults" ItemsSource="{Binding Items}"
                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedItem}">
@@ -47,19 +35,23 @@
 							</DataTemplate>
 						</GridViewColumn.CellTemplate>
 					</GridViewColumn>
-					<GridViewColumn DisplayMemberBinding="{Binding Item.FullName}"
+					<GridViewColumn DisplayMemberBinding="{Binding Path}"
 									controls:LMGridView.Visible="{Binding ShowPath}"
 									Header="File" Width="Auto"></GridViewColumn>
-					<GridViewColumn DisplayMemberBinding="{Binding Item.Length, Converter={StaticResource SizeToString}}"
+
+					<GridViewColumn DisplayMemberBinding="{Binding Size, Converter={StaticResource SizeToString}}"
 									controls:LMGridView.Visible="{Binding ShowSize}"
 									Header="Size" Width="Auto"></GridViewColumn>
-					<GridViewColumn DisplayMemberBinding="{Binding Item.Length}"
+
+					<GridViewColumn DisplayMemberBinding="{Binding CreateTime}"
 									controls:LMGridView.Visible="{Binding ShowCreateTime, StringFormat=dd-MM-yyyy }"
 									Header="Creation Date" Width="Auto"></GridViewColumn>
-					<GridViewColumn DisplayMemberBinding="{Binding Item.LastAccessTime}"
+
+					<GridViewColumn DisplayMemberBinding="{Binding AccessedTime}"
 									controls:LMGridView.Visible="{Binding ShowModifyTime, StringFormat=dd-MM-yyyy }"
 									Header="Modified Date" Width="Auto"></GridViewColumn>
-					<GridViewColumn DisplayMemberBinding="{Binding Item.Extension}"
+
+					<GridViewColumn DisplayMemberBinding="{Binding Extension}"
 									controls:LMGridView.Visible="{Binding ShowExtension}"
 									Header="Extension" Width="Auto"></GridViewColumn>
 				</controls:LMGridView>

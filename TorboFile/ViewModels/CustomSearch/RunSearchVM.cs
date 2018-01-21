@@ -75,7 +75,7 @@ namespace TorboFile.ViewModels.Main {
 		/// <summary>
 		/// Model of the results from a matching operation.
 		/// </summary>
-		public FileCheckListVM ResultsList {
+		public FileListVM ResultsList {
 
 			get { return this._resultsList; }
 
@@ -84,7 +84,7 @@ namespace TorboFile.ViewModels.Main {
 			}
 
 		}
-		private FileCheckListVM _resultsList;
+		private FileListVM _resultsList;
 
 		public bool HasCheckedItems {
 			get {
@@ -204,14 +204,17 @@ namespace TorboFile.ViewModels.Main {
 			return matchOp;
 		}
 	
-		private FileCheckListVM CreateResultsList() {
+		private FileListVM CreateResultsList() {
 
 			if( this.ResultsList != null ) {
 				ResultsList.Clear();
 				return this.ResultsList;
 			}
 
-			FileCheckListVM checkList = new FileCheckListVM();
+			FileListVM checkList = new FileListVM();
+			checkList.ShowOpenCmd = true;
+			checkList.ShowOpenLocationCmd = true;
+			checkList.ShowDeleteCmd = true;
 	
 			/// NOTE: Apparently a public interface member can be protected unless explicitly cast.
 			/// This seems insane to me.

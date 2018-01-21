@@ -166,8 +166,8 @@
     <Compile Include="ViewModels\CategoryManagerVM.cs" />
     <Compile Include="ViewModels\FileCheckListVM.cs" />
     <Compile Include="ViewModels\FileVM.cs" />
-    <Compile Include="ViewModels\Main\BuildSearchVM.cs" />
-    <Compile Include="ViewModels\Main\CustomSearchVM.cs" />
+    <Compile Include="ViewModels\CustomSearch\BuildSearchVM.cs" />
+    <Compile Include="ViewModels\CustomSearch\CustomSearchVM.cs" />
     <Compile Include="ViewModels\EditCategorySetVM.cs" />
     <Compile Include="ViewModels\Main\CleanFoldersModel.cs" />
     <Compile Include="ViewModels\FileDetailsVM.cs" />
@@ -175,7 +175,7 @@
     <Compile Include="ViewModels\Main\FindCopiesVM.cs" />
     <Compile Include="ViewModels\EditCategoryVM.cs" />
     <Compile Include="ViewModels\Main\MainVM.cs" />
-    <Compile Include="ViewModels\Main\RunSearchVM.cs" />
+    <Compile Include="ViewModels\CustomSearch\RunSearchVM.cs" />
     <Compile Include="ViewModels\TagFileModel.cs" />
     <Compile Include="View\Controls\FileList.xaml.cs">
       <DependentUpon>FileList.xaml</DependentUpon>
