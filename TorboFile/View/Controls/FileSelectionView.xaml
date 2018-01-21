@@ -46,7 +46,7 @@
                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedItem}">
 
             <ListView.View>
-                <controls:CustomGridView AllowsColumnReorder="True">
+                <controls:LMGridView AllowsColumnReorder="True" AutoColumnMenu="True">
                     <GridViewColumn Width="Auto">
 						<GridViewColumn.CellTemplate>
 							<DataTemplate>
@@ -54,9 +54,11 @@
 							</DataTemplate>
 						</GridViewColumn.CellTemplate>
 					</GridViewColumn>
-					<GridViewColumn DisplayMemberBinding="{Binding Item.FullName}" Header="File" Width="Auto" controls:CustomGridView.Visible="true"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Item.Length, Converter={StaticResource SizeToString}}" Header="Size" Width="Auto"></GridViewColumn>
-                </controls:CustomGridView>
+					<GridViewColumn DisplayMemberBinding="{Binding Item.FullName}"
+									Header="File" Width="Auto" controls:LMGridView.Visible="true"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Item.Length, Converter={StaticResource SizeToString}}"
+									Header="Size" Width="Auto"></GridViewColumn>
+                </controls:LMGridView>
             </ListView.View>
         </ListView>
 

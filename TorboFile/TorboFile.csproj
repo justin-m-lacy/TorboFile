@@ -165,7 +165,6 @@
     <Compile Include="Services\SystemMessageBox.cs" />
     <Compile Include="ViewModels\CategoryManagerVM.cs" />
     <Compile Include="ViewModels\FileCheckListVM.cs" />
-    <Compile Include="ViewModels\FileListVM.cs" />
     <Compile Include="ViewModels\FileVM.cs" />
     <Compile Include="ViewModels\Main\BuildSearchVM.cs" />
     <Compile Include="ViewModels\Main\CustomSearchVM.cs" />

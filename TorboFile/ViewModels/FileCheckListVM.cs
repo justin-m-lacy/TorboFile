@@ -24,9 +24,9 @@ namespace TorboFile.ViewModels {
 				return this._cmdOpenSelected ?? ( this._cmdOpenSelected = new RelayCommand(
 
 
-				() => {
+				async () => {
 
-					App.Instance.OpenExternalAsync( this.SelectedItem.Item.FullName );
+					await AppUtils.OpenExternalAsync( this.SelectedItem.Item.FullName );
 
 				}, this.HasSelectedItems )
 
@@ -52,7 +52,7 @@ namespace TorboFile.ViewModels {
 				() => {
 
 					string[] paths = this.Items.Where( ( item ) => { return item.IsChecked; } ).Select( ( item ) => { return item.Item.FullName; } ).ToArray();
-					App.Instance.OpenExternalAsync( paths );
+					AppUtils.OpenExternalAsync( paths );
 
 				}, this.HasCheckedItems
 

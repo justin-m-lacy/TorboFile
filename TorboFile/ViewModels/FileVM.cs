@@ -12,7 +12,7 @@ namespace TorboFile.ViewModels {
 	/// <summary>
 	/// CURRENTLY UNFINISHED.
 	/// Wraps a string file path with additional properties.
-	/// Supposed to be more usable than FileSystemInfo.
+	/// Supposed to be more versatile than FileSystemInfo.
 	/// </summary>
 	public class FileVM : DataObjectVM {
 
@@ -25,9 +25,9 @@ namespace TorboFile.ViewModels {
 		public RelayCommand CmdOpenExternal {
 			get {
 				return this._cmdOpenExternal ?? ( this._cmdOpenExternal = new RelayCommand(
-			  () => {
+			  async () => {
 
-				  App.Instance.OpenExternalAsync( this.FullPath );
+				  await AppUtils.OpenExternalAsync( this.FullPath );
 
 			  } ) );
 			}
@@ -211,11 +211,6 @@ namespace TorboFile.ViewModels {
 		/// Mark that attributes were read.
 		/// </summary>
 		private bool _readAttrs;
-
-		/// <summary>
-		/// FileSystemInfo at the path.
-		/// </summary>
-		private FileSystemInfo _info;
 
 		public long Size {
 

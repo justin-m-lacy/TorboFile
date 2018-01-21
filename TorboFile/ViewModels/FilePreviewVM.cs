@@ -24,9 +24,9 @@ namespace TorboFile.ViewModels {
 		/// </summary>
 		public RelayCommand CmdOpenExternal {
 			get { return this._cmdOpenExternal ?? ( this._cmdOpenExternal = new RelayCommand(
-				() => {
+				async () => {
 
-					App.Instance.OpenExternalAsync( this.FilePath );
+					await AppUtils.OpenExternalAsync( this.FilePath );
 
 				} ) );
 			}

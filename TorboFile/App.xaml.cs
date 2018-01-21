@@ -47,51 +47,7 @@ namespace TorboFile {
 			get { return this.categoryManager; }
 		}
 
-		/// <summary>
-		// Attempts to open a file externally. All Exceptions are caught and ignored.
-		/// </summary>
-		/// <param name="path"></param>
-		public async void OpenExternalAsync( string path ) {
 
-			await Task.Run( () => {
-				if( string.IsNullOrEmpty( path ) ) {
-					return;
-				}
-				try {
-					System.Diagnostics.Process.Start( path );
-				} catch( Exception ) {
-				}
-			} );
-
-		}
-
-		/// <summary>
-		/// Attempt to open a list of files externally.
-		/// All exceptions are caught by the function.
-		/// </summary>
-		/// <param name="paths"></param>
-		public async void OpenExternalAsync( string[] paths ) {
-
-			await Task.Run( () => {
-
-				foreach( string path in paths ) {
-					if( string.IsNullOrEmpty( path ) ) {
-						continue;
-					}
-					if( !File.Exists( path ) ) {
-						continue;
-					}
-					try {
-						System.Diagnostics.Process.Start( path );
-					} catch( Exception ) {
-					}
-				}
-
-			}
-
-			);
-
-		}
 
 		private void Application_Startup( object sender, StartupEventArgs e ) {
 
