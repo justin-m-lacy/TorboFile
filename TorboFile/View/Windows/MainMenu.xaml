@@ -9,9 +9,7 @@
         xmlns:local="clr-namespace:TorboFile"
         xmlns:lerp="clr-namespace:Lemur.Windows.Controls"
         xmlns:controls="clr-namespace:TorboFile.View.Controls"
-        xmlns:converters="clr-namespace:Lemur.Windows.Converters"
-        xmlns:svg="http://sharpvectors.codeplex.com/svgc/"
-		xmlns:models="clr-namespace:TorboFile.ViewModels"
+		xmlns:r="clr-namespace:TorboFile.Properties"
         mc:Ignorable="d"
         Style="{StaticResource AppWindow}"
         Title="TorboFile" MinHeight="400" MinWidth="400" Height="{Binding Height, Mode=TwoWay}" Width="{Binding Width, Mode=TwoWay}">
@@ -141,22 +139,23 @@
 				</Style>
 			</TabControl.Resources>
 
-			<TabItem Style="{StaticResource TabStyle}" Name="SortFilesSection" Header="Sort Files">
+			<TabItem Style="{StaticResource TabStyle}" Name="SortFilesSection" Header="{x:Static r:Resources.SORT_FILES_SECTION}">
 				<controls:FileSortControl x:Name="SortFilesView"></controls:FileSortControl>
 			</TabItem>
-			<TabItem Style="{StaticResource TabStyle}" Name="FindCopiesSection" Header="Find Duplicates">
+			<TabItem Style="{StaticResource TabStyle}" Name="FindCopiesSection" Header="{x:Static r:Resources.FIND_COPIES_SECTION}">
 				<controls:FindDuplicatesControl x:Name="FindCopiesView"></controls:FindDuplicatesControl>
 			</TabItem>
-			<TabItem Style="{StaticResource TabStyle}" x:Name="CleanFoldersSection" Header="Clean Folders">
+			<TabItem Style="{StaticResource TabStyle}" x:Name="CleanFoldersSection" Header="{x:Static r:Resources.CLEAN_FOLDERS_SECTION}">
 				<controls:CleanFoldersControl x:Name="CleanFoldersView"></controls:CleanFoldersControl>
 			</TabItem>
-			<TabItem Style="{StaticResource TabStyle}" x:Name="CustomSearchSection" Header="Custom Search">
+			<TabItem Style="{StaticResource TabStyle}" x:Name="CustomSearchSection" Header="{x:Static r:Resources.CUSTOM_SEARCH_SECTION}">
 				<controls:CustomSearch x:Name="CustomSearchView"></controls:CustomSearch>
 			</TabItem>
 		</TabControl>
 
 		<Button x:Name="BtnSettings" Style="{StaticResource StdButton}"
                     VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+					ToolTip="{x:Static r:Resources.SETTINGS_TOOLTIP}"
                     Width="48" Height="48" Panel.ZIndex="10000" Command="{Binding CmdShowSettings}">
 
 			<Image Source="pack://siteoforigin:,,,/assets/images/flat/png/Settings-02-128.png" Stretch="UniformToFill"/>

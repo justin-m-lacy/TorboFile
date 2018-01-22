@@ -63,9 +63,9 @@ namespace TorboFile.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Matched Files and Directories will be deleted. This action cannot be undone..
         /// </summary>
-        public static string action_delete_msg {
+        public static string ACTION_DELETE_MSG {
             get {
-                return ResourceManager.GetString("action_delete_msg", resourceCulture);
+                return ResourceManager.GetString("ACTION_DELETE_MSG", resourceCulture);
             }
         }
         
@@ -210,6 +210,15 @@ namespace TorboFile.Properties {
         public static string is_file_include {
             get {
                 return ResourceManager.GetString("is_file_include", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load Search....
+        /// </summary>
+        public static string LOAD_SEARCH_MSG {
+            get {
+                return ResourceManager.GetString("LOAD_SEARCH_MSG", resourceCulture);
             }
         }
         
@@ -372,6 +381,24 @@ namespace TorboFile.Properties {
         public static string match_size_min_prompt {
             get {
                 return ResourceManager.GetString("match_size_min_prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Search....
+        /// </summary>
+        public static string SAVE_SEARCH_MSG {
+            get {
+                return ResourceManager.GetString("SAVE_SEARCH_MSG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string SEARCH_DIR_PROMPT {
+            get {
+                return ResourceManager.GetString("SEARCH_DIR_PROMPT", resourceCulture);
             }
         }
     }

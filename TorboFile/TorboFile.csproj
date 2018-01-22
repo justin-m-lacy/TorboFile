@@ -560,9 +560,7 @@
   <ItemGroup>
     <Resource Include="assets\images\system-search-3.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Collections\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="assets\images\flat\png\Add-128.png" />
     <None Include="assets\images\flat\png\Arrowhead-Down-01-128.png" />

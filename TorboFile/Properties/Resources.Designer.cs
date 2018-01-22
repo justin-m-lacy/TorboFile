@@ -79,6 +79,42 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clean Folders.
+        /// </summary>
+        public static string CLEAN_FOLDERS_SECTION {
+            get {
+                return ResourceManager.GetString("CLEAN_FOLDERS_SECTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Search.
+        /// </summary>
+        public static string CUSTOM_SEARCH_SECTION {
+            get {
+                return ResourceManager.GetString("CUSTOM_SEARCH_SECTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: Directory does not exist..
+        /// </summary>
+        public static string DIR_NO_EXIST_ERR {
+            get {
+                return ResourceManager.GetString("DIR_NO_EXIST_ERR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Duplicates.
+        /// </summary>
+        public static string FIND_COPIES_SECTION {
+            get {
+                return ResourceManager.GetString("FIND_COPIES_SECTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to tsrch.
         /// </summary>
         public static string SEARCH_FILE_EXTENSION {
@@ -102,6 +138,24 @@ namespace TorboFile.Properties {
         public static string SET_DELETE_PROMPT {
             get {
                 return ResourceManager.GetString("SET_DELETE_PROMPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SETTINGS_TOOLTIP {
+            get {
+                return ResourceManager.GetString("SETTINGS_TOOLTIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort Files.
+        /// </summary>
+        public static string SORT_FILES_SECTION {
+            get {
+                return ResourceManager.GetString("SORT_FILES_SECTION", resourceCulture);
             }
         }
     }

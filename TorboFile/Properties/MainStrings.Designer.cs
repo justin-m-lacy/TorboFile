@@ -70,6 +70,24 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Categories.
+        /// </summary>
+        public static string BTN_EDIT_CATEGORIES_TIP {
+            get {
+                return ResourceManager.GetString("BTN_EDIT_CATEGORIES_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Category.
+        /// </summary>
+        public static string BTN_NEW_CATEGORY_TIP {
+            get {
+                return ResourceManager.GetString("BTN_NEW_CATEGORY_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Categories:.
         /// </summary>
         public static string CATEGORIES_HEADER {
@@ -331,6 +349,15 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete File.
+        /// </summary>
+        public static string DELETE_FILE_TIP {
+            get {
+                return ResourceManager.GetString("DELETE_FILE_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         public static string FILE_NAME_HEADER {
@@ -385,11 +412,29 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next File.
+        /// </summary>
+        public static string NEXT_FILE_TIP {
+            get {
+                return ResourceManager.GetString("NEXT_FILE_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open External....
         /// </summary>
         public static string OPEN_EXTERNAL_PROMPT {
             get {
                 return ResourceManager.GetString("OPEN_EXTERNAL_PROMPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Externally.
+        /// </summary>
+        public static string OPEN_EXTERNAL_TIP {
+            get {
+                return ResourceManager.GetString("OPEN_EXTERNAL_TIP", resourceCulture);
             }
         }
         
@@ -421,6 +466,15 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous File.
+        /// </summary>
+        public static string PREVIOUS_FILE_TIP {
+            get {
+                return ResourceManager.GetString("PREVIOUS_FILE_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set Name.
         /// </summary>
         public static string SET_NAME_HEADER {
@@ -435,6 +489,78 @@ namespace TorboFile.Properties {
         public static string SET_NAME_PROMPT {
             get {
                 return ResourceManager.GetString("SET_NAME_PROMPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show In Explorer.
+        /// </summary>
+        public static string SHOW_IN_EXPLORER_TIP {
+            get {
+                return ResourceManager.GetString("SHOW_IN_EXPLORER_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string SORT_BROWSE_HEADER {
+            get {
+                return ResourceManager.GetString("SORT_BROWSE_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go To Folder.
+        /// </summary>
+        public static string SORT_BROWSE_TIP {
+            get {
+                return ResourceManager.GetString("SORT_BROWSE_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Directory.
+        /// </summary>
+        public static string SORT_CHANGE_DIR_TIP {
+            get {
+                return ResourceManager.GetString("SORT_CHANGE_DIR_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quick Key.
+        /// </summary>
+        public static string SORT_KEYBIND_HEADER {
+            get {
+                return ResourceManager.GetString("SORT_KEYBIND_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press to move Current File to Category.
+        /// </summary>
+        public static string SORT_KEYBIND_TIP {
+            get {
+                return ResourceManager.GetString("SORT_KEYBIND_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string SORT_MOVETO_HEADER {
+            get {
+                return ResourceManager.GetString("SORT_MOVETO_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move file to Category.
+        /// </summary>
+        public static string SORT_MOVETO_TIP {
+            get {
+                return ResourceManager.GetString("SORT_MOVETO_TIP", resourceCulture);
             }
         }
         

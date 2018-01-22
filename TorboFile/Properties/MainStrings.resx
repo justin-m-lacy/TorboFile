@@ -120,6 +120,12 @@
   <data name="AUDIO_TYPE_NAME" xml:space="preserve">
     <value>Audio</value>
   </data>
+  <data name="BTN_EDIT_CATEGORIES_TIP" xml:space="preserve">
+    <value>Edit Categories</value>
+  </data>
+  <data name="BTN_NEW_CATEGORY_TIP" xml:space="preserve">
+    <value>Create New Category</value>
+  </data>
   <data name="CATEGORIES_HEADER" xml:space="preserve">
     <value>Categories:</value>
   </data>
@@ -208,6 +214,9 @@
   <data name="COPIES_SIZE_OPT" xml:space="preserve">
     <value>Use Size Range</value>
   </data>
+  <data name="DELETE_FILE_TIP" xml:space="preserve">
+    <value>Delete File</value>
+  </data>
   <data name="FILE_NAME_HEADER" xml:space="preserve">
     <value>File</value>
   </data>
@@ -226,8 +235,14 @@
   <data name="KEY_BINDING_HEADER" xml:space="preserve">
     <value>Key Binding</value>
   </data>
+  <data name="NEXT_FILE_TIP" xml:space="preserve">
+    <value>Next File</value>
+  </data>
   <data name="OPEN_EXTERNAL_PROMPT" xml:space="preserve">
     <value>Open External...</value>
+  </data>
+  <data name="OPEN_EXTERNAL_TIP" xml:space="preserve">
+    <value>Open Externally</value>
   </data>
   <data name="PREVIEW_MIME_MSG" xml:space="preserve">
     <value>Mime Type:</value>
@@ -238,11 +253,38 @@
   <data name="PREVIEW_UNKNOWN_MSG" xml:space="preserve">
     <value>Unknown File Type</value>
   </data>
+  <data name="PREVIOUS_FILE_TIP" xml:space="preserve">
+    <value>Previous File</value>
+  </data>
   <data name="SET_NAME_HEADER" xml:space="preserve">
     <value>Set Name</value>
   </data>
   <data name="SET_NAME_PROMPT" xml:space="preserve">
     <value>Set Name:</value>
+  </data>
+  <data name="SHOW_IN_EXPLORER_TIP" xml:space="preserve">
+    <value>Show In Explorer</value>
+  </data>
+  <data name="SORT_BROWSE_HEADER" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="SORT_BROWSE_TIP" xml:space="preserve">
+    <value>Go To Folder</value>
+  </data>
+  <data name="SORT_CHANGE_DIR_TIP" xml:space="preserve">
+    <value>Change Directory</value>
+  </data>
+  <data name="SORT_KEYBIND_HEADER" xml:space="preserve">
+    <value>Quick Key</value>
+  </data>
+  <data name="SORT_KEYBIND_TIP" xml:space="preserve">
+    <value>Press to move Current File to Category</value>
+  </data>
+  <data name="SORT_MOVETO_HEADER" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="SORT_MOVETO_TIP" xml:space="preserve">
+    <value>Move file to Category</value>
   </data>
   <data name="TEXT_TYPE_NAME" xml:space="preserve">
     <value>Text</value>

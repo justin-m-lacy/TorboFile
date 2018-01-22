@@ -16,7 +16,7 @@
 	
 	<DataTemplate x:Key="fileDeleteTemplate" DataType="{x:Type mvvm:DataObjectVM}">
 
-		<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.action_delete_msg}" />
+		<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.ACTION_DELETE_MSG}" />
 
 	</DataTemplate>
 

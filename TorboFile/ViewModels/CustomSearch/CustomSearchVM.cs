@@ -23,7 +23,7 @@ namespace TorboFile.ViewModels {
 
 	public class CustomSearchVM : ViewModelBase {
 
-		#region COMMANDs
+		#region COMMANDS
 
 		public RelayCommand CmdPickDirectory {
 			get {
@@ -111,7 +111,7 @@ namespace TorboFile.ViewModels {
 					this.SetProperty( ref this._searchDirectory, value );
 
 					if( !Directory.Exists( value ) ) {
-						throw new ValidationException( "Error: Search directory does not exist." );
+						throw new ValidationException( Resources.DIR_NO_EXIST_ERR );
 					} else {
 						Properties.CustomSearchSettings.Default.LastDirectory = this._searchDirectory;
 						this.RunSearchVM.SearchDirectory = value;
@@ -168,7 +168,7 @@ namespace TorboFile.ViewModels {
 			IFileDialogService dialog = this.GetService<IFileDialogService>();
 			if( dialog != null ) {
 
-				string searchDir = dialog.PickFolder( "Choose search folder." );
+				string searchDir = dialog.PickFolder( CustomSearchStrings.SEARCH_DIR_PROMPT );
 				if( !string.IsNullOrEmpty( searchDir ) ) {
 					this.SearchDirectory = searchDir;
 				}
@@ -185,7 +185,7 @@ namespace TorboFile.ViewModels {
 			IFileDialogService dialog = this.GetService<IFileDialogService>();
 			if( dialog != null ) {
 
-				string saveFile = dialog.PickSaveFile( "Save Search...", null, "custom_search", Properties.Resources.SEARCH_FILE_EXTENSION );
+				string saveFile = dialog.PickSaveFile( CustomSearchStrings.SAVE_SEARCH_MSG, null, "custom_search", Properties.Resources.SEARCH_FILE_EXTENSION );
 
 				if( !string.IsNullOrEmpty( saveFile ) ) {
 
@@ -203,7 +203,7 @@ namespace TorboFile.ViewModels {
 			IFileDialogService dialog = this.GetService<IFileDialogService>();
 			if( dialog != null ) {
 
-				string loadFile = dialog.PickOpenFile( "Load Search...", null, Properties.Resources.SEARCH_FILE_EXTENSION );
+				string loadFile = dialog.PickOpenFile( CustomSearchStrings.LOAD_SEARCH_MSG, null, Properties.Resources.SEARCH_FILE_EXTENSION );
 				if( !string.IsNullOrEmpty( loadFile ) ) {
 
 					/// TODO: Make async?
@@ -219,7 +219,6 @@ namespace TorboFile.ViewModels {
 			}
 
 		} // LoadSearch()
-
 
 		/// <summary>
 		/// Build the current search from the currently displayed items.

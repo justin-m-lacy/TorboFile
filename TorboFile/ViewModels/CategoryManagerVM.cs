@@ -230,7 +230,8 @@ namespace TorboFile.ViewModels {
 		public CategoryManagerVM( CategoryManager manager ) {
 
 			this.manager = manager;
-			this.manager.PropertyChanged += Manager_PropertyChanged;
+			// TODO: not sure what this would be for.
+			//this.manager.PropertyChanged += Manager_PropertyChanged;
 		}
 
 		private void Manager_PropertyChanged( object sender, PropertyChangedEventArgs e ) {

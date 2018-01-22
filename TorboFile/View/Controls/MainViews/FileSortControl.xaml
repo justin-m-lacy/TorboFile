@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TorboFile.View.Controls"
+             xmlns:r="clr-namespace:TorboFile.Properties"
              mc:Ignorable="d"
              xmlns:categories="clr-namespace:TorboFile.Categories"
              d:DesignHeight="340" d:DesignWidth="677" Loaded="UserControl_Loaded" Focusable="True">
@@ -50,13 +50,15 @@
         </Grid>
 
         <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0">
-            <Button x:Name="BtnAllCategories" Style="{StaticResource StdButton}" ToolTip="Configure Categories"
+            <Button x:Name="BtnAllCategories" Style="{StaticResource StdButton}"
+					ToolTip="{x:Static r:MainStrings.BTN_EDIT_CATEGORIES_TIP}"
                     Command="{Binding CmdShowManager}" Margin="4,0,4,0">
 
                 <Image Source="/TorboFile;component/assets/images/configure-5.png" Stretch="Uniform"/>
 
             </Button>
-            <Button x:Name="BtnNewCategory" Style="{StaticResource StdButton}" ToolTip="New Category"
+            <Button x:Name="BtnNewCategory" Style="{StaticResource StdButton}"
+					ToolTip="{x:Static r:MainStrings.BTN_NEW_CATEGORY_TIP}"
                     HorizontalContentAlignment="Center" Command="{Binding CmdNewCategory}" Margin="4,0,4,0">
 
                 <Image Source="/TorboFile;component/assets/images/list-add-4.png" Stretch="Uniform"/>
@@ -72,11 +74,11 @@
                   ItemsSource="{Binding Path=CategorySet}" BorderBrush="{x:Null}" BorderThickness="0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Browse">
+                    <GridViewColumn Header="{x:Static r:MainStrings.SORT_BROWSE_HEADER}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type categories:FileCategory}">
                                 <Button Style="{StaticResource StdButton}" MaxHeight="28" MaxWidth="28"
-                                        HorizontalAlignment="Left" MinHeight="20" MinWidth="20" ToolTip="Go To Folder"
+                                        HorizontalAlignment="Left" MinHeight="20" MinWidth="20" ToolTip=""
                             Command="{Binding ElementName=CategoryList, Path=DataContext.CmdSetDirectory, Mode=OneWay}"
                             CommandParameter="{Binding Path=DirectoryPath}">
 
@@ -86,10 +88,11 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Category">
+					<GridViewColumn Header="{x:Static r:MainStrings.SORT_MOVETO_HEADER}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button HorizontalAlignment="Stretch" MinHeight="24" Content="{Binding Name}" ToolTip="Move file to Category" BorderBrush="{x:Null}" Background="{x:Null}">
+                                <Button HorizontalAlignment="Stretch" MinHeight="24" Content="{Binding Name}"
+										ToolTip="{x:Static r:MainStrings.SORT_MOVETO_TIP}" BorderBrush="{x:Null}" Background="{x:Null}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <i:InvokeCommandAction Command="{Binding ElementName=CategoryList, Path=DataContext.CmdCategoryClick, Mode=OneWay}" CommandParameter="{Binding}"/>
@@ -100,11 +103,13 @@
 
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Quick Key">
+					<GridViewColumn Header="{x:Static r:MainStrings.SORT_KEYBIND_HEADER}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
 
-                                <TextBlock Text="{Binding Gesture}" Margin="4,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Gesture}" Margin="4,0,0,0"
+										   ToolTip="{x:Static r:MainStrings.SORT_KEYBIND_TIP}"
+										   HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -122,7 +127,9 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Grid.Column="0">
-                <Button x:Name="BtnDirectory" Style="{StaticResource StdButton}" MinWidth="28" ToolTip="Change Directory" MinHeight="28" HorizontalAlignment="Left"
+                <Button x:Name="BtnDirectory" Style="{StaticResource StdButton}" MinWidth="28"
+						ToolTip="{x:Static r:MainStrings.SORT_CHANGE_DIR_TIP}"
+						MinHeight="28" HorizontalAlignment="Left"
                     Command="{Binding CmdPickDirectory}">
                     <Image Source="/TorboFile;component/assets/images/folder-yellow_open.png" Stretch="UniformToFill"/>
 
@@ -133,28 +140,31 @@
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left">
 
-                <Button x:Name="BtnPrev" Style="{StaticResource StdButton}" Margin="0,0,2,0" ToolTip="Next File" Command="{Binding CmdPrevFile}">
+                <Button x:Name="BtnPrev" Style="{StaticResource StdButton}" Margin="0,0,2,0"
+						ToolTip="{x:Static r:MainStrings.PREVIOUS_FILE_TIP}" Command="{Binding CmdPrevFile}">
                     <Image Source="/TorboFile;component/assets/images/go-previous-5.png"></Image>
                 </Button>
-                <Button x:Name="BtnNext" Style="{StaticResource StdButton}" ToolTip="Previous File" Command="{Binding Path=CmdNextFile}"
+                <Button x:Name="BtnNext" Style="{StaticResource StdButton}"
+						ToolTip="{x:Static r:MainStrings.NEXT_FILE_TIP}" Command="{Binding Path=CmdNextFile}"
                     Margin="2,0,36,0">
 
                     <Image Source="/TorboFile;component/assets/images/go-next-5.png"/>
                 </Button>
 
                 <Button x:Name="BtnExternal" Style="{StaticResource StdButton}" Command="{Binding FilePreview.CmdOpenExternal}"
-                        ToolTip="Open Externally" Margin="2,0,4,0">
+                        ToolTip="{x:Static r:MainStrings.OPEN_EXTERNAL_TIP}" Margin="2,0,4,0">
 
                     <Image Source="/TorboFile;component/assets/images/document-preview.png"/>
 
                 </Button>
                 <Button x:Name="BtnShowExternal" Style="{StaticResource StdButton}" Command="{Binding FilePreview.CmdShowLocation}"
-                        ToolTip="Show in Explorer" Margin="2,0,4,0">
+                        ToolTip="{x:Static r:MainStrings.SHOW_IN_EXPLORER_TIP}" Margin="2,0,4,0">
 
                     <Image Source="/TorboFile;component/assets/images/large/folder.png"/>
 
                 </Button>
-                <Button x:Name="BtnDelete" Style="{StaticResource StdButton}" HorizontalAlignment="Left" ToolTip="Delete File"
+				<Button x:Name="BtnDelete" Style="{StaticResource StdButton}" HorizontalAlignment="Left"
+						ToolTip="{x:Static r:MainStrings.DELETE_FILE_TIP}"
                         Command="{Binding CmdDeleteFile}" Margin="4,0,0,0">
                     <Image Source="/TorboFile;component/assets/images/dialog-close.png" Stretch="Uniform"/>
 
