@@ -213,6 +213,7 @@ namespace TorboFile.ViewModels.Main {
 
 			FileListVM checkList = new FileListVM();
 			checkList.ShowOpenCmd = true;
+			checkList.ShowCheckBox = true;
 			checkList.ShowOpenLocationCmd = true;
 			checkList.ShowDeleteCmd = true;
 	

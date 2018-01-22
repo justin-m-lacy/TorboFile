@@ -115,6 +115,24 @@ namespace TorboFile.ViewModels {
 		}
 		private bool _editMode = true;
 
+		public string SearchDirectory {
+			get => _searchDirectory;
+			set {
+
+				if( value != this._searchDirectory ) {
+
+					this.SetProperty( ref this._searchDirectory, value );
+
+					if( !Directory.Exists( value ) ) {
+						throw new ValidationException( "Error: Search directory does not exist." );
+					}
+
+				}
+
+			} // set()
+		}
+		private string _searchDirectory;
+
 		public BuildSearchVM BuildSearchVM { get => _buildSearchVM; set => _buildSearchVM = value; }
 		private BuildSearchVM _buildSearchVM;
 
@@ -234,6 +252,10 @@ namespace TorboFile.ViewModels {
 			this._runSearchVM = new RunSearchVM( provider );
 
 			this.CustomSearch = new CustomSearchData();
+
+			CustomSearchSettings settings = Properties.CustomSearchSettings.Default;
+			if( settings.saveLastDirectory ) {
+			}
 
 		}
 

@@ -44,5 +44,41 @@ namespace TorboFile.Properties {
                 this["mediaViewMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool saveLastDirectory {
+            get {
+                return ((bool)(this["saveLastDirectory"]));
+            }
+            set {
+                this["saveLastDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string lastDirectory {
+            get {
+                return ((string)(this["lastDirectory"]));
+            }
+            set {
+                this["lastDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string lastFile {
+            get {
+                return ((string)(this["lastFile"]));
+            }
+            set {
+                this["lastFile"] = value;
+            }
+        }
     }
 }

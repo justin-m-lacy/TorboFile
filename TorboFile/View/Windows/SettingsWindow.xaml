@@ -78,33 +78,51 @@
 
         <TabItem x:Name="FindCopiesTab"  Style="{StaticResource SettingsTab}" DataContext="{x:Static settings:FindCopiesSettings.Default}" Header="Find Duplicates">
             <StackPanel Style="{StaticResource SettingsContent}">
-                <Label Style="{StaticResource SettingHeader}">Deleted Files:</Label>
+                <TextBlock Style="{StaticResource TextSettingHeader}">Deleted Files:</TextBlock>
                     <RadioButton x:Name="RadioDuplicateRecycle" Content="Move To Recycle Bin" Style="{StaticResource SettingControl}" IsChecked="{Binding moveToTrash}" />
                     <RadioButton x:Name="RadioDuplicateDelete" Content="Remove From Disk" Style="{StaticResource SettingControl}"
                                  IsChecked="{Binding moveToTrash, Converter={StaticResource InvertBool}, Mode=OneWay}"/>
-                <Label Style="{StaticResource SettingHeader}">Recursive Search:</Label>
+                <TextBlock Style="{StaticResource TextSettingHeader}">Recursive Search:</TextBlock>
                 <CheckBox x:Name="ChkDuplicateRecursive" Content="Search All Subfolders" Style="{StaticResource SettingControl}" IsChecked="{Binding recursive}" />
-                <Label Style="{StaticResource SettingHeader}">Search File Extensions:</Label>
-                <CheckBox x:Name="ChkDuplicateSaveExtensions" Style="{StaticResource SettingControl}" IsChecked="{Binding rememberExtensions}">Remember Search File Extensions</CheckBox>
-                </StackPanel>
+
+
+				<TextBlock Style="{StaticResource TextSettingHeader}" DockPanel.Dock="Top" Text="Remember Last Directory"/>
+				<CheckBox x:Name="chkCopiesLastDir" DockPanel.Dock="Top" Style="{StaticResource SettingControl}" Content="Remember Directory" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember the last folder searched."/>
+
+				<TextBlock Style="{StaticResource TextSettingHeader}">Search File Extensions:</TextBlock>
+				<CheckBox x:Name="ChkDuplicateSaveExtensions" Style="{StaticResource SettingControl}" IsChecked="{Binding rememberExtensions}"
+						  ToolTip="Remember file extensions used in searches." Content="Remember File Extensions"/>
+			</StackPanel>
             </TabItem>
         
         <TabItem x:Name="CleanFoldersTab" DataContext="{x:Static settings:FolderCleanSettings.Default}" Header="Clean Folders" Style="{StaticResource SettingsTab}">
             <StackPanel Style="{StaticResource SettingsContent}">
-                
-                <Label Style="{StaticResource SettingHeader}">Deleted Files:</Label>
-                <RadioButton x:Name="RadioCleanRecycle" Content="Move To Recycle Bin" Style="{StaticResource SettingControl}" IsChecked="{Binding moveToTrash}"/>
+
+				<TextBlock Style="{StaticResource TextSettingHeader}" Text="Deleted Files:"/>
+				<RadioButton x:Name="RadioCleanRecycle" Content="Move To Recycle Bin" Style="{StaticResource SettingControl}" IsChecked="{Binding moveToTrash}"/>
                 <RadioButton x:Name="RadioCleanDelete" Content="Remove From Disk" Style="{StaticResource SettingControl}"
                              IsChecked="{Binding moveToTrash, Converter={StaticResource InvertBool}, Mode=OneWay}"/>
-                
-                <Label Style="{StaticResource SettingHeader}">Recursive Search:</Label>
-                <CheckBox x:Name="ChkEmptyFoldersRecursive" Content="Search All Subfolders" Style="{StaticResource SettingControl}" IsChecked="{Binding recursive}" />
+
+				<TextBlock Style="{StaticResource TextSettingHeader}" Text="Recursive Search:"/>
+				<CheckBox x:Name="ChkEmptyFoldersRecursive" Content="Search All Subfolders" Style="{StaticResource SettingControl}" IsChecked="{Binding recursive}" />
                 <TextBlock Style="{StaticResource TextSettingHeader}" Text="Remember Last Directory"/>
                 <CheckBox x:Name="ChkSaveLastDirectory" Style="{StaticResource SettingControl}" Content="Remember Directory" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember search directory between program runs."/>
             </StackPanel>
         </TabItem>
-		<TabItem x:Name="CustomSearchTab" Header="Custom Search" Style="{StaticResource SettingsTab}">
+		
+		<TabItem x:Name="CustomSearchTab" Header="Custom Search" Style="{StaticResource SettingsTab}"
+				 DataContext="{x:Static settings:CustomSearchSettings.Default}">
 			<StackPanel Style="{StaticResource SettingsContent}">
+
+				<TextBlock Style="{StaticResource TextSettingHeader}" Text="Recursive Search:"/>
+				<CheckBox x:Name="chkCustomRecursive" Content="Search All Subfolders" Style="{StaticResource SettingControl}" IsChecked="{Binding recursive}" />
+
+				<TextBlock Style="{StaticResource TextSettingHeader}" Text="Save Search"/>
+				<CheckBox x:Name="chkSaveSearch" Style="{StaticResource SettingControl}" Content="Save Last Search"
+						  IsChecked="{Binding saveLastDirectory}" ToolTip="Save the last custom search built."/>
+	
+				<TextBlock Style="{StaticResource TextSettingHeader}" Text="Remember Directory"/>
+				<CheckBox x:Name="chkCustomSaveDir" Style="{StaticResource SettingControl}" Content="Remember Directory" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember search directory between program runs."/>
 				
 			</StackPanel>
 		</TabItem>

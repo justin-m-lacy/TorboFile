@@ -14,25 +14,7 @@ namespace TorboFile.Properties {
 		private char[] illegalExtensionChars = { '?', '/', '\\' };
 		private readonly char[] separators = { ';', ',' };
 
-		public FindCopiesSettings() {
-
-			/// Add any System-level invalid file characters, and ensure they are all distinct.
-			this.illegalExtensionChars = (char[])this.illegalExtensionChars.Concat( System.IO.Path.GetInvalidFileNameChars() ).Distinct().ToArray();
-
-			this.SettingsLoaded += FindDuplicates_SettingsLoaded;
-
-		} // FindDuplicates()
-
-		private void FindDuplicates_SettingsLoaded( object sender, System.Configuration.SettingsLoadedEventArgs e ) {
-
-			if( this.rememberExtensions ) {
-
-				this._include = this.includeExtensions;
-				this._exclude = this.excludeExtensions;
-
-			}
-
-		} //
+		#region RUNTIME PROPERTIES
 
 		/// <summary>
 		/// Used to store the 'includeExtensions' setting when the setting is not being
@@ -48,9 +30,6 @@ namespace TorboFile.Properties {
 
 				if( value != this._include ) {
 					this._include = value;
-					if( this.rememberExtensions ) {
-						this.includeExtensions = value;
-					}
 					this.OnPropertyChanged( this, new PropertyChangedEventArgs( "IncludeExtensions" ) );
 				}
 
@@ -60,7 +39,7 @@ namespace TorboFile.Properties {
 
 		/// <summary>
 		/// Used to store the 'excludeExtensions' setting when the setting is not being
-		/// remembered between uses. The official setting is not saved if remember option is
+		/// remembered between uses. The backing setting is not saved if remember option is
 		/// not enabled.
 		/// </summary>
 		private string _exclude;
@@ -72,9 +51,6 @@ namespace TorboFile.Properties {
 
 				if( value != this._exclude ) {
 					this._exclude = value;
-					if( this.rememberExtensions ) {
-						this.excludeExtensions = value;
-					}
 					this.OnPropertyChanged( this, new PropertyChangedEventArgs( "ExcludeExtensions" ) );
 
 				}
@@ -82,6 +58,69 @@ namespace TorboFile.Properties {
 			} // set()
 
 		} // ExcludeExtensions()
+
+		  /// <summary>
+		  /// Only stored to the backing setting if saveLastDirectory is true.
+		  /// Events don't make the LastDirectory property unnecessary, since the setting still needs
+		  /// to remember the value for the running application, even if the backing setting isn't
+		  /// changed.
+		  /// </summary>
+		private string _lastDirectory;
+		public string LastDirectory {
+			get => this._lastDirectory;
+			set {
+
+				if( this._lastDirectory != value ) {
+
+					this._lastDirectory = value;
+					this.OnPropertyChanged( this, new System.ComponentModel.PropertyChangedEventArgs( "LastDirectory" ) );
+				}
+
+			}
+		}
+
+		#endregion
+
+		public FindCopiesSettings() {
+
+			/// Add any System-level invalid file characters, and ensure they are all distinct.
+			this.illegalExtensionChars = (char[])this.illegalExtensionChars.Concat( System.IO.Path.GetInvalidFileNameChars() ).Distinct().ToArray();
+
+			this.SettingsLoaded += FindDuplicates_SettingsLoaded;
+			this.SettingsSaving += FindCopiesSettings_SettingsSaving;
+
+		} // FindDuplicates()
+
+		private void FindCopiesSettings_SettingsSaving( object sender, CancelEventArgs e ) {
+
+			if( this.saveExtensions ) {
+				this.includeExtensions = this._include;
+				this.excludeExtensions = this._exclude;
+			} else {
+				this.includeExtensions = this.excludeExtensions = null;
+			}
+
+			if( this.saveLastDirectory ) {
+				this.lastDirectory = this._lastDirectory;
+			} else {
+				this.lastDirectory = null;
+			}
+
+		}
+
+		private void FindDuplicates_SettingsLoaded( object sender, System.Configuration.SettingsLoadedEventArgs e ) {
+
+			if( this.saveExtensions ) {
+
+				this._include = this.includeExtensions;
+				this._exclude = this.excludeExtensions;
+
+			}
+			if( this.saveLastDirectory ) {
+				this._lastDirectory = this.lastDirectory;
+			}
+
+		} //
 		
 		/// <summary>
 		/// Parse a string into an extensions array.

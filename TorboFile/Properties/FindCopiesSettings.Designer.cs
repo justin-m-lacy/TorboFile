@@ -122,12 +122,12 @@ namespace TorboFile.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool rememberExtensions {
+        public bool saveExtensions {
             get {
-                return ((bool)(this["rememberExtensions"]));
+                return ((bool)(this["saveExtensions"]));
             }
             set {
-                this["rememberExtensions"] = value;
+                this["saveExtensions"] = value;
             }
         }
         
@@ -152,6 +152,18 @@ namespace TorboFile.Properties {
             }
             set {
                 this["showFilePreviews"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool saveLastDirectory {
+            get {
+                return ((bool)(this["saveLastDirectory"]));
+            }
+            set {
+                this["saveLastDirectory"] = value;
             }
         }
     }

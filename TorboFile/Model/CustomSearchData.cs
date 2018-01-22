@@ -21,6 +21,12 @@ namespace TorboFile.Model {
 		public List<IFileAction> Actions { get => _actions; set => _actions = value; }
 		private List<IFileAction> _actions;
 
+		private FileMatchSettings _settings;
+		public FileMatchSettings Settings {
+			get => this._settings;
+			set => this._settings = value;
+		}
+
 		public CustomSearchData() {
 
 			this.Conditions = new List<IMatchCondition>();

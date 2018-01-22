@@ -124,10 +124,11 @@
     <Compile Include="Categories\ICategorySource.cs" />
     <Compile Include="ColorEffect.cs" />
     <Compile Include="Model\CustomSearchData.cs" />
-    <Compile Include="Properties\CustomSearch.Designer.cs">
+    <Compile Include="Properties\CustomSearchSettings.cs" />
+    <Compile Include="Properties\CustomSearchSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>CustomSearch.settings</DependentUpon>
+      <DependentUpon>CustomSearchSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="Properties\CustomSearchStrings.en.Designer.cs">
       <DependentUpon>CustomSearchStrings.en.resx</DependentUpon>
@@ -447,9 +448,9 @@
       <ShaderModel>3_0</ShaderModel>
       <AllResourcesBound>False</AllResourcesBound>
     </None>
-    <None Include="Properties\CustomSearch.settings">
+    <None Include="Properties\CustomSearchSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>CustomSearch.Designer.cs</LastGenOutput>
+      <LastGenOutput>CustomSearchSettings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Properties\FindCopiesSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

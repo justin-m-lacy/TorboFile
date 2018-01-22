@@ -26,15 +26,15 @@ namespace TorboFile.Properties {
 		public FolderCleanSettings() {
 
 			this.SettingsLoaded += FindEmpty_SettingsLoaded;
-
-			///DEBUG TESTING ONLY:
 			this.SettingChanging += FolderCleanSettings_SettingChanging;
 		}
 
 		private void FolderCleanSettings_SettingChanging( object sender, System.Configuration.SettingChangingEventArgs e ) {
 
-			if( e.SettingName == "moveToTrash" ) {
-				Console.WriteLine( "MOVE TO TRASH CHANGING: " + e.NewValue );
+			if( this.saveLastDirectory ) {
+				this.lastDirectory = this._lastDirectory;
+			} else {
+				this.lastDirectory = null;
 			}
 
 		}

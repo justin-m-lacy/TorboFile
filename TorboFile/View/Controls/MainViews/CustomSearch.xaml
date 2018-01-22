@@ -167,6 +167,11 @@
 
 				<DockPanel LastChildFill="False">
 
+					<StackPanel Name="searchSettingsPanel" DockPanel.Dock="Top">
+						<CheckBox Name="chkRecursive" Content="Recursive Search"
+								  ToolTip="Search all subfolders of the main search folder" />
+						
+					</StackPanel>
 
 					<StackPanel DockPanel.Dock="Top" Name="buttonPanel" Orientation="Horizontal" HorizontalAlignment="Left"
 					Grid.Row="1">
@@ -208,7 +213,7 @@
 						</Button>
 					</StackPanel>
 					
-					<DockPanel Grid.Row="1"
+					<DockPanel Grid.Row="1" Name="runSearchPanel"
 							   DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.RunSearchVM}">
 
 						<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
@@ -237,24 +242,33 @@
 									<controls:FileList Visibility="{Binding Converter={StaticResource NonNullToVisible}}">
 										<controls:FileList.Buttons>
 
-											<Button DockPanel.Dock="Bottom" Style="{StaticResource StdButton}"
+											<Button Style="{StaticResource StdButton}"
                 MinHeight="32" MinWidth="32" Margin="2,0,2,2"
                 ToolTip="Open in Explorer" Command="{Binding CmdOpenChecked}" Visibility="{Binding ShowOpenCmd, Converter={StaticResource BoolVisibility}}"
                 VerticalAlignment="Bottom" HorizontalAlignment="Right">
 													<Image Source="/TorboFile;component/assets/images/document-preview.png" MaxHeight="28" MaxWidth="28" />
 												</Button>
-												<Button DockPanel.Dock="Bottom" Style="{StaticResource StdButton}"
+												<Button Style="{StaticResource StdButton}"
                 MinHeight="32" MinWidth="32" Margin="2,0,2,2"
                 ToolTip="Show in Explorer" Command="{Binding CmdShowLocation}" Visibility="{Binding ShowOpenLocationCmd, Converter={StaticResource BoolVisibility}}"
                 VerticalAlignment="Bottom" HorizontalAlignment="Right">
 													<Image Source="/TorboFile;component/assets/images/large/folder.png" MaxHeight="28" MaxWidth="28"  />
 												</Button>
-												<Button DockPanel.Dock="Bottom" Style="{StaticResource StdButton}"
+											
+												<Button Style="{StaticResource StdButton}"
                 MinHeight="32" MinWidth="32" Margin="2,0,2,2"
                 ToolTip="Delete Selected" Command="{Binding CmdDelete}" Visibility="{Binding ShowDeleteCmd, Converter={StaticResource BoolVisibility}}"
                 VerticalAlignment="Bottom" HorizontalAlignment="Right">
 													<Image Source="/TorboFile;component/assets/images/dialog-close.png" MaxHeight="28" MaxWidth="28" />
 												</Button>
+
+											<Button Style="{StaticResource StdButton}"
+                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
+                ToolTip="Run Actions" Command="{Binding ElementName=runSearchPanel, Path=DataContext.CmdRunActions}"
+                VerticalAlignment="Bottom" HorizontalAlignment="Right">
+												<Image Source="/TorboFile;component/assets/images/image_start.png" MaxHeight="28" MaxWidth="28" />
+											</Button>
+											
 										</controls:FileList.Buttons>
 									</controls:FileList>
 
