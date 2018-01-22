@@ -21,30 +21,17 @@ using TorboFile.ViewModels.Main;
 
 namespace TorboFile.ViewModels {
 
-	public enum CustomSearchMode {
-
-		/// <summary>
-		/// Mode that indicates a custom search is being constructed.
-		/// </summary>
-		Edit,
-
-		/// <summary>
-		/// Indicates that a search is being performed to find matching
-		/// files.
-		/// </summary>
-		Search,
-
-		/// <summary>
-		/// Indicates that a list of actions are being applied to the
-		/// discovered files.
-		/// </summary>
-		Apply
-
-	} //
-
 	public class CustomSearchVM : ViewModelBase {
 
 		#region COMMANDs
+
+		public RelayCommand CmdPickDirectory {
+			get {
+				return this._cmdPickDirectory ?? ( this._cmdPickDirectory = new RelayCommand(
+					this.PickDirectory ) );
+			}
+		}
+		private RelayCommand _cmdPickDirectory;
 
 		/// <summary>
 		/// Command to load a Search Operation saved to disk.
@@ -116,7 +103,7 @@ namespace TorboFile.ViewModels {
 		private bool _editMode = true;
 
 		public string SearchDirectory {
-			get => _searchDirectory;
+			get => this._searchDirectory;
 			set {
 
 				if( value != this._searchDirectory ) {
@@ -125,6 +112,9 @@ namespace TorboFile.ViewModels {
 
 					if( !Directory.Exists( value ) ) {
 						throw new ValidationException( "Error: Search directory does not exist." );
+					} else {
+						Properties.CustomSearchSettings.Default.LastDirectory = this._searchDirectory;
+						this.RunSearchVM.SearchDirectory = value;
 					}
 
 				}
@@ -133,7 +123,7 @@ namespace TorboFile.ViewModels {
 		}
 		private string _searchDirectory;
 
-		public BuildSearchVM BuildSearchVM { get => _buildSearchVM; set => _buildSearchVM = value; }
+		public BuildSearchVM BuildSearchVM { get => _buildSearchVM; }
 		private BuildSearchVM _buildSearchVM;
 
 		/// <summary>
@@ -163,20 +153,29 @@ namespace TorboFile.ViewModels {
 		/// Run the operation.
 		/// </summary>
 		private void DoSearchMode() {
-
-			Console.WriteLine( "RUN-SEARCH MODE." );
-
 			this.EditMode = false;
-
 		}
 
 		private void EditSearch() {
-
-			Console.WriteLine( "EDIT-SEARCH MODE." );
 			this.EditMode = true;
-
 		}
 
+		/// <summary>
+		/// Pick the starting directory for the search.
+		/// </summary>
+		private void PickDirectory() {
+
+			IFileDialogService dialog = this.GetService<IFileDialogService>();
+			if( dialog != null ) {
+
+				string searchDir = dialog.PickFolder( "Choose search folder." );
+				if( !string.IsNullOrEmpty( searchDir ) ) {
+					this.SearchDirectory = searchDir;
+				}
+
+			}
+
+		} //
 
 		private void SaveCurrent() {
 
@@ -254,8 +253,7 @@ namespace TorboFile.ViewModels {
 			this.CustomSearch = new CustomSearchData();
 
 			CustomSearchSettings settings = Properties.CustomSearchSettings.Default;
-			if( settings.saveLastDirectory ) {
-			}
+			this._searchDirectory = settings.LastDirectory;
 
 		}
 

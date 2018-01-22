@@ -51,8 +51,8 @@
     <TabControl x:Name="TabSettings" Height="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" TabStripPlacement="left">
         <TabItem x:Name="GeneralSettings" DataContext="{Binding Source={x:Static settings:Settings.Default}}" Header="General" Style="{StaticResource SettingsTab}">
             <StackPanel Style="{StaticResource SettingsContent}">
-                <Label Style="{StaticResource SettingHeader}">View Options:</Label>
-                <CheckBox x:Name="ChkRememberView" Content="Restore Last Tab" Style="{StaticResource SettingControl}" IsChecked="{Binding saveLastView}" ToolTip="Open previous tab on program load." />
+				<TextBlock Style="{StaticResource TextSettingHeader}" Text="View Options:"/>
+				<CheckBox x:Name="ChkRememberView" Content="Restore Last View" Style="{StaticResource SettingControl}" IsChecked="{Binding saveLastView}" ToolTip="Opens the program to the last view." />
             </StackPanel>
         </TabItem>
         
@@ -66,8 +66,8 @@
                 <RadioButton x:Name="RadioSortingDelete" DockPanel.Dock="Top" Content="Remove From Disk" Style="{StaticResource SettingControl}"
                              IsChecked="{Binding moveToTrash, Converter={StaticResource InvertBool}, Mode=OneWay}" />
 
-                <TextBlock Style="{StaticResource TextSettingHeader}" DockPanel.Dock="Top" Text="Restore Last Directory"/>
-                <CheckBox x:Name="ChkSaveSortDirectory" DockPanel.Dock="Top" Style="{StaticResource SettingControl}" Content="Remember Directory" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember last folder between program runs."/>
+                <TextBlock Style="{StaticResource TextSettingHeader}" DockPanel.Dock="Top" Text="Restore Directory"/>
+                <CheckBox x:Name="ChkSaveSortDirectory" DockPanel.Dock="Top" Style="{StaticResource SettingControl}" Content="Remember last directory viewed" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember last folder between program runs."/>
                 
                 <TextBlock Style="{StaticResource TextSettingHeader}" DockPanel.Dock="Top" Text="Sorting Sets"/>
                 <controls:CategoryManagerView VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" x:Name="CategoryManagerView"/>
@@ -86,8 +86,8 @@
                 <CheckBox x:Name="ChkDuplicateRecursive" Content="Search All Subfolders" Style="{StaticResource SettingControl}" IsChecked="{Binding recursive}" />
 
 
-				<TextBlock Style="{StaticResource TextSettingHeader}" DockPanel.Dock="Top" Text="Remember Last Directory"/>
-				<CheckBox x:Name="chkCopiesLastDir" DockPanel.Dock="Top" Style="{StaticResource SettingControl}" Content="Remember Directory" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember the last folder searched."/>
+				<TextBlock Style="{StaticResource TextSettingHeader}" DockPanel.Dock="Top" Text="Remember Directory"/>
+				<CheckBox x:Name="chkCopiesLastDir" DockPanel.Dock="Top" Style="{StaticResource SettingControl}" Content="Remember last directory searched" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember the last folder searched."/>
 
 				<TextBlock Style="{StaticResource TextSettingHeader}">Search File Extensions:</TextBlock>
 				<CheckBox x:Name="ChkDuplicateSaveExtensions" Style="{StaticResource SettingControl}" IsChecked="{Binding rememberExtensions}"
@@ -105,8 +105,8 @@
 
 				<TextBlock Style="{StaticResource TextSettingHeader}" Text="Recursive Search:"/>
 				<CheckBox x:Name="ChkEmptyFoldersRecursive" Content="Search All Subfolders" Style="{StaticResource SettingControl}" IsChecked="{Binding recursive}" />
-                <TextBlock Style="{StaticResource TextSettingHeader}" Text="Remember Last Directory"/>
-                <CheckBox x:Name="ChkSaveLastDirectory" Style="{StaticResource SettingControl}" Content="Remember Directory" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember search directory between program runs."/>
+                <TextBlock Style="{StaticResource TextSettingHeader}" Text="Remember Directory"/>
+                <CheckBox x:Name="ChkSaveLastDirectory" Style="{StaticResource SettingControl}" Content="Remember last directory cleaned" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember search directory between program runs."/>
             </StackPanel>
         </TabItem>
 		
@@ -122,7 +122,7 @@
 						  IsChecked="{Binding saveLastDirectory}" ToolTip="Save the last custom search built."/>
 	
 				<TextBlock Style="{StaticResource TextSettingHeader}" Text="Remember Directory"/>
-				<CheckBox x:Name="chkCustomSaveDir" Style="{StaticResource SettingControl}" Content="Remember Directory" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember search directory between program runs."/>
+				<CheckBox x:Name="chkCustomSaveDir" Style="{StaticResource SettingControl}" Content="Remember last directory searched" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember search directory between program runs."/>
 				
 			</StackPanel>
 		</TabItem>

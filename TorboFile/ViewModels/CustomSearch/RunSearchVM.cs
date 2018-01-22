@@ -24,13 +24,7 @@ namespace TorboFile.ViewModels.Main {
 
 		#region COMMANDs
 
-		public RelayCommand CmdPickDirectory {
-			get {
-				return this._cmdPickDirectory ?? ( this._cmdPickDirectory = new RelayCommand(
-					this.PickDirectory ) );
-			}
-		}
-		private RelayCommand _cmdPickDirectory;
+
 
 		/// <summary>
 		/// Command to run the current search, matching any files that match
@@ -106,13 +100,7 @@ namespace TorboFile.ViewModels.Main {
 			set {
 
 				if( value != this._searchDirectory ) {
-
 					this.SetProperty( ref this._searchDirectory, value );
-
-					if( !Directory.Exists( value ) ) {
-						throw new ValidationException( "Error: Search directory does not exist." );
-					}
-
 				}
 
 			} // set()
@@ -226,24 +214,6 @@ namespace TorboFile.ViewModels.Main {
 			return checkList;
 
 		}
-
-
-		/// <summary>
-		/// Pick the starting directory for the search.
-		/// </summary>
-		private void PickDirectory() {
-
-			IFileDialogService dialog = this.GetService<IFileDialogService>();
-			if( dialog != null ) {
-
-				string searchDir = dialog.PickFolder( "Choose search folder." );
-				if( !string.IsNullOrEmpty( searchDir ) ) {
-					this.SearchDirectory = searchDir;
-				}
-
-			}
-
-		} //
 
 		public bool HasActions() {
 			//return this.actionBuilder.HasItems();

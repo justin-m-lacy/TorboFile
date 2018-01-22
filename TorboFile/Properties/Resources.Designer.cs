@@ -61,11 +61,47 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm Delete.
+        /// </summary>
+        public static string CATEGORY_DELETE_HEADER {
+            get {
+                return ResourceManager.GetString("CATEGORY_DELETE_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this category?.
+        /// </summary>
+        public static string CATEGORY_DELETE_PROMPT {
+            get {
+                return ResourceManager.GetString("CATEGORY_DELETE_PROMPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to tsrch.
         /// </summary>
         public static string SEARCH_FILE_EXTENSION {
             get {
                 return ResourceManager.GetString("SEARCH_FILE_EXTENSION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Delete.
+        /// </summary>
+        public static string SET_DELETE_HEADER {
+            get {
+                return ResourceManager.GetString("SET_DELETE_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this set?.
+        /// </summary>
+        public static string SET_DELETE_PROMPT {
+            get {
+                return ResourceManager.GetString("SET_DELETE_PROMPT", resourceCulture);
             }
         }
     }

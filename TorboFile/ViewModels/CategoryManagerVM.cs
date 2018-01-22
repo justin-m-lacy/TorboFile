@@ -8,6 +8,7 @@ using TorboFile.Categories;
 using Lemur.Windows;
 using TorboFile.Services;
 using System.ComponentModel;
+using TorboFile.Properties;
 
 namespace TorboFile.ViewModels {
 
@@ -75,25 +76,6 @@ namespace TorboFile.ViewModels {
 
 		}
 
-		/// <summary>
-		/// TODO: Dispatch PropertyChanged.
-		/// </summary>
-		/*public CategorySet ActiveSet {
-			get { return this.manager.Current; }
-			set {
-				this.manager.Current = value;
-			}
-		}
-
-		public string ActiveSetName {
-			get {
-				CategorySet cur = this.manager.Current;
-				if( cur == null ) { return string.Empty; }
-				return cur.Name;
-			}
-		}*/
-
-
 		private RelayCommand<string> _cmdChangeActiveSet;
 		/// <summary>
 		/// Change the currently active CategorySet.
@@ -128,8 +110,10 @@ namespace TorboFile.ViewModels {
 						if( this.FocusedSet == null ) return;
 						string name = this.FocusedSet.Name;
 						IMessageBox msgBox = (IMessageBox)this.ServiceProvider.GetService( typeof( IMessageBox ) );
+
 						MessageResult result =
-							msgBox.ShowConfirm( this, "Confirm Delete", "Are you sure you want to delete this set?" );
+							msgBox.ShowConfirm( this, Resources.SET_DELETE_HEADER, Resources.SET_DELETE_PROMPT );
+
 						if( result == MessageResult.Accept ) {
 							// Delete the thingy.
 							Console.WriteLine( "Attempting to delete Set: " + name );
@@ -172,7 +156,7 @@ namespace TorboFile.ViewModels {
 							IMessageBox msgBox = (IMessageBox)this.ServiceProvider.GetService( typeof( IMessageBox ) );
 
 							MessageResult result =
-							msgBox.ShowConfirm( this, "Confirm Delete", "Are you sure you want to delete this category?" );
+							msgBox.ShowConfirm( this, Resources.CATEGORY_DELETE_HEADER, Resources.CATEGORY_DELETE_PROMPT );
 
 							if( result == MessageResult.Accept ) {
 								// Delete the thingy.

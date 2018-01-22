@@ -41,7 +41,6 @@ namespace TorboFile {
 		}
 
 		private ServiceContainer services;
-		private List<string> tempFiles;
 
 		public CategoryManager CategoryManager {
 			get { return this.categoryManager; }
@@ -56,7 +55,6 @@ namespace TorboFile {
 
 			App._Instance = this;
 			this.categoryManager = CategoryManager.Instance;
-			this.tempFiles = new List<string>();
 
 			ViewModelBase.CloseView = TryCloseView;
 
@@ -328,48 +326,6 @@ namespace TorboFile {
 
 		} // RunOperationAsync()
 
-		static public string MakeTempCopy( string source ) {
-
-			if( string.IsNullOrEmpty( source ) ) {
-				return string.Empty;
-			}
-
-			string tmp = Path.GetTempFileName();
-
-			byte[] contents = File.ReadAllBytes( source );
-			using( FileStream file = File.OpenWrite( tmp ) ) {
-
-				file.Write( contents, 0, contents.Length );
-
-			}
-
-			_Instance.tempFiles.Add( tmp );
-
-			return tmp;
-
-		}
-
-		static public void DeleteTempFiles() {
-			App._Instance.DeleteTemps();
-		}
-
-		public void DeleteTemps() {
-
-			try {
-
-				foreach( string path in this.tempFiles ) {
-
-					if( File.Exists( path ) ) {
-						File.Delete( path );
-					}
-
-				}
-
-			} catch( Exception ) {
-			}
-
-		}
-
 		public void Dispose() {
 
 			if( this.services != null ) {
@@ -394,7 +350,7 @@ namespace TorboFile {
 			FolderCleanSettings.Default.Save();
 			SortingSettings.Default.Save();
 
-			this.DeleteTemps();
+			//this.DeleteTemps();
 
 		}
 
@@ -436,6 +392,54 @@ namespace TorboFile {
 			}
 
 		} // Application_DispatcherUnhandledException()
+
+		#region UNUSED TEMP FILES
+
+		/*List<string> tempFiles;
+
+		static public string MakeTempCopy( string source ) {
+
+			if( string.IsNullOrEmpty( source ) ) {
+				return string.Empty;
+			}
+
+			string tmp = Path.GetTempFileName();
+
+			byte[] contents = File.ReadAllBytes( source );
+			using( FileStream file = File.OpenWrite( tmp ) ) {
+
+				file.Write( contents, 0, contents.Length );
+
+			}
+
+			//_Instance.tempFiles.Add( tmp );
+
+			return tmp;
+
+		}
+
+		static public void DeleteTempFiles() {
+			App._Instance.DeleteTemps();
+		}
+
+		public void DeleteTemps() {
+
+			try {
+
+				foreach( string path in this.tempFiles ) {
+
+					if( File.Exists( path ) ) {
+						File.Delete( path );
+					}
+
+				}
+
+			} catch( Exception ) {
+			}
+
+		}*/
+
+		#endregion
 
 	} // class
 
