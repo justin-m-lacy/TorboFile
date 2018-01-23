@@ -102,6 +102,12 @@ namespace TorboFile.ViewModels {
 		}
 		private bool _editMode = true;
 
+		/// <summary>
+		/// The private _searchDirectory property is necessary to allow the UI to display
+		/// an invalid search path so the user can continue to edit it.
+		/// However, invalid paths should not be stored to the application settings or the
+		/// CustomSearchData object.
+		/// </summary>
 		public string SearchDirectory {
 			get => this._searchDirectory;
 			set {
@@ -113,8 +119,8 @@ namespace TorboFile.ViewModels {
 					if( !Directory.Exists( value ) ) {
 						throw new ValidationException( Resources.DIR_NO_EXIST_ERR );
 					} else {
-						Properties.CustomSearchSettings.Default.LastDirectory = this._searchDirectory;
-						this.RunSearchVM.SearchDirectory = value;
+						this._searchData.Options.BaseDirectory = value;
+						CustomSearchSettings.Default.LastDirectory = this._searchDirectory;
 					}
 
 				}
@@ -134,17 +140,19 @@ namespace TorboFile.ViewModels {
 
 
 		public CustomSearchData CustomSearch {
-			get => _customSearch;
+			get => _searchData;
 			set {
 
-				if( this.SetProperty( ref this._customSearch, value ) ) {
+				if( this.SetProperty( ref this._searchData, value ) ) {
+
 					this.BuildSearchVM.CustomSearch = value;
 					this.RunSearchVM.CustomSearch = value;
+
 				}
 			}
 
 		}
-		private CustomSearchData _customSearch;
+		private CustomSearchData _searchData;
 
 
 		#endregion
@@ -190,7 +198,7 @@ namespace TorboFile.ViewModels {
 				if( !string.IsNullOrEmpty( saveFile ) ) {
 
 					/// TODO: Make async?
-					FileUtils.WriteBinary( saveFile, this._customSearch );
+					FileUtils.WriteBinary( saveFile, this._searchData );
 
 				}
 
@@ -225,14 +233,14 @@ namespace TorboFile.ViewModels {
 		/// </summary>
 		private void CloneSearch() {
 
-			if( this._customSearch == null ) {
-				this._customSearch = new CustomSearchData();
+			if( this._searchData == null ) {
+				this._searchData = new CustomSearchData();
 			} else {
-				this._customSearch.Clear();
+				this._searchData.Clear();
 			}
 
-			this._customSearch.Conditions = this.BuildSearchVM.MatchBuilder.CloneCollection();
-			this._customSearch.Actions = this.BuildSearchVM.ActionBuilder.CloneCollection();
+			this._searchData.Conditions = this.BuildSearchVM.MatchBuilder.CloneCollection();
+			this._searchData.Actions = this.BuildSearchVM.ActionBuilder.CloneCollection();
 
 		}
 
@@ -249,10 +257,39 @@ namespace TorboFile.ViewModels {
 			this._buildSearchVM = new BuildSearchVM( provider );
 			this._runSearchVM = new RunSearchVM( provider );
 
-			this.CustomSearch = new CustomSearchData();
+			CustomSearchSettings settings = CustomSearchSettings.Default;
 
-			CustomSearchSettings settings = Properties.CustomSearchSettings.Default;
-			this._searchDirectory = settings.LastDirectory;
+			CustomSearchData searchData;
+
+			if( settings.saveLastSearch ) {
+
+				Console.WriteLine( "LOADING PREVIOUS SEARCH" );
+				searchData = CustomSearchSettings.LoadLastSearch() ?? NewSearchData();
+
+			} else {
+
+				searchData = NewSearchData();
+
+			}
+
+			this.CustomSearch = searchData;
+
+		} // CustomSearchVM()
+
+		/// <summary>
+		/// Create new CustomSearchData with last options from settings.
+		/// </summary>
+		/// <returns></returns>
+		private CustomSearchData NewSearchData() {
+
+			Console.WriteLine( "CREATING NEW SEARCH" );
+			CustomSearchData data = new CustomSearchData();
+
+			data.Options.Flags = CustomSearchSettings.Default.searchFlags;
+			Console.WriteLine( "LOADED FLAGS: " + data.Options.Flags );
+			data.Options.BaseDirectory = CustomSearchSettings.Default.LastDirectory;
+
+			return data;
 
 		}
 

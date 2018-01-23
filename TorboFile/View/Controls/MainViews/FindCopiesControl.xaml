@@ -29,7 +29,7 @@
 						<DockPanel>
 
 							<StackPanel Name="ResultSizePanel" Orientation="Horizontal" DockPanel.Dock="Bottom">
-								<TextBlock Text="Total Selected Size: " />
+								<TextBlock Text="{x:Static r:MainStrings.SELECTED_SIZE_MSG}" />
 								<TextBlock Text="{Binding CheckedSize, Converter={StaticResource SizeToString}}" />
 							</StackPanel>
 
@@ -107,7 +107,7 @@
 
                 <CheckBox x:Name="ChkRecursiveMatch" DockPanel.Dock="Left"
                   IsChecked="{Binding recursive}"
-                  Content="Recursive Search" HorizontalAlignment="Left" Height="21" Width="121"/>
+                  Content="{x:Static r:MainStrings.COPIES_RECURSIVE_OPT}" HorizontalAlignment="Left" Height="21" Width="121"/>
 
                 <!-- Button is in the SettingsPanel for Layout reason -->
                 <Button x:Name="BtnFindDuplicates" Style="{StaticResource StdButton}" Margin="24,0,0,0"
@@ -115,8 +115,8 @@
             Command="{Binding Path=DataContext.CmdBeginSearch, ElementName=GridLeftPanel}" ToolTip="Begin Search">
                     <DockPanel>
                         <Image Source="/TorboFile;component/assets/images/system-search-4.png" DockPanel.Dock="Top" Width="42" Height="42" />
-                        <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center">Search</TextBlock>
-                    </DockPanel>
+						<TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Text="{x:Static r:Resources.BTN_SEARCH}"/>
+					</DockPanel>
                 </Button>
 
             </DockPanel>

@@ -177,12 +177,14 @@ namespace TorboFile {
 		public void InitSortView( FileSortVM model ) {
 			this.InitView( ( this.MainWindow as MainWindow ).SortFilesView, model );
 		}
-		public void InitCustomSearchView( CustomSearchVM model ) {
-			this.InitView( ( this.MainWindow as MainWindow ).CustomSearchView, model );
-		}
 		public void InitCleanFoldersView( CleanFoldersModel model ) {
 			this.InitView( ( this.MainWindow as MainWindow ).CleanFoldersView, model );
 		}
+
+		public void InitCustomSearchView( CustomSearchVM model ) {
+			this.InitView( ( this.MainWindow as MainWindow ).CustomSearchView, model );
+		}
+
 		#endregion
 
 		public void InitView( FrameworkElement view, ViewModelBase viewModel, ViewModelBase parentModel=null ) {
@@ -349,6 +351,7 @@ namespace TorboFile {
 			FindCopiesSettings.Default.Save();
 			FolderCleanSettings.Default.Save();
 			SortingSettings.Default.Save();
+			CustomSearchSettings.Default.Save();
 
 			//this.DeleteTemps();
 

@@ -66,7 +66,7 @@ namespace TorboFile.Properties {
 		/// Saves the last search into isolated storage.
 		/// </summary>
 		/// <param name="search"></param>
-		public void SaveLastSearch( CustomSearchData search ) {
+		static public void SaveLastSearch( CustomSearchData search ) {
 
 			if( IsolatedStorageFile.IsEnabled ) {
 
@@ -92,7 +92,7 @@ namespace TorboFile.Properties {
 
 		}
 
-		public CustomSearchData LoadLastSearch() {
+		static public CustomSearchData LoadLastSearch() {
 
 			if( IsolatedStorageFile.IsEnabled ) {
 

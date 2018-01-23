@@ -49,18 +49,6 @@ namespace TorboFile.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool recursive {
-            get {
-                return ((bool)(this["recursive"]));
-            }
-            set {
-                this["recursive"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool saveLastSearch {
             get {
@@ -68,6 +56,18 @@ namespace TorboFile.Properties {
             }
             set {
                 this["saveLastSearch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::TorboFile.Model.CustomSearchFlags searchFlags {
+            get {
+                return ((global::TorboFile.Model.CustomSearchFlags)(this["searchFlags"]));
+            }
+            set {
+                this["searchFlags"] = value;
             }
         }
     }

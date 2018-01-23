@@ -61,6 +61,15 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string BTN_SEARCH {
+            get {
+                return ResourceManager.GetString("BTN_SEARCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Delete.
         /// </summary>
         public static string CATEGORY_DELETE_HEADER {
@@ -111,6 +120,33 @@ namespace TorboFile.Properties {
         public static string FIND_COPIES_SECTION {
             get {
                 return ResourceManager.GetString("FIND_COPIES_SECTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause.
+        /// </summary>
+        public static string MEDIA_PAUSE_TIP {
+            get {
+                return ResourceManager.GetString("MEDIA_PAUSE_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play.
+        /// </summary>
+        public static string MEDIA_PLAY_TIP {
+            get {
+                return ResourceManager.GetString("MEDIA_PLAY_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        public static string MEDIA_STOP_TIP {
+            get {
+                return ResourceManager.GetString("MEDIA_STOP_TIP", resourceCulture);
             }
         }
         

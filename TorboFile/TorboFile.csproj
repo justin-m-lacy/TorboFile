@@ -124,6 +124,9 @@
     <Compile Include="Categories\ICategorySource.cs" />
     <Compile Include="ColorEffect.cs" />
     <Compile Include="Model\CustomSearchData.cs" />
+    <Compile Include="Model\CustomSearchOptions.cs" />
+    <Compile Include="Operations\FileActionOperation.cs" />
+    <Compile Include="Operations\FileMatchOperation.cs" />
     <Compile Include="Properties\CustomSearchSettings.cs" />
     <Compile Include="Properties\CustomSearchSettings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -448,6 +451,12 @@
       <ShaderModel>3_0</ShaderModel>
       <AllResourcesBound>False</AllResourcesBound>
     </None>
+    <None Include="documentation\LICENSES">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="documentation\README">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\CustomSearchSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>CustomSearchSettings.Designer.cs</LastGenOutput>
@@ -642,6 +651,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="AssetSources.txt" />
+    <Content Include="documentation\LICENSES_full_documentation_std.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="FUTURE CHANGES.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

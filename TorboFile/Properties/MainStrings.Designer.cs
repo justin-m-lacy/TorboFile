@@ -223,6 +223,15 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to It&apos;s a Confirm button..
+        /// </summary>
+        public static string CONFIRM_BTN_TIP {
+            get {
+                return ResourceManager.GetString("CONFIRM_BTN_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deleted Files:.
         /// </summary>
         public static string COPIES_DELETE_HEADER {
@@ -471,6 +480,15 @@ namespace TorboFile.Properties {
         public static string PREVIOUS_FILE_TIP {
             get {
                 return ResourceManager.GetString("PREVIOUS_FILE_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Selected Size:.
+        /// </summary>
+        public static string SELECTED_SIZE_MSG {
+            get {
+                return ResourceManager.GetString("SELECTED_SIZE_MSG", resourceCulture);
             }
         }
         

@@ -1,16 +1,13 @@
 ﻿using Lemur.Operations.FileMatching;
 using Lemur.Operations.FileMatching.Actions;
 using Lemur.Operations.FileMatching.Models;
-using Lemur.Utils;
-using Lemur.Windows;
 using Lemur.Windows.MVVM;
-using Lemur.Windows.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TorboFile.Properties;
 using TorboFile.Model;
+using TorboFile.Operations;
 
 namespace TorboFile.ViewModels {
 
@@ -46,7 +43,7 @@ namespace TorboFile.ViewModels {
 		public MatchBuilder MatchBuilder {
 			get => matchBuilder;
 		}
-		private readonly MatchBuilder matchBuilder;
+		private MatchBuilder matchBuilder;
 
 		/// <summary>
 		/// Model for building a list of actions.
@@ -54,7 +51,93 @@ namespace TorboFile.ViewModels {
 		public ActionBuilder ActionBuilder {
 			get => this.actionBuilder;
 		}
-		private readonly ActionBuilder actionBuilder;
+		private ActionBuilder actionBuilder;
+
+		public CustomSearchFlags SearchFlags {
+			get => this._customSearch.Options.Flags;
+			set {
+
+				if( _customSearch.Options.Flags != value ) {
+
+					this._customSearch.Options.Flags = value;
+					Console.WriteLine( "UPDATING SETTING SEARCH FLAGS: " + value );
+					CustomSearchSettings.Default.searchFlags = value;
+					this.NotifyPropertyChanged();
+
+				}
+
+			}
+
+		}
+
+		public bool Recursive {
+			get => this.SearchFlags.HasFlag( CustomSearchFlags.Recursive );
+			set {
+
+				if( value == true ) {
+
+					if( !this.SearchFlags.HasFlag( CustomSearchFlags.Recursive ) ) {
+						this.SearchFlags |= CustomSearchFlags.Recursive;
+						this.NotifyPropertyChanged();
+					}
+
+				} else {
+
+					if( this.SearchFlags.HasFlag( CustomSearchFlags.Recursive ) ) {
+						this.SearchFlags &= ~CustomSearchFlags.Recursive;
+						this.NotifyPropertyChanged();
+					}
+
+				}
+
+			}
+		}
+
+		public bool AutoRun {
+			get => this.SearchFlags.HasFlag( CustomSearchFlags.AutoRun );
+			set {
+
+				if( value == true ) {
+
+					if( !this.SearchFlags.HasFlag( CustomSearchFlags.AutoRun ) ) {
+						this.SearchFlags |= CustomSearchFlags.AutoRun;
+						this.NotifyPropertyChanged();
+					}
+
+				} else {
+
+					if( this.SearchFlags.HasFlag( CustomSearchFlags.AutoRun ) ) {
+						this.SearchFlags &= ~CustomSearchFlags.AutoRun;
+						this.NotifyPropertyChanged();
+					}
+
+				}
+
+			}
+		}
+
+		public bool HaltOnError {
+			get => this.SearchFlags.HasFlag( CustomSearchFlags.HaltOnError );
+			set {
+
+				if( value == true ) {
+
+					if( !this.SearchFlags.HasFlag( CustomSearchFlags.HaltOnError ) ) {
+						this.SearchFlags |= CustomSearchFlags.HaltOnError;
+						this.NotifyPropertyChanged();
+					}
+
+				} else {
+
+					if( this.SearchFlags.HasFlag( CustomSearchFlags.HaltOnError ) ) {
+						this.SearchFlags &= ~CustomSearchFlags.HaltOnError;
+						this.NotifyPropertyChanged();
+					}
+
+				}
+
+			}
+		}
 
 		public CustomSearchData CustomSearch {
 			get => _customSearch;
@@ -64,6 +147,10 @@ namespace TorboFile.ViewModels {
 
 					this.actionBuilder.SourceCollection = value.Actions;
 					this.matchBuilder.SourceCollection = value.Conditions;
+
+					// set the local flags, and update the settings (last used) flags.
+					Console.WriteLine( "BuildSearchVM: SETTING SEARCH FLAGS" );
+					CustomSearchSettings.Default.searchFlags = _customSearch.Options.Flags;
 
 				}
 			}
@@ -102,7 +189,7 @@ namespace TorboFile.ViewModels {
 		public bool HasItems() {
 			return this.HasConditions() || this.HasActions();
 		}
-
+		
 		/// <summary>
 		/// Build the current search from the currently displayed items.
 		/// </summary>

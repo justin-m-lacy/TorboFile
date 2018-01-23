@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BTN_SEARCH" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="CATEGORY_DELETE_HEADER" xml:space="preserve">
     <value>Confirm Delete</value>
   </data>
@@ -134,6 +137,15 @@
   </data>
   <data name="FIND_COPIES_SECTION" xml:space="preserve">
     <value>Find Duplicates</value>
+  </data>
+  <data name="MEDIA_PAUSE_TIP" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="MEDIA_PLAY_TIP" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="MEDIA_STOP_TIP" xml:space="preserve">
+    <value>Stop</value>
   </data>
   <data name="SEARCH_FILE_EXTENSION" xml:space="preserve">
     <value>tsrch</value>

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:TorboFile.View.Controls"
              xmlns:model="clr-namespace:TorboFile.ViewModels"
              xmlns:v="clr-namespace:Lemur.Windows.Validation"
+			 xmlns:r="clr-namespace:TorboFile.Properties"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -25,7 +26,7 @@
 
         <DockPanel Grid.Row="0" Margin="8,12">
             <TextBlock x:Name="LblName" DockPanel.Dock="Left"
-                       Text="Set Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59"/>
+                       Text="{x:Static r:MainStrings.SET_NAME_PROMPT}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59"/>
 
             <TextBox x:Name="FldName" DockPanel.Dock="Left" Height="24" Validation.ErrorTemplate="{StaticResource ErrorTemplate}" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Top" MinWidth="100" ToolTip="Name of the Category Set." TabIndex="1">
                 <Binding Path="NewName" ValidatesOnExceptions="True" UpdateSourceTrigger="PropertyChanged">
@@ -39,7 +40,8 @@
 
         <DockPanel Grid.Row="1" Margin="8,0,0,0" HorizontalAlignment="Stretch" LastChildFill="False">
 
-            <Button x:Name="BtnAccept" Style="{StaticResource StdButton}" Command="{Binding CmdSubmit}" ToolTip="It's a confirm button."
+            <Button x:Name="BtnAccept" Style="{StaticResource StdButton}" Command="{Binding CmdSubmit}"
+					ToolTip="{x:Static r:MainStrings.CONFIRM_BTN_TIP}"
                     DockPanel.Dock="Right" MinWidth="42" MinHeight="42" IsDefault="True">
 
                     <Image Stretch="Uniform" Source="/TorboFile;component/assets/images/dialog-yes.png"/>

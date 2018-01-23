@@ -172,6 +172,9 @@
   <data name="CLEAN_DIRS_SIZE_TIP" xml:space="preserve">
     <value>Check to delete any files found within the specified size range.</value>
   </data>
+  <data name="CONFIRM_BTN_TIP" xml:space="preserve">
+    <value>It's a Confirm button.</value>
+  </data>
   <data name="COPIES_DELETE_HEADER" xml:space="preserve">
     <value>Deleted Files:</value>
   </data>
@@ -255,6 +258,9 @@
   </data>
   <data name="PREVIOUS_FILE_TIP" xml:space="preserve">
     <value>Previous File</value>
+  </data>
+  <data name="SELECTED_SIZE_MSG" xml:space="preserve">
+    <value>Total Selected Size:</value>
   </data>
   <data name="SET_NAME_HEADER" xml:space="preserve">
     <value>Set Name</value>

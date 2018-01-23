@@ -4,13 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TorboFile.View.Controls"
-              xmlns:media="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
+             xmlns:media="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
+			 xmlns:r="clr-namespace:TorboFile.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
         <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Center" Orientation="Horizontal" MaxHeight="32" HorizontalAlignment="Center">
-            <Button x:Name="BtnPause"  Style="{StaticResource StdButton}" Click="BtnPause_Click" Margin="4,0,4,0" ToolTip="Pause Media" MinWidth="32" MinHeight="32">
+            <Button x:Name="BtnPause"  Style="{StaticResource StdButton}" Click="BtnPause_Click" Margin="4,0,4,0"
+					ToolTip="{x:Static r:Resources.MEDIA_PAUSE_TIP}" MinWidth="32" MinHeight="32">
 
                 <Image Source="/TorboFile;component/assets/images/media-playback-pause-8.png" Stretch="Uniform"/>
 
@@ -21,7 +23,8 @@
                 <Image Source="/TorboFile;component/assets/images/media-playback-start-8.png" Stretch="Uniform"/>
 
             </Button>
-            <Button x:Name="BtnStop"  Style="{StaticResource StdButton}" Margin="4,0,4,0" ToolTip="Stop Media" Click="BtnStop_Click">
+            <Button x:Name="BtnStop"  Style="{StaticResource StdButton}" Margin="4,0,4,0"
+					ToolTip="{x:Static r:Resources.MEDIA_STOP_TIP}" Click="BtnStop_Click">
 
                 <Image Source="/TorboFile;component/assets/images/media-playback-stop-8.png" Stretch="Uniform"/>
 

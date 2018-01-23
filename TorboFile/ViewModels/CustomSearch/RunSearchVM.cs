@@ -1,16 +1,12 @@
-﻿using Lemur.Operations.FileMatching;
-using Lemur.Operations.FileMatching.Actions;
-using Lemur.Utils;
+﻿using TorboFile.Operations;
 using Lemur.Windows;
 using Lemur.Windows.MVVM;
-using Lemur.Windows.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using TorboFile.Model;
@@ -33,7 +29,7 @@ namespace TorboFile.ViewModels.Main {
 		public RelayCommand CmdRunSearch {
 			get {
 				return this._cmdRunSearch ?? ( this._cmdRunSearch = new RelayCommand(
-					async () => await this.RunSearchAsync( this.SearchDirectory )
+					async () => await this.RunSearchAsync()
 				) );
 			}
 		}
@@ -95,18 +91,6 @@ namespace TorboFile.ViewModels.Main {
 		}
 		private CustomSearchData _customSearch;
 
-		public string SearchDirectory {
-			get => _searchDirectory;
-			set {
-
-				if( value != this._searchDirectory ) {
-					this.SetProperty( ref this._searchDirectory, value );
-				}
-
-			} // set()
-		}
-		private string _searchDirectory;
-
 		#endregion
 
 		/// <summary>
@@ -118,6 +102,8 @@ namespace TorboFile.ViewModels.Main {
 			FileActionOperation operation = new FileActionOperation();
 			operation.Actions = this.CustomSearch.Actions;
 			operation.Targets = this.ResultsList.CheckedItems;
+
+			operation.Options = this._customSearch.Options;
 
 			this.CurrentProgress.Operation = operation;
 
@@ -144,14 +130,12 @@ namespace TorboFile.ViewModels.Main {
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		private async Task RunSearchAsync( string path ) {
+		private async Task RunSearchAsync() {
 
-			//Console.WriteLine( "RUNNING SEARCH" );
+			FileMatchOperation operation = this.BuildMatchOperation( this._customSearch );
+			operation.OnMatchFound += MatchFinder_OnMatchFound;
 
-			FileMatchOperation matchFinder = this.BuildMatchOperation( this.SearchDirectory );
-			matchFinder.OnMatchFound += MatchFinder_OnMatchFound;
-
-			this._currentProgress.Operation = matchFinder;
+			this._currentProgress.Operation = operation;
 
 			//List<FileSystemInfo> matches = matchFinder.Matches;
 			//BindingOperations.EnableCollectionSynchronization( matches, resultsLock );
@@ -161,7 +145,7 @@ namespace TorboFile.ViewModels.Main {
 
 			try {
 
-				await Task.Run( () => matchFinder.Run() );
+				await Task.Run( () => operation.Run() );
 
 			} catch( Exception e ) {
 				Console.WriteLine( "ERROR: " + e.ToString() );
@@ -170,9 +154,10 @@ namespace TorboFile.ViewModels.Main {
 			if( this.ResultsList.Items.Count == 0 ) {
 				// report no results found.
 				Console.WriteLine( "NO RESULTS FOUND" );
-			} else {
-				//Console.WriteLine( "FOUND RESULTS" );
 			}
+
+			operation.OnMatchFound -= MatchFinder_OnMatchFound;
+
 		} //
 
 		private void MatchFinder_OnMatchFound( FileSystemInfo obj ) {
@@ -186,9 +171,9 @@ namespace TorboFile.ViewModels.Main {
 
 		}
 
-		private FileMatchOperation BuildMatchOperation( string basePath ) {
+		private FileMatchOperation BuildMatchOperation( CustomSearchData search ) {
 
-			FileMatchOperation matchOp = new FileMatchOperation( basePath, this._customSearch.Conditions );
+			FileMatchOperation matchOp = new FileMatchOperation( search.Options.BaseDirectory, search.Conditions, search.Options );
 			return matchOp;
 		}
 	
