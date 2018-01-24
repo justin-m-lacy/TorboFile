@@ -38,15 +38,17 @@ namespace TorboFile.View.Controls {
 		public FileList() {
 
 			this.Buttons = new ObservableCollection<Control>();
-			this.Buttons.CollectionChanged += Buttons_CollectionChanged;
+
+			//this.Buttons.CollectionChanged += Buttons_CollectionChanged;
 
             InitializeComponent();
 
         }
 
-		private void Buttons_CollectionChanged( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e ) {
-			Console.WriteLine( "ADDING BUTTON" );
-		}
+		/*private void Buttons_CollectionChanged( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e ) {
+			Console.WriteLine( "FileList.xaml.cs: Adding FileList sub-button." );
+		}*/
+
 	} // class
 
 } // namespace

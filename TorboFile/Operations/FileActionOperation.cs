@@ -57,6 +57,7 @@ namespace TorboFile.Operations {
 
 		private IList<FileSystemInfo> targets = new List<FileSystemInfo>();
 
+		private bool _hasError;
 		CustomSearchFlags _flags;
 		CustomSearchOptions _opts;
 
@@ -65,6 +66,7 @@ namespace TorboFile.Operations {
 		public override void Run() {
 
 			this.errorList.Clear();
+			this._hasError = false;
 			this.ResetProgress();
 
 			if( this._actions == null ) {
@@ -103,16 +105,13 @@ namespace TorboFile.Operations {
 
 			foreach( IFileAction action in this._actions ) {
 
+				if( this.CancelRequested() ) {
+					return;
+				}
+
 				if( action.RunOnce ) {
 
-					try {
-
-						action.Run( new FileInfo( "/" ) );
-
-					} catch( Exception e ) {
-						this.errorList.Add( e );
-					}
-					this.AdvanceProgress();
+					this.RunOnce( action );
 
 				} else {
 
@@ -130,7 +129,9 @@ namespace TorboFile.Operations {
 						} catch( Exception e ) {
 
 							this.SaveError( e );
-							if( SkipItemOnError ) {
+							if( CancelRequested() ) {
+								return;
+							} else if( SkipItemOnError ) {
 								// Advances progress over the number of actions remaining for this item.
 								this.SkipItem( actionsRun, fileActions );
 								break;
@@ -138,7 +139,10 @@ namespace TorboFile.Operations {
 
 						}
 						this.AdvanceProgress();
-						
+						if( this.CancelRequested() ) {
+							return;
+						}
+
 					} //
 
 				}
@@ -146,6 +150,19 @@ namespace TorboFile.Operations {
 				actionsRun++;
 
 			} // action loop.
+
+		}
+
+		private void RunOnce( IFileAction action ) {
+
+			try {
+
+				action.Run( new FileInfo( "/" ) );
+
+			} catch( Exception e ) {
+				this.SaveError( e );
+			}
+			this.AdvanceProgress();
 
 		}
 
@@ -206,15 +223,11 @@ namespace TorboFile.Operations {
 		private void SaveError( Exception e ) {
 
 			this.errorList.Add( e );
+			if( this._flags.HasFlag( CustomSearchFlags.HaltOnError ) ) {
+				this.Cancel();
+			}
 
 		}
-
-		/// <summary>
-		/// Method to halt when an error occurs ( if option is checked. )
-		/// </summary>
-		private void HaltFail() {
-
-		} //
 
 	} // class
 

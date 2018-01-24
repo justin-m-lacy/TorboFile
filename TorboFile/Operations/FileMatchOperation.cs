@@ -159,6 +159,10 @@ namespace TorboFile.Operations {
 				this.AddError( e );
 			}
 
+			if( CancelRequested() ) {
+				return;
+			}
+
 			//Console.WriteLine( "FileMatchOperation: Visiting Files In: " + dir );
 			this.VisitEntries( dir );
 
@@ -184,6 +188,9 @@ namespace TorboFile.Operations {
 				} catch( Exception e ) {
 					this.errorList.Add( e );
 				}
+				if( CancelRequested() ) {
+					return;
+				}
 
 			} // foreach.
 
@@ -191,7 +198,6 @@ namespace TorboFile.Operations {
 
 				try {
 
-					
 					FileInfo info = new FileInfo( file );
 					if( this.TestFile( info ) ) {
 						this.AddResult( info );
@@ -199,6 +205,9 @@ namespace TorboFile.Operations {
 
 				} catch( Exception e ) {
 					this.errorList.Add( e );
+				}
+				if( CancelRequested() ) {
+					return;
 				}
 
 			} // foreach.
@@ -235,6 +244,10 @@ namespace TorboFile.Operations {
 
 			} );
 
+			if( this._flags.HasFlag( CustomSearchFlags.HaltOnError ) ) {
+				this.Cancel();
+			}
+
 		}
 
 		/// <summary>
@@ -270,9 +283,15 @@ namespace TorboFile.Operations {
 
 				/// No Conditions for visiting subdirectories:
 				foreach( string subdir in dirs ) {
+
 					this.VisitDirectory( subdir );
+					if( CancelRequested() ) {
+						return;
+					}
+
 				}
 				return;
+
 			} //
 
 			/// Conditions for visiting subdirectories.
@@ -291,6 +310,9 @@ namespace TorboFile.Operations {
 
 				}
 				if( follow ) {
+					if( CancelRequested() ) {
+						return;
+					}
 					this.VisitDirectory( subdir );
 				}
 

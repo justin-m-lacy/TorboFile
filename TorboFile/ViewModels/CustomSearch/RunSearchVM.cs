@@ -20,8 +20,6 @@ namespace TorboFile.ViewModels.Main {
 
 		#region COMMANDs
 
-
-
 		/// <summary>
 		/// Command to run the current search, matching any files that match
 		/// the search conditions.

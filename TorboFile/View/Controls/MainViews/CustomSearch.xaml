@@ -167,31 +167,33 @@
 
 				<DockPanel LastChildFill="False">
 
-
-
 					<StackPanel DockPanel.Dock="Top" Name="buttonPanel" Orientation="Horizontal" HorizontalAlignment="Left">
 						
-						<Button Name="btnSave" Style="{StaticResource StdButton}" Content="SAVE SEARCH"
+						<Button Name="btnSave" Style="{StaticResource textButton}" Content="SAVE SEARCH"
 				Command="{Binding CmdSaveOperation}"/>
-						<Button Name="btnLoad" Style="{StaticResource StdButton}" Content="LOAD SEARCH"
+						<Button Name="btnLoad" Style="{StaticResource textButton}" Content="LOAD SEARCH"
 					Command="{Binding CmdLoadOperation}">
 						</Button>
-						<Button Name="btnRun" Style="{StaticResource StdButton}" Content="RUN SEARCH"
+						<Button Name="btnRun" Style="{StaticResource textButton}" Content="RUN SEARCH"
 					Command="{Binding CmdSearchMode}">
 						</Button>
 					</StackPanel>
 
-					<StackPanel Name="searchSettingsPanel" DockPanel.Dock="Top">
+					<StackPanel Name="searchSettingsPanel" DockPanel.Dock="Top" Orientation="Vertical">
 						<CheckBox Name="chkRecursive" Content="Recursive Search" IsChecked="{Binding  Path=BuildSearchVM.Recursive}"
 								  ToolTip="Search all subfolders of the main search folder" />
-						<CheckBox Name="chkAutoRun" Content="AutoRun Actions" IsChecked="{Binding Path=BuildSearchVM.AutoRun}"
-						  ToolTip="Run actions immediately on all matched files. WARNING: You will not be able to review the files beforehand." />
+						<CheckBox Name="chkSkipItem" Content="Skip File on Error" IsChecked="{Binding Path=BuildSearchVM.SkipItemOnError}"
+								  ToolTip="If an action fails on a file or directory, skip any further actions for that file." />
+						<!--<CheckBox Name="chkAutoRun" Content="AutoRun Actions" IsChecked="{Binding Path=BuildSearchVM.AutoRun}"
+						  ToolTip="Run actions immediately on all matched files. WARNING: You will not be able to review the files beforehand." />-->
 
+						<StackPanel Orientation="Horizontal">
 						<Button x:Name="BtnDirectory" Style="{StaticResource StdButton}" MaxHeight="28" Command="{Binding CmdPickDirectory}">
 							<Image Source="/TorboFile;component/assets/images/folder-yellow_open.png"/>
 						</Button>
 						<TextBox Style="{StaticResource TextInputTemplate}" Name="fldDirectory"
 									 Text="{Binding SearchDirectory, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+						</StackPanel>
 
 					</StackPanel>
 					
@@ -218,9 +220,17 @@
 
 
 					<StackPanel Name="btnPanel" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
-						<Button Name="btnEdit" Style="{StaticResource StdButton}" Content="EDIT SEARCH" Command="{Binding CmdEditSearch}">
+						<Button Name="btnEdit" Style="{StaticResource textButton}" Content="EDIT SEARCH" FontSize="14" Command="{Binding CmdEditSearch}">
 
 						</Button>
+						<Button Name="btnRunSearch" Style="{StaticResource textButton}" MaxHeight="32" FontSize="14" Command="{Binding RunSearchVM.CmdRunSearch}">
+							RUN SEARCH
+						</Button>
+						<Button Name="btnRunActions" Style="{StaticResource textButton}" MaxHeight="32" FontSize="14"
+									Command="{Binding CmdRunActions}" Visibility="{Binding Path=ResultsList, Converter={StaticResource NonNullToVisible}}">
+							APPLY ACTIONS
+						</Button>
+						
 					</StackPanel>
 					
 					<DockPanel Grid.Row="1" Name="runSearchPanel"
@@ -236,13 +246,7 @@
 									 Text="{Binding SearchDirectory, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
 							</StackPanel>
 							
-							<Button Name="btnRunSearch" Style="{StaticResource StdButton}" MaxHeight="32" Command="{Binding CmdRunSearch}">
-								RUN SEARCH
-							</Button>
-							<Button Name="btnRunActions" Style="{StaticResource StdButton}" MaxHeight="32"
-									Command="{Binding CmdRunActions}" Visibility="{Binding Path=ResultsList, Converter={StaticResource NonNullToVisible}}">
-								APPLY ACTIONS
-							</Button>
+
 						</StackPanel>
 
 						<controls:ProgressControl Margin="4,0,4,0" DockPanel.Dock="Top"

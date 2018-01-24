@@ -60,7 +60,7 @@ namespace TorboFile.ViewModels {
 				if( _customSearch.Options.Flags != value ) {
 
 					this._customSearch.Options.Flags = value;
-					Console.WriteLine( "UPDATING SETTING SEARCH FLAGS: " + value );
+					//Console.WriteLine( "UPDATING SETTING SEARCH FLAGS: " + value );
 					CustomSearchSettings.Default.searchFlags = value;
 					this.NotifyPropertyChanged();
 
@@ -68,6 +68,29 @@ namespace TorboFile.ViewModels {
 
 			}
 
+		}
+
+		public bool SkipItemOnError {
+			get => this.SearchFlags.HasFlag( CustomSearchFlags.SkipItemOnError );
+			set {
+
+				if( value == true ) {
+
+					if( !this.SearchFlags.HasFlag( CustomSearchFlags.SkipItemOnError ) ) {
+						this.SearchFlags |= CustomSearchFlags.SkipItemOnError;
+						this.NotifyPropertyChanged();
+					}
+
+				} else {
+
+					if( this.SearchFlags.HasFlag( CustomSearchFlags.SkipItemOnError ) ) {
+						this.SearchFlags &= ~CustomSearchFlags.SkipItemOnError;
+						this.NotifyPropertyChanged();
+					}
+
+				}
+
+			}
 		}
 
 		public bool Recursive {
@@ -149,7 +172,6 @@ namespace TorboFile.ViewModels {
 					this.matchBuilder.SourceCollection = value.Conditions;
 
 					// set the local flags, and update the settings (last used) flags.
-					Console.WriteLine( "BuildSearchVM: SETTING SEARCH FLAGS" );
 					CustomSearchSettings.Default.searchFlags = _customSearch.Options.Flags;
 
 				}
