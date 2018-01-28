@@ -7,71 +7,75 @@
              xmlns:prefs="clr-namespace:TorboFile.Properties"
 			 xmlns:r="clr-namespace:TorboFile.Properties"
              xmlns:convert="clr-namespace:Lemur.Windows.Converters"
-             d:DesignHeight="300" d:DesignWidth="500">
-    <!-- Use CleanFoldersModel -->
-    <DockPanel>
-        <TextBlock x:Name="LblInstructions" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="10,10,0,12" VerticalAlignment="Top"
+			 xmlns:controls="clr-namespace:Lemur.Windows.Controls"
+			 d:DesignHeight="300" d:DesignWidth="500">
+	<UserControl.Resources>
+		
+	</UserControl.Resources>
+	<!-- Use CleanFoldersModel -->
+	<DockPanel>
+		<TextBlock x:Name="LblInstructions" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="10,10,0,12" VerticalAlignment="Top"
 				   TextWrapping="Wrap" Background="Transparent" Text="{x:Static r:MainStrings.CLEAN_DIRS_MSG}" />
 
-        <!-- increased bottom margin for validation message. -->
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="4,0,4,12" HorizontalAlignment="Stretch">
-            <Button x:Name="BtnDirectory" Style="{StaticResource StdButton}" MaxHeight="28" Command="{Binding CmdPickFolder}">
-                <Image Source="/TorboFile;component/assets/images/folder-yellow_open.png"/>
-            </Button>
-            <TextBox x:Name="FldDirectory" Text="{Binding SearchDirectory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnExceptions=True}"
+		<!-- increased bottom margin for validation message. -->
+		<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="4,0,4,12" HorizontalAlignment="Stretch">
+			<Button x:Name="BtnDirectory" Style="{StaticResource BtnPickFolder}" MaxHeight="28" Command="{Binding CmdPickFolder}" />
+			<TextBox x:Name="FldDirectory" Text="{Binding SearchDirectory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnExceptions=True}"
                     Validation.ErrorTemplate="{StaticResource ErrorTemplate}" MaxHeight="22" MinWidth="420"/>
-        </StackPanel>
+		</StackPanel>
 
-        <!-- SIZE RANGES -->
-        <StackPanel DockPanel.Dock="Top" Margin="16,4,0,8">
-        <CheckBox x:Name="ChkUseSizeRange" Content="{x:Static r:MainStrings.CLEAN_DIRS_SIZE_OPT}" HorizontalAlignment="Left" VerticalAlignment="Top"
+		<!-- SIZE RANGES -->
+		<StackPanel DockPanel.Dock="Top" Margin="16,4,0,8">
+			<CheckBox x:Name="ChkUseSizeRange" Content="{x:Static r:MainStrings.CLEAN_DIRS_SIZE_OPT}" HorizontalAlignment="Left" VerticalAlignment="Top"
                  ToolTip="{x:Static r:MainStrings.CLEAN_DIRS_SIZE_TIP}" IsChecked="{Binding UseSizeRange}" />
 
-        <StackPanel x:Name="ContentSizeRange" Orientation="Horizontal" Margin="16,4,0,8"
+			<StackPanel x:Name="ContentSizeRange" Orientation="Horizontal" Margin="16,4,0,8"
                     Visibility="{Binding ElementName=ChkUseSizeRange, Path=IsChecked, Converter={StaticResource BoolVisibility}}">
-                <StackPanel x:Name="MinSizePanel">
+				<StackPanel x:Name="MinSizePanel">
 
 					<TextBlock x:Name="LblMinSize" Text="{x:Static r:MainStrings.CLEAN_DIRS_MIN_MSG}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
-                    <TextBox x:Name="FldMinSize"
+					<TextBox x:Name="FldMinSize"
                          Text="{Binding MinSize, ValidatesOnExceptions=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"
                          HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" MaxLines="1" MaxLength="0" IsUndoEnabled="True" UndoLimit="3"/>
 
-                </StackPanel>
-                <StackPanel Margin="32,0,0,0">
+				</StackPanel>
+				<StackPanel Margin="32,0,0,0">
 
 					<TextBlock x:Name="LblMaxSize" Text="{x:Static r:MainStrings.CLEAN_DIRS_MAX_MSG}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
-                <TextBox x:Name="FldMaxSize"
+					<TextBox x:Name="FldMaxSize"
                      Text="{Binding MaxSize, ValidatesOnExceptions=True}" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"
                      HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLines="1" />
 
-            </StackPanel>
+				</StackPanel>
 
-        </StackPanel>
-        </StackPanel>
+			</StackPanel>
+		</StackPanel>
 
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,4,4,4">
-            <Button x:Name="BtnDeleteEmpty" Style="{StaticResource StdButton}" Command="{Binding CmdBeginSearch}"
+		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,4,4,4">
+			<Button x:Name="BtnBeginClean" Style="{StaticResource StdButton}" Command="{Binding CmdBeginSearch}"
                     HorizontalAlignment="Left" VerticalAlignment="Top" MaxHeight="72" Margin="12,0,0,0" >
-                <DockPanel>
-                    <Image DockPanel.Dock="Top" Source="/TorboFile;component/assets/images/system-search-4.png" MaxHeight="42">
-                    </Image>
-                    <TextBlock DockPanel.Dock="Bottom" Text="{x:Static r:MainStrings.CLEAN_DIRS_BEGIN_PROMPT}"/>
-                </DockPanel>
-            </Button>
-            <CheckBox x:Name="ChkRecursiveEmpty" IsChecked="{Binding Source={x:Static prefs:FolderCleanSettings.Default}, Path=recursive}"
+				<DockPanel>
+					<Image DockPanel.Dock="Top" Source="/TorboFile;component/assets/images/system-search-4.png" MaxHeight="42">
+					</Image>
+					<TextBlock DockPanel.Dock="Bottom" Text="{x:Static r:MainStrings.CLEAN_DIRS_BEGIN_PROMPT}"/>
+				</DockPanel>
+			</Button>
+			<CheckBox x:Name="ChkRecursiveEmpty" IsChecked="{Binding Source={x:Static prefs:FolderCleanSettings.Default}, Path=recursive}"
                       ToolTip="{x:Static r:MainStrings.CLEAN_DIRS_RECURSIVE_TIP}"
                       Content="{x:Static r:MainStrings.CLEAN_DIRS_RECURSIVE_OPT}" Margin="24,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="24" Width="193"/>
-            <CheckBox x:Name="ChkDeleteEmpty" IsChecked="{Binding DeleteEmptyFiles}"
-                      ToolTip="{x:Static r:MainStrings.CLEAN_DIRS_RECURSIVE_TIP}"
-                      Content="{x:Static r:MainStrings.CLEAN_DIRS_RECURSIVE_OPT}" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center"/>
-        </StackPanel>
-        
-        <ScrollViewer DockPanel.Dock="Bottom" Margin="8,4,8,4" VerticalScrollBarVisibility="Auto">
+			<CheckBox x:Name="ChkDeleteEmpty" IsChecked="{Binding DeleteEmptyFiles}"
+                      ToolTip="{x:Static r:MainStrings.CLEAN_DIRS_EMPTY_TIP}"
+                      Content="{x:Static r:MainStrings.CLEAN_DIRS_EMPTY_OPT}" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center"/>
+		</StackPanel>
 
-            <ItemsControl x:Name="ItemsOutput" ItemsSource="{Binding Output}" ItemTemplate="{StaticResource MessageString}"/>
+		<ScrollViewer DockPanel.Dock="Bottom" Margin="8,4,8,4" VerticalScrollBarVisibility="Auto">
 
-        </ScrollViewer>
+			<controls:FeedbackList x:Name="FeedbackList" Current="{Binding Output}" ErrorBrush="{StaticResource ErrorBrush}"
+								   DefaultBrush="{StaticResource SuccessBrush}" />
+			<!--<ItemsControl x:Name="ItemsOutput" ItemsSource="{Binding Output}" ItemTemplate="{StaticResource MessageString}"/>-->
+
+		</ScrollViewer>
 
 
-    </DockPanel>
+	</DockPanel>
 </UserControl>

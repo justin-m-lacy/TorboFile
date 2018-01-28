@@ -19,6 +19,7 @@ namespace TorboFile.Operations {
 		private const string ROOT_DIR = "/";
 
 		public event Action<FileSystemInfo> OnMatchFound;
+		public event Action<Exception> OnError;
 
 		#region PROPERTIES
 
@@ -241,6 +242,7 @@ namespace TorboFile.Operations {
 			this.Dispatch( () => {
 
 				this.errorList.Add( err );
+				this.OnError?.Invoke( err );
 
 			} );
 

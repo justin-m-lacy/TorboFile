@@ -14,6 +14,7 @@ using Lemur;
 using System.Diagnostics;
 using Lemur.Windows.Services;
 using System.IO;
+using Lemur.Windows.Text;
 
 namespace TorboFile.ViewModels {
 
@@ -26,6 +27,8 @@ namespace TorboFile.ViewModels {
 		void DebugDestructor() {
 			Console.WriteLine( "FIND DUPLICATES MODEL DESTRUCTOR" );
 		}
+
+		#region COMMANDS
 
 		private RelayCommand _cmdBeginSearch;
 		/// <summary>
@@ -43,7 +46,15 @@ namespace TorboFile.ViewModels {
 
 		}
 
+		#endregion
+
 		#region PROPERTIES
+
+		private TextString _output;
+		public TextString Output {
+			get => this._output;
+			set => this.SetProperty( ref this._output, value );
+		}
 
 		/// <summary>
 		/// Current file being previewed.
@@ -110,16 +121,14 @@ namespace TorboFile.ViewModels {
 
 			IFileDialogService dialog = (IFileDialogService)this.ServiceProvider.GetService( typeof( IFileDialogService ) );
 			if( dialog != null ) {
-				string folder = dialog.PickFolder( "Choose a source folder..." );
+				string folder = dialog.PickFolder( Properties.Resources.PICK_SEARCH_FOLDER );
 
 				if( !string.IsNullOrEmpty( folder ) ) {
-
 					Task t = this.FindCopiesAsync( folder );
-
 				}
 			}
 
-		}
+		} // PickFolder()
 
 		private async void DeleteCheckedAsync( IEnumerable<FileSystemInfo> checked_files ) {
 
@@ -178,6 +187,7 @@ namespace TorboFile.ViewModels {
 
 			if( this.ResultsList.Items.Count == 0 ) {
 				// report no results found.
+				this.Output = new TextString( Properties.Resources.NO_MATCHES_FOUND );
 			}
 
 			matchGroups.CollectionChanged -= this.Matches_CollectionChanged;

@@ -161,6 +161,7 @@ namespace TorboFile.ViewModels {
 		/// Run the operation.
 		/// </summary>
 		private void DoSearchMode() {
+			Console.WriteLine( "DO SEARCH MODE" );
 			this.EditMode = false;
 		}
 

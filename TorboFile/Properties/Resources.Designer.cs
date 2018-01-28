@@ -106,6 +106,15 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Selected Item.
+        /// </summary>
+        public static string DELETE_ITEM_TIP {
+            get {
+                return ResourceManager.GetString("DELETE_ITEM_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error: Directory does not exist..
         /// </summary>
         public static string DIR_NO_EXIST_ERR {
@@ -147,6 +156,24 @@ namespace TorboFile.Properties {
         public static string MEDIA_STOP_TIP {
             get {
                 return ResourceManager.GetString("MEDIA_STOP_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No matches found..
+        /// </summary>
+        public static string NO_MATCHES_FOUND {
+            get {
+                return ResourceManager.GetString("NO_MATCHES_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a search folder....
+        /// </summary>
+        public static string PICK_SEARCH_FOLDER {
+            get {
+                return ResourceManager.GetString("PICK_SEARCH_FOLDER", resourceCulture);
             }
         }
         

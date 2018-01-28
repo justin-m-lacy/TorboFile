@@ -181,6 +181,12 @@
     <Compile Include="ViewModels\Main\MainVM.cs" />
     <Compile Include="ViewModels\CustomSearch\RunSearchVM.cs" />
     <Compile Include="ViewModels\TagFileModel.cs" />
+    <Compile Include="View\Controls\CustomSearch\BuildSearch.xaml.cs">
+      <DependentUpon>BuildSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\CustomSearch\RunSearch.xaml.cs">
+      <DependentUpon>RunSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\FileList.xaml.cs">
       <DependentUpon>FileList.xaml</DependentUpon>
     </Compile>
@@ -295,6 +301,26 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="assets\BaseDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="assets\CustomSearchDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\FeedbackList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\CustomSearch\BuildSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\CustomSearch\RunSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

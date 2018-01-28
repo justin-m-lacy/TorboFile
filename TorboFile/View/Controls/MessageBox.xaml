@@ -18,17 +18,10 @@
                    Text="{Binding Message}"/>
         </Border>
         <DockPanel Grid.Row="2" LastChildFill="False">
-            <Button x:Name="BtnConfirm" DockPanel.Dock="Right" Style="{StaticResource StdButton}"
-                    FontSize="10" MinWidth="48" Margin="2,0,2,0"
-                   Click="BtnConfirm_Click">
-                <Image Source="/TorboFile;component/assets/images/dialog-yes.png" />
-            </Button>
-            <Button x:Name="BtnCancel" DockPanel.Dock="Right" Style="{StaticResource StdButton}"
-                    FontSize="10" MinWidth="48" Click="BtnCancel_Click">
-
-                <Image Source="/TorboFile;component/assets/images/dialog-close.png"/>
-            </Button>
-        </DockPanel>
+			<Button x:Name="BtnConfirm" DockPanel.Dock="Right" Style="{StaticResource BtnAccept}" MinWidth="48" Margin="2,0,2,0"
+                   Click="BtnConfirm_Click"/>
+			<Button x:Name="BtnCancel"  Style="{StaticResource BtnCancel}" DockPanel.Dock="Right" MinWidth="48" Click="BtnCancel_Click"/>
+		</DockPanel>
         
     </Grid>
 </UserControl>

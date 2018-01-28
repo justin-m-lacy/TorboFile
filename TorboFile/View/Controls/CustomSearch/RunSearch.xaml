@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="TorboFile.View.Controls.RunSearch"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:fb="clr-namespace:Lemur.Windows.Controls"
+			 xmlns:controls="clr-namespace:TorboFile.View.Controls"
+			 mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+	<UserControl.Resources>
+		<ResourceDictionary Source="/TorboFile;component/assets/CustomSearchDictionary.xaml"/>
+	</UserControl.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="95*"/>
+		</Grid.RowDefinitions>
+
+		<StackPanel Name="btnPanel" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
+			<Button Name="btnEdit" Style="{StaticResource textButton}" Content="EDIT SEARCH" FontSize="14" Command="{Binding CmdEditSearch}">
+
+			</Button>
+			<Button Name="btnRunSearch" Style="{StaticResource textButton}" MaxHeight="42" FontSize="14" Command="{Binding RunSearchVM.CmdRunSearch}">RUN SEARCH
+			</Button>
+			<Button Name="btnRunActions" Style="{StaticResource textButton}" MaxHeight="42" FontSize="14"
+									Command="{Binding RunSearchVM.CmdRunActions}" Visibility="{Binding Path=ResultsList, Converter={StaticResource NonNullToVisible}}">
+				APPLY ACTIONS
+			</Button>
+
+		</StackPanel>
+
+		<DockPanel Grid.Row="1" Name="runSearchPanel"
+							   DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.RunSearchVM}">
+
+			<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+
+				<StackPanel Name="pickFolderPanel" Orientation="Horizontal" DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext}">
+					<Button x:Name="BtnDirectory" Style="{StaticResource BtnPickFolder}" Command="{Binding CmdPickDirectory}"/>
+					<TextBox Style="{StaticResource TextInputTemplate}" Name="fldDirectory"
+									 Text="{Binding SearchDirectory, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+				</StackPanel>
+
+
+			</StackPanel>
+
+			<controls:ProgressControl Margin="4,0,4,0" DockPanel.Dock="Top"
+                                  DataContext="{Binding CurrentProgress}"
+                                  Visibility="{Binding Path=IsRunning, Converter={StaticResource BoolVisibility}}" />
+
+			<controls:FileList DataContext="{Binding RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=DockPanel}, Path=DataContext.ResultsList}" Visibility="{Binding Converter={StaticResource NonNullToVisible}}">
+				<controls:FileList.Buttons>
+
+					<Button Style="{StaticResource BtnOpenExternal}" Margin="2,0,2,2"
+                Command="{Binding CmdOpenChecked}" Visibility="{Binding ShowOpenCmd, Converter={StaticResource BoolVisibility}}" />
+
+					<Button Style="{StaticResource BtnShowExternal}" Margin="2,0,2,2"
+                Command="{Binding CmdShowLocation}" Visibility="{Binding ShowOpenLocationCmd, Converter={StaticResource BoolVisibility}}"/>
+
+					<Button Style="{StaticResource BtnDelete}" Margin="2,0,2,2"
+							Command="{Binding CmdDelete}" 
+							Visibility="{Binding ShowDeleteCmd, Converter={StaticResource BoolVisibility}}" />
+
+					<Button Style="{StaticResource StdButton}"
+                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
+                ToolTip="Run Actions" Command="{Binding ElementName=runSearchPanel, Path=DataContext.CmdRunActions}"
+                VerticalAlignment="Bottom" HorizontalAlignment="Right">
+						<Image Source="/TorboFile;component/assets/images/image_start.png" MaxHeight="28" MaxWidth="28" />
+					</Button>
+
+				</controls:FileList.Buttons>
+			</controls:FileList>
+
+			<fb:FeedbackList x:Name="FeedbackList" Current="{Binding Output}" ErrorBrush="{StaticResource ErrorBrush}"
+								   DefaultBrush="{StaticResource SuccessBrush}" />
+
+		</DockPanel>
+
+	</Grid>
+</UserControl>

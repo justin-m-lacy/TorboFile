@@ -132,6 +132,9 @@
   <data name="CUSTOM_SEARCH_SECTION" xml:space="preserve">
     <value>Custom Search</value>
   </data>
+  <data name="DELETE_ITEM_TIP" xml:space="preserve">
+    <value>Delete Selected Item</value>
+  </data>
   <data name="DIR_NO_EXIST_ERR" xml:space="preserve">
     <value>Error: Directory does not exist.</value>
   </data>
@@ -146,6 +149,12 @@
   </data>
   <data name="MEDIA_STOP_TIP" xml:space="preserve">
     <value>Stop</value>
+  </data>
+  <data name="NO_MATCHES_FOUND" xml:space="preserve">
+    <value>No matches found.</value>
+  </data>
+  <data name="PICK_SEARCH_FOLDER" xml:space="preserve">
+    <value>Choose a search folder...</value>
   </data>
   <data name="SEARCH_FILE_EXTENSION" xml:space="preserve">
     <value>tsrch</value>

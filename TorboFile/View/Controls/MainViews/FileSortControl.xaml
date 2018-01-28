@@ -25,7 +25,7 @@
             <ColumnDefinition Width="80*"></ColumnDefinition>
             <ColumnDefinition Width="{StaticResource GridSplitterWidth}"/>
             <!-- GridSplitter Column-->
-            <ColumnDefinition Width="15*"></ColumnDefinition>
+            <ColumnDefinition MinWidth="120" Width="195"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <Grid x:Name="PreviewGrid" Grid.Row="0" Grid.Column="0">
@@ -57,16 +57,11 @@
                 <Image Source="/TorboFile;component/assets/images/configure-5.png" Stretch="Uniform"/>
 
             </Button>
-            <Button x:Name="BtnNewCategory" Style="{StaticResource StdButton}"
-					ToolTip="{x:Static r:MainStrings.BTN_NEW_CATEGORY_TIP}"
-                    HorizontalContentAlignment="Center" Command="{Binding CmdNewCategory}" Margin="4,0,4,0">
-
-                <Image Source="/TorboFile;component/assets/images/list-add-4.png" Stretch="Uniform"/>
-
-            </Button>
+			<Button x:Name="BtnNewCategory" Style="{StaticResource BtnAddItem}"
+					ToolTip="{x:Static r:MainStrings.BTN_NEW_CATEGORY_TIP}" Command="{Binding CmdNewCategory}"/> 
 
 
-        </StackPanel>
+		</StackPanel>
 
         <GridSplitter Grid.Column="1" Grid.Row="0" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
@@ -127,17 +122,13 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Grid.Column="0">
-                <Button x:Name="BtnDirectory" Style="{StaticResource StdButton}" MinWidth="28"
+				<Button x:Name="BtnDirectory" Style="{StaticResource BtnPickFolder}"
 						ToolTip="{x:Static r:MainStrings.SORT_CHANGE_DIR_TIP}"
-						MinHeight="28" HorizontalAlignment="Left"
-                    Command="{Binding CmdPickDirectory}">
-                    <Image Source="/TorboFile;component/assets/images/folder-yellow_open.png" Stretch="UniformToFill"/>
-
-                </Button>
+                    Command="{Binding CmdPickDirectory}"/>
 
 
-                <TextBlock Text="{Binding Path=FileList.Current.FullName}" Width="Auto"></TextBlock>
-            </StackPanel>
+				<TextBlock VerticalAlignment="Center" Text="{Binding Path=FileList.Current.FullName}" Width="Auto" />
+			</StackPanel>
             <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left">
 
                 <Button x:Name="BtnPrev" Style="{StaticResource StdButton}" Margin="0,0,2,0"
@@ -151,26 +142,15 @@
                     <Image Source="/TorboFile;component/assets/images/go-next-5.png"/>
                 </Button>
 
-                <Button x:Name="BtnExternal" Style="{StaticResource StdButton}" Command="{Binding FilePreview.CmdOpenExternal}"
-                        ToolTip="{x:Static r:MainStrings.OPEN_EXTERNAL_TIP}" Margin="2,0,4,0">
-
-                    <Image Source="/TorboFile;component/assets/images/document-preview.png"/>
-
-                </Button>
-                <Button x:Name="BtnShowExternal" Style="{StaticResource StdButton}" Command="{Binding FilePreview.CmdShowLocation}"
-                        ToolTip="{x:Static r:MainStrings.SHOW_IN_EXPLORER_TIP}" Margin="2,0,4,0">
-
-                    <Image Source="/TorboFile;component/assets/images/large/folder.png"/>
-
-                </Button>
-				<Button x:Name="BtnDelete" Style="{StaticResource StdButton}" HorizontalAlignment="Left"
+				<Button x:Name="BtnExternal" Style="{StaticResource BtnOpenExternal}" Command="{Binding FilePreview.CmdOpenExternal}"
+                        Margin="2,0,4,0"/>
+				<Button x:Name="BtnShowExternal" Style="{StaticResource BtnShowExternal}" Command="{Binding FilePreview.CmdShowLocation}"
+                        Margin="2,0,4,0"/>
+				<Button x:Name="BtnDelete" Style="{StaticResource BtnDelete}"
 						ToolTip="{x:Static r:MainStrings.DELETE_FILE_TIP}"
-                        Command="{Binding CmdDeleteFile}" Margin="4,0,0,0">
-                    <Image Source="/TorboFile;component/assets/images/dialog-close.png" Stretch="Uniform"/>
+                        Command="{Binding CmdDeleteFile}" />
 
-                </Button>
-
-            </StackPanel>
+			</StackPanel>
 
         </Grid>
 

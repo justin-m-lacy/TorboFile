@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using TorboFile.Model;
+using Lemur.Windows.Text;
 
 namespace TorboFile.ViewModels.Main {
 
@@ -48,6 +49,16 @@ namespace TorboFile.ViewModels.Main {
 		#endregion
 
 		#region PROPERTIES
+
+		private TextString _output;
+		public TextString Output {
+			get => this._output;
+			set {
+				this._output = value;
+				NotifyPropertyChanged();
+			}
+
+		}
 
 		/// <summary>
 		/// Models the progression of the current search.
@@ -97,31 +108,35 @@ namespace TorboFile.ViewModels.Main {
 		/// <returns>A Task, apparently.</returns>
 		private async void RunActionsAsync() {
 
-			FileActionOperation operation = new FileActionOperation();
-			operation.Actions = this.CustomSearch.Actions;
-			operation.Targets = this.ResultsList.CheckedItems;
+			using ( FileActionOperation operation = new FileActionOperation() ) {
+	
+				operation.Actions = this.CustomSearch.Actions;
+				operation.Targets = this.ResultsList.CheckedItems;
 
-			operation.Options = this._customSearch.Options;
+				operation.Options = this._customSearch.Options;
 
-			this.CurrentProgress.Operation = operation;
+				this.CurrentProgress.Operation = operation;
 
-			try {
+				try {
 
-				await Task.Run( () => { operation.Run(); } );
+					await Task.Run( () => { operation.Run(); } );
 
-			} catch( Exception e ) {
+				} catch( Exception e ) {
 
-				Console.WriteLine( "ERROR: " + e.ToString() );
+					this.Output = new TextString( e.Message, TextString.Error );
+					Console.WriteLine( "ERROR: " + e.ToString() );
 
-			}
+				}
 
-			Exception[] exceptions = operation.ErrorList;
-			foreach( Exception e in exceptions ) {
-				Console.WriteLine( e.ToString() );
-			}
+				Exception[] exceptions = operation.ErrorList;
+				foreach( Exception e in exceptions ) {
+					Console.WriteLine( e.ToString() );
+					this.Output = new TextString( e.Message, "error" );
+				}
 
-			Console.WriteLine( "ACTIONS DONE" );
-		}
+			} // using
+
+		} // RunActionsAsync()
 
 		/// <summary>
 		/// 
@@ -130,31 +145,31 @@ namespace TorboFile.ViewModels.Main {
 		/// <returns></returns>
 		private async Task RunSearchAsync() {
 
-			FileMatchOperation operation = this.BuildMatchOperation( this._customSearch );
-			operation.OnMatchFound += MatchFinder_OnMatchFound;
+			using( FileMatchOperation operation = this.BuildMatchOperation( this._customSearch ) ) {
 
-			this._currentProgress.Operation = operation;
+				this._currentProgress.Operation = operation;
 
-			//List<FileSystemInfo> matches = matchFinder.Matches;
-			//BindingOperations.EnableCollectionSynchronization( matches, resultsLock );
+				// Ensure the ResultsModel exists for displaying results.
+				this.CreateResultsList();
 
-			// Ensure the ResultsModel exists for displaying results.
-			this.CreateResultsList();
+				try {
 
-			try {
+					await Task.Run( () => operation.Run() );
 
-				await Task.Run( () => operation.Run() );
+				} catch( Exception e ) {
+					this.Output = new TextString( e.Message, TextString.Error );
+					Console.WriteLine( "ERROR: " + e.ToString() );
+				}
 
-			} catch( Exception e ) {
-				Console.WriteLine( "ERROR: " + e.ToString() );
+				if( this.ResultsList.Items.Count == 0 ) {
+					// report no results found.
+					Console.WriteLine( "NO RESULTS FOUND" );
+					this.Output = new TextString( "No matches found." );
+				}
+
+				OpDone( operation );
 			}
 
-			if( this.ResultsList.Items.Count == 0 ) {
-				// report no results found.
-				Console.WriteLine( "NO RESULTS FOUND" );
-			}
-
-			operation.OnMatchFound -= MatchFinder_OnMatchFound;
 
 		} //
 
@@ -169,12 +184,24 @@ namespace TorboFile.ViewModels.Main {
 
 		}
 
+		private void OpDone( FileMatchOperation op ) {
+			op.OnMatchFound -= MatchFinder_OnMatchFound;
+			op.OnError -= this.MatchOp_OnError;
+		}
+
 		private FileMatchOperation BuildMatchOperation( CustomSearchData search ) {
 
 			FileMatchOperation matchOp = new FileMatchOperation( search.Options.BaseDirectory, search.Conditions, search.Options );
+			matchOp.OnMatchFound += MatchFinder_OnMatchFound;
+			matchOp.OnError += MatchOp_OnError;
+
 			return matchOp;
 		}
-	
+
+		private void MatchOp_OnError( Exception obj ) {
+			this.Output = new TextString( obj.Message, TextString.Error );
+		}
+
 		private FileListVM CreateResultsList() {
 
 			if( this.ResultsList != null ) {

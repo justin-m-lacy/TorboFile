@@ -121,6 +121,11 @@
 			</Setter>
 		</Style>
 
+		<ToolBarTray x:Key="mainTray">
+			<ToolBar>
+				<Button x:Name="trayTest" Content="TRAY TEST BUTN" />
+			</ToolBar>
+		</ToolBarTray>
 	</Window.Resources>
 
 	<Grid>
@@ -140,10 +145,14 @@
 			</TabControl.Resources>
 
 			<TabItem Style="{StaticResource TabStyle}" Name="SortFilesSection" Header="{x:Static r:Resources.SORT_FILES_SECTION}">
+
 				<controls:FileSortControl x:Name="SortFilesView"></controls:FileSortControl>
 			</TabItem>
 			<TabItem Style="{StaticResource TabStyle}" Name="FindCopiesSection" Header="{x:Static r:Resources.FIND_COPIES_SECTION}">
-				<controls:FindDuplicatesControl x:Name="FindCopiesView"></controls:FindDuplicatesControl>
+
+					<controls:FindDuplicatesControl x:Name="FindCopiesView"
+						DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabItem}, Path=FindCopiesVM}"></controls:FindDuplicatesControl>
+
 			</TabItem>
 			<TabItem Style="{StaticResource TabStyle}" x:Name="CleanFoldersSection" Header="{x:Static r:Resources.CLEAN_FOLDERS_SECTION}">
 				<controls:CleanFoldersControl x:Name="CleanFoldersView"></controls:CleanFoldersControl>

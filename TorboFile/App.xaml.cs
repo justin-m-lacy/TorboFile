@@ -46,8 +46,6 @@ namespace TorboFile {
 			get { return this.categoryManager; }
 		}
 
-
-
 		private void Application_Startup( object sender, StartupEventArgs e ) {
 
 			//Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo( "zh" );
@@ -59,6 +57,7 @@ namespace TorboFile {
 			ViewModelBase.CloseView = TryCloseView;
 
 			this.InitServices();
+			this.InitToolBar();
 
 			this.CreateMainWindow();
 
@@ -122,6 +121,16 @@ namespace TorboFile {
 			this.services.AddService( typeof( FileDeleteService ), new ServiceCreatorCallback( ( container, type ) => {
 				return new FileDeleteService();
 			} ) );
+
+		}
+
+		/// <summary>
+		/// Provide reusable toolbar to views. 
+		/// </summary>
+		private void InitToolBar() {
+
+			ToolBarVM toolBar = new ToolBarVM();
+			this.services.AddService( typeof( ToolBarVM ), toolBar );
 
 		}
 

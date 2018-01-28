@@ -211,7 +211,7 @@ namespace TorboFile.ViewModels {
 		public bool HasItems() {
 			return this.HasConditions() || this.HasActions();
 		}
-		
+
 		/// <summary>
 		/// Build the current search from the currently displayed items.
 		/// </summary>
@@ -266,6 +266,6 @@ namespace TorboFile.ViewModels {
 
 		} //
 
-} // class
+	} // class
 
 } // namespace

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TorboFile.View.Controls"
-             xmlns:lerp="clr-namespace:Lemur.Windows.Controls"
+             xmlns:lmrcontrols="clr-namespace:Lemur.Windows.Controls"
              xmlns:convert="clr-namespace:Lemur.Windows.Converters"
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:TorboFile.View.Controls"
@@ -80,11 +80,11 @@
                     Visibility="{Binding ElementName=ChkUseSizeRange, Path=IsChecked, Converter={StaticResource BoolVisibility}}">
                     <StackPanel x:Name="MinSizePanel">
 						<Label x:Name="LblMinSize" Content="{x:Static r:MainStrings.COPIES_SIZE_MIN}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
-                        <lerp:ByteTextBox x:Name="FldMinSize" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" MaxLength="0" IsUndoEnabled="True" UndoLimit="3"/>
+						<lmrcontrols:ByteTextBox x:Name="FldMinSize" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" MaxLength="0" IsUndoEnabled="True" UndoLimit="3"/>
                     </StackPanel>
                     <StackPanel Margin="32,0,0,0">
 						<Label x:Name="LblMaxSize" Content="{x:Static r:MainStrings.COPIES_SIZE_MAX}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
-                        <lerp:ByteTextBox x:Name="FldMaxSize" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" />
+						<lmrcontrols:ByteTextBox x:Name="FldMaxSize" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" />
                     </StackPanel>
 
                 </StackPanel>
@@ -112,7 +112,7 @@
                 <!-- Button is in the SettingsPanel for Layout reason -->
                 <Button x:Name="BtnFindDuplicates" Style="{StaticResource StdButton}" Margin="24,0,0,0"
                         DockPanel.Dock="Right" MaxWidth="72" MaxHeight="92" HorizontalAlignment="Left"
-            Command="{Binding Path=DataContext.CmdBeginSearch, ElementName=GridLeftPanel}" ToolTip="Begin Search">
+            Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.CmdBeginSearch}" ToolTip="Begin Search">
                     <DockPanel>
                         <Image Source="/TorboFile;component/assets/images/system-search-4.png" DockPanel.Dock="Top" Width="42" Height="42" />
 						<TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Text="{x:Static r:Resources.BTN_SEARCH}"/>
@@ -125,11 +125,14 @@
                                   DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.CurrentSearch}"
                                   Visibility="{Binding Converter={StaticResource NonNullToVisible}}" />
 
-            <ContentControl
+            <ContentControl DockPanel.Dock="Bottom"
                             DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}, Path=DataContext.ResultsList}"
                                  Style="{StaticResource ResultsContent}" Visibility="{Binding Converter={StaticResource NonNullToVisible}}"/>
 
-        </DockPanel>
+			<lmrcontrols:FeedbackList DockPanel.Dock="Bottom" x:Name="FeedbackList" Current="{Binding Output}" ErrorBrush="{StaticResource ErrorBrush}"
+								   DefaultBrush="{StaticResource SuccessBrush}" />
+
+		</DockPanel>
 
 
         <GridSplitter Grid.Column="1" Width="4" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Stretch" />

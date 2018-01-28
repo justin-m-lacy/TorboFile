@@ -31,10 +31,12 @@ namespace TorboFile.Properties {
 
 		private void FolderCleanSettings_SettingChanging( object sender, System.Configuration.SettingChangingEventArgs e ) {
 
-			if( this.saveLastDirectory ) {
-				this.lastDirectory = this._lastDirectory;
-			} else {
-				this.lastDirectory = null;
+			if( e.SettingName == "saveLastDirectory" ) {
+				if( this.saveLastDirectory ) {
+					this.lastDirectory = this._lastDirectory;
+				} else {
+					this.lastDirectory = null;
+				}
 			}
 
 		}

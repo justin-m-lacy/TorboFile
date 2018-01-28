@@ -40,19 +40,11 @@
 
         <DockPanel Grid.Row="1" Margin="8,0,0,0" HorizontalAlignment="Stretch" LastChildFill="False">
 
-            <Button x:Name="BtnAccept" Style="{StaticResource StdButton}" Command="{Binding CmdSubmit}"
+			<Button x:Name="BtnAccept" Style="{StaticResource BtnAccept}" Command="{Binding CmdSubmit}"
 					ToolTip="{x:Static r:MainStrings.CONFIRM_BTN_TIP}"
-                    DockPanel.Dock="Right" MinWidth="42" MinHeight="42" IsDefault="True">
-
-                    <Image Stretch="Uniform" Source="/TorboFile;component/assets/images/dialog-yes.png"/>
-
-            </Button>
-            <Button Style="{StaticResource StdButton}" x:Name="BtnCancel" MinHeight="40" MinWidth="40" DockPanel.Dock="Right" Click="BtnCancel_Click">
-
-                    <Image Source="/TorboFile;component/assets/images/dialog-close.png" Stretch="Uniform"/>
-
-            </Button>
-        </DockPanel>
+                    DockPanel.Dock="Right" MinWidth="42" MinHeight="42" IsDefault="True"/>
+			<Button Style="{StaticResource BtnCancel}" x:Name="BtnCancel" MinHeight="40" MinWidth="40" DockPanel.Dock="Right" Click="BtnCancel_Click"/>
+		</DockPanel>
 
     </Grid>
 </UserControl>

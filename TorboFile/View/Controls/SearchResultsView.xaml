@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:r="clr-namespace:TorboFile.Properties"
              xmlns:local="clr-namespace:TorboFile.View.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -31,24 +32,13 @@
 		<DockPanel Grid.Column="0" Name="GridLeftPanel" Grid.RowSpan="2">
 			<StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
 
-				<Button DockPanel.Dock="Bottom" x:Name="BtnOpen" Style="{StaticResource StdButton}"
-                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
-                ToolTip="Open in Explorer" Command="{Binding CmdOpenChecked}"
-                VerticalAlignment="Bottom" HorizontalAlignment="Right">
-					<Image Source="/TorboFile;component/assets/images/document-preview.png" MaxHeight="28" MaxWidth="28" />
-				</Button>
-				<Button DockPanel.Dock="Bottom" x:Name="BtnShow" Style="{StaticResource StdButton}"
-                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
-                ToolTip="Show in Explorer" Command="{Binding CmdShowLocation}"
-                VerticalAlignment="Bottom" HorizontalAlignment="Right">
-					<Image Source="/TorboFile;component/assets/images/large/folder.png" MaxHeight="28" MaxWidth="28"  />
-				</Button>
-				<Button DockPanel.Dock="Bottom" x:Name="BtnDelete" Style="{StaticResource StdButton}"
-                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
-                ToolTip="Delete Selected" Command="{Binding CmdDelete}"
-                VerticalAlignment="Bottom" HorizontalAlignment="Right">
-					<Image Source="/TorboFile;component/assets/images/dialog-close.png" MaxHeight="28" MaxWidth="28" />
-				</Button>
+				<Button DockPanel.Dock="Bottom" x:Name="BtnOpen" Style="{StaticResource BtnOpenExternal}"
+                Margin="2,0,2,2"
+				Command="{Binding CmdOpenChecked}"/>
+				<Button DockPanel.Dock="Bottom" x:Name="BtnShow" Style="{StaticResource BtnShowExternal}" Margin="2,0,2,2"
+						Command="{Binding CmdShowLocation}"/>
+				<Button DockPanel.Dock="Bottom" x:Name="BtnDelete" Style="{StaticResource BtnDelete}" Margin="2,0,2,2"
+                ToolTip="{x:Static r:MainStrings.DELETE_FILE_TIP}" Command="{Binding CmdDelete}"/>
 			</StackPanel>
 
 			<ListView DockPanel.Dock="Top" x:Name="ListResults" ItemsSource="{Binding Items}"

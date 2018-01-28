@@ -31,8 +31,7 @@ namespace TorboFile.ViewModels {
 			Console.WriteLine( @"CLEAN FOLDERS MODEL DESTRUCTOR" );
 		}
 
-		private const string SUCCESS_STRING = @"success";
-		private const string ERROR_STRING = @"error";
+		#region COMMANDS
 
 		private RelayCommand _cmdBeginSearch;
 		public RelayCommand CmdBeginSearch {
@@ -49,6 +48,23 @@ namespace TorboFile.ViewModels {
 			}
 
 		}
+
+		private RelayCommand _cmdPickFolder;
+		public RelayCommand CmdPickFolder {
+			get {
+
+				return this._cmdPickFolder ?? ( this._cmdPickFolder = new RelayCommand(
+
+					this.PickFolder
+
+				) );
+			}
+
+		}
+
+		#endregion
+
+		#region PROPERTIES
 
 		public string SearchDirectory {
 			get {
@@ -72,19 +88,6 @@ namespace TorboFile.ViewModels {
 			}
 
 		} // SearchDirectory
-
-		private RelayCommand _cmdPickFolder;
-		public RelayCommand CmdPickFolder {
-			get {
-
-				return this._cmdPickFolder ?? ( this._cmdPickFolder = new RelayCommand(
-
-					this.PickFolder
-
-				) );
-			}
-
-		}
 
 		/// <summary>
 		/// Whether to remove files of size zero.
@@ -156,21 +159,21 @@ namespace TorboFile.ViewModels {
 			set { FolderCleanSettings.Default.deleteRange = value; }
 		}
 
-		private ObservableCollection<TextString> _output;
-		public ObservableCollection<TextString> Output {
+		private TextString _output;
+		public TextString Output {
 
 			get { return this._output; }
 			set {
+				/// Never check for changes, because the same output can be repeated.
 				this._output = value;
 				this.NotifyPropertyChanged();
 			}
 
 		}
 
+		#endregion
+
 		public CleanFoldersModel() {
-
-			this._output = new ObservableCollection<TextString>();
-
 		}
 
 		/// <summary>
@@ -180,8 +183,6 @@ namespace TorboFile.ViewModels {
 		/// <param name="recursive"></param>
 		/// <returns></returns>
 		private async Task FolderCleanAsync() {
-
-			this.Output.Clear();
 
 			FolderCleanSettings appSettings = FolderCleanSettings.Default;
 			string path = appSettings.LastDirectory;
@@ -205,16 +206,18 @@ namespace TorboFile.ViewModels {
 				);
 
 				if( clean.DeletedList.Length == 0 && clean.ErrorList.Length == 0 ) {
-					this.Output.Add( new TextString( "Clean complete.", SUCCESS_STRING ) );
-					this.Output.Add( new TextString( "Nothing found to delete.", SUCCESS_STRING ) );
+					
+					this.Output = new TextString( "Nothing found to delete.", TextString.Message );
 				}
 
 			} catch( Exception e ) {
 
+				this.Output = new TextString( e.Message, TextString.Error );
 				Console.WriteLine( e.ToString() );
 
 			} finally {
 
+				this.Output = new TextString( "Clean complete." );
 				clean.Dispose();
 
 			}
@@ -223,6 +226,7 @@ namespace TorboFile.ViewModels {
 
 		private void FolderDeleted( string path, bool success ) {
 
+			Console.WriteLine( "FOLDER DELETED: " + path );
 			if( success ) {
 				this.AddSuccessLine( path );
 			} else {
@@ -231,11 +235,11 @@ namespace TorboFile.ViewModels {
 
 		} //
 		public void AddSuccessLine( string path ) {
-			this.Output.Add( new TextString( "Deleted: " + path + Environment.NewLine, SUCCESS_STRING ) );
+			this.Output = new TextString( "Deleted: " + path + Environment.NewLine );
 		}
 
 		public void AddFailLine( string path ) {
-			this.Output.Add( new TextString( "Could not delete: " + path + Environment.NewLine, ERROR_STRING ) );
+			this.Output = ( new TextString( "Could not delete: " + path + Environment.NewLine, TextString.Error ) );
 		}
 
 		private void PickFolder() {

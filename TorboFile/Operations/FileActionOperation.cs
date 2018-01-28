@@ -14,6 +14,9 @@ namespace TorboFile.Operations {
 	[Serializable]
 	public class FileActionOperation : ProgressOperation {
 
+		public event Action<IFileAction, FileSystemInfo> ActionComplete;
+		public event Action<Exception> OnError;
+
 		#region PROPERTIES
 
 		/// <summary>
@@ -56,8 +59,7 @@ namespace TorboFile.Operations {
 		}
 
 		private IList<FileSystemInfo> targets = new List<FileSystemInfo>();
-
-		private bool _hasError;
+		
 		CustomSearchFlags _flags;
 		CustomSearchOptions _opts;
 
@@ -66,7 +68,6 @@ namespace TorboFile.Operations {
 		public override void Run() {
 
 			this.errorList.Clear();
-			this._hasError = false;
 			this.ResetProgress();
 
 			if( this._actions == null ) {
@@ -128,7 +129,7 @@ namespace TorboFile.Operations {
 
 						} catch( Exception e ) {
 
-							this.SaveError( e );
+							this.AddError( e );
 							if( CancelRequested() ) {
 								return;
 							} else if( SkipItemOnError ) {
@@ -160,7 +161,7 @@ namespace TorboFile.Operations {
 				action.Run( new FileInfo( "/" ) );
 
 			} catch( Exception e ) {
-				this.SaveError( e );
+				this.AddError( e );
 			}
 			this.AdvanceProgress();
 
@@ -220,9 +221,15 @@ namespace TorboFile.Operations {
 			this.AdvanceProgress( totalActions - actionsDone );
 		}
 
-		private void SaveError( Exception e ) {
+		private void AddError( Exception e ) {
 
-			this.errorList.Add( e );
+			Dispatch( () => {
+
+				this.errorList.Add( e );
+				this.OnError?.Invoke( e );
+
+			} );
+
 			if( this._flags.HasFlag( CustomSearchFlags.HaltOnError ) ) {
 				this.Cancel();
 			}
