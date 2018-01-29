@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TorboFile.View.Controls.FindDuplicatesControl"
+﻿<UserControl x:Class="TorboFile.View.Controls.FindCopiesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -33,7 +33,7 @@
 								<TextBlock Text="{Binding CheckedSize, Converter={StaticResource SizeToString}}" />
 							</StackPanel>
 
-							<controls:FileSelectionView />
+							<controls:FileList />
 
 						</DockPanel>
 					</Setter.Value>
@@ -149,9 +149,33 @@
 
 			<lmrcontrols:FeedbackList DockPanel.Dock="Bottom" x:Name="FeedbackList" Current="{Binding Output}" ErrorBrush="{StaticResource ErrorBrush}"
 								   DefaultBrush="{StaticResource SuccessBrush}" />
-			<ContentControl DockPanel.Dock="Top"
-                            DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}, Path=DataContext.ResultsList}"
-                                 Style="{StaticResource ResultsContent}" Visibility="{Binding Converter={StaticResource NonNullToVisible}}"/>
+
+			<DockPanel DockPanel.Dock="Top">
+
+				<StackPanel Name="ResultSizePanel" Orientation="Horizontal" DockPanel.Dock="Bottom">
+					<TextBlock Text="{x:Static r:MainStrings.SELECTED_SIZE_MSG}" />
+					<TextBlock Text="{Binding CheckedSize, Converter={StaticResource SizeToString}}" />
+				</StackPanel>
+
+				<controls:FileList DockPanel.Dock="Top"
+							   Visibility="{Binding Converter={StaticResource NonNullToVisible}}"
+							    DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}, Path=DataContext.ResultsList}">
+					<controls:FileList.Buttons>
+
+						<Button Style="{StaticResource BtnOpenExternal}" Margin="2,0,2,2"
+                Command="{Binding CmdOpenChecked}" Visibility="{Binding ShowOpenCmd, Converter={StaticResource BoolVisibility}}" />
+
+						<Button Style="{StaticResource BtnShowExternal}" Margin="2,0,2,2"
+                Command="{Binding CmdShowLocation}" Visibility="{Binding ShowOpenLocationCmd, Converter={StaticResource BoolVisibility}}"/>
+
+						<Button Style="{StaticResource BtnDelete}" Margin="2,0,2,2"
+							Command="{Binding CmdDelete}" 
+							Visibility="{Binding ShowDeleteCmd, Converter={StaticResource BoolVisibility}}" />
+
+					</controls:FileList.Buttons>
+				</controls:FileList>
+
+			</DockPanel>
 
 		</DockPanel>
 

@@ -13,7 +13,7 @@ namespace TorboFile.ViewModels {
 	/// <summary>
 	/// Model for a file check list.
 	/// </summary>
-	public class DuplicateFilesVM : FileCheckListVM {
+	public class DuplicateFilesVM : FileListVM {
 
 		#region COMMANDS
 
@@ -34,7 +34,7 @@ namespace TorboFile.ViewModels {
 		public void AddDuplicateInfo( FileDuplicateInfo info, bool isChecked=false ) {
 
 			this.duplicateInfos[info.Path] = info;
-			this.Items.Add( new ListItemVM<FileSystemInfo>( new FileInfo( info.Path ), isChecked ) );
+			this.Add( new FileInfo( info.Path ), isChecked );
 
 		}
 

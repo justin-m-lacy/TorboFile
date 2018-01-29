@@ -150,8 +150,8 @@
 			</TabItem>
 			<TabItem Style="{StaticResource TabStyle}" Name="FindCopiesSection" Header="{x:Static r:Resources.FIND_COPIES_SECTION}">
 
-					<controls:FindDuplicatesControl x:Name="FindCopiesView"
-						DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabItem}, Path=FindCopiesVM}"></controls:FindDuplicatesControl>
+					<controls:FindCopiesView x:Name="FindCopiesView"
+						DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabItem}, Path=FindCopiesVM}"></controls:FindCopiesView>
 
 			</TabItem>
 			<TabItem Style="{StaticResource TabStyle}" x:Name="CleanFoldersSection" Header="{x:Static r:Resources.CLEAN_FOLDERS_SECTION}">

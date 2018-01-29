@@ -168,7 +168,6 @@
     <Compile Include="Services\ITorbViewMaker.cs" />
     <Compile Include="Services\SystemMessageBox.cs" />
     <Compile Include="ViewModels\CategoryManagerVM.cs" />
-    <Compile Include="ViewModels\FileCheckListVM.cs" />
     <Compile Include="ViewModels\FileVM.cs" />
     <Compile Include="ViewModels\CustomSearch\BuildSearchVM.cs" />
     <Compile Include="ViewModels\CustomSearch\CustomSearchVM.cs" />
@@ -218,8 +217,8 @@
     <Compile Include="View\Controls\MainViews\FileSortControl.xaml.cs">
       <DependentUpon>FileSortControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\MainViews\FindCopiesControl.xaml.cs">
-      <DependentUpon>FindCopiesControl.xaml</DependentUpon>
+    <Compile Include="View\Controls\MainViews\FindCopiesView.xaml.cs">
+      <DependentUpon>FindCopiesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
@@ -250,9 +249,6 @@
     <Compile Include="Categories\CategorySet.cs" />
     <Compile Include="View\Controls\CategoryManagerView.xaml.cs">
       <DependentUpon>CategoryManagerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Controls\FileSelectionView.xaml.cs">
-      <DependentUpon>FileSelectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DirectoryVisitor.cs" />
     <Compile Include="Properties\FolderCleanSettings.Designer.cs">
@@ -364,15 +360,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\FileSelectionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Controls\MainViews\FileSortControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\MainViews\FindCopiesControl.xaml">
+    <Page Include="View\Controls\MainViews\FindCopiesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
