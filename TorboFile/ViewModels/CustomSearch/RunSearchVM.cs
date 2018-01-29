@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using TorboFile.Model;
 using Lemur.Windows.Text;
+using System.Diagnostics;
+using TorboFile.Services;
 
 namespace TorboFile.ViewModels.Main {
 
@@ -18,6 +20,19 @@ namespace TorboFile.ViewModels.Main {
 	/// ViewModel for running a CustomSearch.
 	/// </summary>
 	public class RunSearchVM : ViewModelBase {
+
+		#region DEBUG
+
+		~RunSearchVM() {
+			DebugDestructor();
+		}
+		[Conditional( "DEBUG" )]
+		void DebugDestructor() {
+			Console.WriteLine( "RunSearchVM destroyed." );
+		}
+
+
+		#endregion
 
 		#region COMMANDs
 
@@ -59,6 +74,20 @@ namespace TorboFile.ViewModels.Main {
 			}
 
 		}
+
+		/// <summary>
+		/// Preview of the currently selected file.
+		/// </summary>
+		public FilePreviewVM FilePreview {
+
+			get { return this._filePreview ?? ( this.FilePreview = new FilePreviewVM() ); }
+			set {
+				this._filePreview = value;
+				this.NotifyPropertyChanged();
+			}
+
+		}
+		private FilePreviewVM _filePreview;
 
 		/// <summary>
 		/// Models the progression of the current search.
@@ -167,7 +196,7 @@ namespace TorboFile.ViewModels.Main {
 					this.Output = new TextString( "No matches found." );
 				}
 
-				OpDone( operation );
+				SearchDone( operation );
 			}
 
 
@@ -184,7 +213,7 @@ namespace TorboFile.ViewModels.Main {
 
 		}
 
-		private void OpDone( FileMatchOperation op ) {
+		private void SearchDone( FileMatchOperation op ) {
 			op.OnMatchFound -= MatchFinder_OnMatchFound;
 			op.OnError -= this.MatchOp_OnError;
 		}
@@ -214,10 +243,13 @@ namespace TorboFile.ViewModels.Main {
 			checkList.ShowCheckBox = true;
 			checkList.ShowOpenLocationCmd = true;
 			checkList.ShowDeleteCmd = true;
-	
+			checkList.DeleteAction = this.DeleteCheckedAsync;
+
 			/// NOTE: Apparently a public interface member can be protected unless explicitly cast.
 			/// This seems insane to me.
 			//( (INotifyPropertyChanged)checkList.CheckedItems ).PropertyChanged += CheckedItems_PropertyChanged;
+
+			checkList.PropertyChanged += ResultsList_PropertyChanged;
 
 			this.ResultsList = checkList;
 
@@ -225,19 +257,34 @@ namespace TorboFile.ViewModels.Main {
 
 		}
 
-		public bool HasActions() {
-			//return this.actionBuilder.HasItems();
-			return false;
+		private void ResultsList_PropertyChanged( object sender, PropertyChangedEventArgs e ) {
+
+			/// file selected change. show preview.
+			if( e.PropertyName == FileListVM.SelectedPropertyName ) {
+
+				ListItemVM<FileSystemInfo> selectedData = this.ResultsList.SelectedItem;
+				if( selectedData != null ) {
+					FilePreview.FilePath = selectedData.Item.FullName;
+				} else {
+					FilePreview.FilePath = string.Empty;
+				}
+
+			} //
+
 		}
 
-		/// <summary>
-		/// Checks if any conditions have been added to the current match builder.
-		/// </summary>
-		/// <returns></returns>
-		public bool HasConditions() {
-			//return this.matchBuilder.HasItems();
-			return false;
-		}
+		private async void DeleteCheckedAsync( IEnumerable<FileSystemInfo> checked_files ) {
+
+			FileDeleteService deleteService = this.GetService<FileDeleteService>();
+			if( deleteService != null ) {
+
+				await deleteService.DeleteFilesAsync(
+					checked_files.Select<FileSystemInfo, string>( ( data ) => { return data.FullName; } ), true
+				);
+
+			}
+
+		} //
 
 		/// <summary>
 		/// Checks that results exist, and that at least some are selected
@@ -249,6 +296,9 @@ namespace TorboFile.ViewModels.Main {
 		}
 
 		public RunSearchVM( IServiceProvider provider ) : base( provider ) {
+
+			Console.WriteLine( "RunSearchVM created." );
+
 		}
 
 	} // class

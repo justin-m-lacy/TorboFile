@@ -202,7 +202,7 @@ namespace TorboFile {
 
 				viewModel.ServiceProvider = this.services;
 				viewModel.ViewElement = view;
-				Console.WriteLine( "setting context for: " + view.Name );
+				//Console.WriteLine( "setting context for: " + view.Name );
 				view.DataContext = viewModel;
 
 			}

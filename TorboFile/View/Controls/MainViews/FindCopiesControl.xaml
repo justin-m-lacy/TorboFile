@@ -10,7 +10,7 @@
              xmlns:controls="clr-namespace:TorboFile.View.Controls"
 			 xmlns:r="clr-namespace:TorboFile.Properties"
              xmlns:settings="clr-namespace:TorboFile.Properties"
-            >
+			 xmlns:rules="clr-namespace:Lemur.Windows.Validation">
 
     <!-- Use with FindDuplicatesModel -->
 
@@ -68,6 +68,7 @@
 
             <TextBlock x:Name="LblOptions" Text="{x:Static r:MainStrings.COPIES_OPTIONS_MSG}" FontSize="16" DockPanel.Dock="Top" />
 
+			<!-- NOTE: Binding directly to settings to allow possible reuse of the panel, but probably not a good idea. -->
             <DockPanel Name="SettingsPanel" DataContext="{x:Static settings:FindCopiesSettings.Default}"
                       DockPanel.Dock="Top" Margin="0,4,0,4" >
 
@@ -80,12 +81,33 @@
                     Visibility="{Binding ElementName=ChkUseSizeRange, Path=IsChecked, Converter={StaticResource BoolVisibility}}">
                     <StackPanel x:Name="MinSizePanel">
 						<Label x:Name="LblMinSize" Content="{x:Static r:MainStrings.COPIES_SIZE_MIN}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
-						<lmrcontrols:ByteTextBox x:Name="FldMinSize" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" MaxLength="0" IsUndoEnabled="True" UndoLimit="3"/>
+						
+						<TextBox x:Name="FldMinSize" Style="{StaticResource SimpleTextInput}" Width="120" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+							<TextBox.Text>
+								<Binding ValidatesOnExceptions="true" Converter="{StaticResource SizeToString}" Path="minSize">
+									<Binding.ValidationRules>
+										<rules:DataSizeRule />
+									</Binding.ValidationRules>
+								</Binding>
+							</TextBox.Text>
+
+						</TextBox>
+
                     </StackPanel>
                     <StackPanel Margin="32,0,0,0">
 						<Label x:Name="LblMaxSize" Content="{x:Static r:MainStrings.COPIES_SIZE_MAX}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
-						<lmrcontrols:ByteTextBox x:Name="FldMaxSize" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" MaxLines="1" />
-                    </StackPanel>
+
+						<TextBox x:Name="FldMaxSize" Style="{StaticResource SimpleTextInput}" Width="120" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+							<TextBox.Text>
+								<Binding ValidatesOnExceptions="true" Converter="{StaticResource SizeToString}" Path="maxSize">
+									<Binding.ValidationRules>
+										<rules:DataSizeRule />
+									</Binding.ValidationRules>
+								</Binding>
+							</TextBox.Text>
+
+						</TextBox>
+					</StackPanel>
 
                 </StackPanel>
 
@@ -121,21 +143,20 @@
 
             </DockPanel>
 
-            <controls:ProgressControl Margin="4,0,4,0" DockPanel.Dock="Top"
+            <controls:ProgressControl Margin="4,0,4,0" DockPanel.Dock="Top" MaxHeight="80"
                                   DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.CurrentSearch}"
                                   Visibility="{Binding Converter={StaticResource NonNullToVisible}}" />
 
-            <ContentControl DockPanel.Dock="Bottom"
-                            DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}, Path=DataContext.ResultsList}"
-                                 Style="{StaticResource ResultsContent}" Visibility="{Binding Converter={StaticResource NonNullToVisible}}"/>
-
 			<lmrcontrols:FeedbackList DockPanel.Dock="Bottom" x:Name="FeedbackList" Current="{Binding Output}" ErrorBrush="{StaticResource ErrorBrush}"
 								   DefaultBrush="{StaticResource SuccessBrush}" />
+			<ContentControl DockPanel.Dock="Top"
+                            DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}, Path=DataContext.ResultsList}"
+                                 Style="{StaticResource ResultsContent}" Visibility="{Binding Converter={StaticResource NonNullToVisible}}"/>
 
 		</DockPanel>
 
 
-        <GridSplitter Grid.Column="1" Width="4" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+		<GridSplitter Grid.Column="1" Style="{StaticResource StdGridSplitter}" />
 
         <!-- PREVIEW PANE -->
         <ContentControl x:Name="SelectionPreview" Grid.Column="2" Margin="0,4,4,4" VerticalAlignment="Center"

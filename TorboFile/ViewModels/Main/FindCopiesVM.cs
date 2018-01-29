@@ -15,6 +15,7 @@ using System.Diagnostics;
 using Lemur.Windows.Services;
 using System.IO;
 using Lemur.Windows.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace TorboFile.ViewModels {
 
@@ -79,6 +80,42 @@ namespace TorboFile.ViewModels {
 			set {
 				this.SetProperty( ref this._currentSearch, value );
 			} // set()
+		}
+
+		public bool Recursive {
+			get => FindCopiesSettings.Default.recursive;
+			set {
+				FindCopiesSettings.Default.recursive = value;
+				this.NotifyPropertyChanged();
+			}
+		}
+
+
+		public bool UseSizeRange {
+			get => FindCopiesSettings.Default.useSizeRange;
+			set {
+				FindCopiesSettings.Default.useSizeRange = value;
+				this.NotifyPropertyChanged();
+			}
+		}
+
+		public DataSize MinSize {
+
+			get { return FindCopiesSettings.Default.minSize; }
+
+			set {
+				FindCopiesSettings.Default.minSize = value;
+				NotifyPropertyChanged();
+			}
+
+		}
+
+		public DataSize MaxSize {
+			get { return FindCopiesSettings.Default.maxSize; }
+			set {
+				FindCopiesSettings.Default.maxSize = value;
+				NotifyPropertyChanged();
+			}
 		}
 
 		/// <summary>
@@ -240,7 +277,7 @@ namespace TorboFile.ViewModels {
 			}
 
 			DuplicateFilesVM checkList = new DuplicateFilesVM();
-			checkList.DeleteDelegate = this.DeleteCheckedAsync;
+			checkList.DeleteAction = this.DeleteCheckedAsync;
 
 			/// Listen for selected item to set the FilePreviewModel current preview.
 			checkList.PropertyChanged += CheckList_PropertyChanged;

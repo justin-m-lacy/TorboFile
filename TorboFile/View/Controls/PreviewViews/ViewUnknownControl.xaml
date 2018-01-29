@@ -44,8 +44,8 @@
                     </DockPanel>
                 </Button>
                 <Button Style="{StaticResource StdButton}" Command="{Binding CmdOpenExternal}" Margin="2,0,2,0">
-                    <DockPanel>
-                        <Image DockPanel.Dock="Top" Source="/TorboFile;component/assets/images/document-preview.png" Stretch="Uniform" Width="64" Height="64"/>
+					<DockPanel>
+						<Image DockPanel.Dock="Top" Source="/TorboFile;component/assets/images/document-preview.png" Stretch="Uniform" Width="64" Height="64"/>
 						<TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" DockPanel.Dock="Bottom" Text="{x:Static r:MainStrings.OPEN_EXTERNAL_PROMPT}"/>
                     </DockPanel>
                 </Button>

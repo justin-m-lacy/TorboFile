@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Input;
 using TorboFile.Model;
 using TorboFile.Properties;
 using TorboFile.Services;
@@ -135,7 +136,10 @@ namespace TorboFile.ViewModels {
 		/// <summary>
 		/// ViewModel for running the search.
 		/// </summary>
-		public RunSearchVM RunSearchVM { get => _runSearchVM; }
+		public RunSearchVM RunSearchVM {
+			get => _runSearchVM ?? ( this._runSearchVM = this.CreateRunSearchVM() );
+			private set => this.SetProperty( ref this._runSearchVM, value ); 
+		}
 		private RunSearchVM _runSearchVM;
 
 
@@ -146,8 +150,9 @@ namespace TorboFile.ViewModels {
 				if( this.SetProperty( ref this._searchData, value ) ) {
 
 					this.BuildSearchVM.CustomSearch = value;
-					this.RunSearchVM.CustomSearch = value;
-
+					if( this._runSearchVM != null ) {
+						this._runSearchVM.CustomSearch = value;
+					}
 				}
 			}
 
@@ -161,8 +166,14 @@ namespace TorboFile.ViewModels {
 		/// Run the operation.
 		/// </summary>
 		private void DoSearchMode() {
-			Console.WriteLine( "DO SEARCH MODE" );
+
 			this.EditMode = false;
+
+			ICommand runCommand = this.RunSearchVM.CmdRunSearch;
+			if( runCommand.CanExecute( null ) ) {
+				runCommand.Execute( null );
+			}
+
 		}
 
 		private void EditSearch() {
@@ -187,9 +198,6 @@ namespace TorboFile.ViewModels {
 		} //
 
 		private void SaveCurrent() {
-
-			//TODO: Cloning not appropriate here.
-			//this.CloneSearch();
 
 			IFileDialogService dialog = this.GetService<IFileDialogService>();
 			if( dialog != null ) {
@@ -256,7 +264,6 @@ namespace TorboFile.ViewModels {
 		public CustomSearchVM( IServiceProvider provider ) : base( provider ) {
 
 			this._buildSearchVM = new BuildSearchVM( provider );
-			this._runSearchVM = new RunSearchVM( provider );
 
 			CustomSearchSettings settings = CustomSearchSettings.Default;
 
@@ -287,10 +294,18 @@ namespace TorboFile.ViewModels {
 			CustomSearchData data = new CustomSearchData();
 
 			data.Options.Flags = CustomSearchSettings.Default.searchFlags;
-			Console.WriteLine( "LOADED FLAGS: " + data.Options.Flags );
+			Console.WriteLine( "LOADED FLAGS: " + data.Options.Flags.ToString() );
 			data.Options.BaseDirectory = CustomSearchSettings.Default.LastDirectory;
 
 			return data;
+
+		}
+
+		private RunSearchVM CreateRunSearchVM() {
+
+			RunSearchVM vm = new RunSearchVM( this.ServiceProvider );
+			vm.CustomSearch = this.CustomSearch;
+			return vm;
 
 		}
 

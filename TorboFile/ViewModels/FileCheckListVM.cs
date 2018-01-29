@@ -106,7 +106,7 @@ namespace TorboFile.ViewModels {
 		/// Delegate for deleting files.
 		/// TODO: move version to base class?
 		/// </summary>
-		public Action<IEnumerable< FileSystemInfo> > DeleteDelegate {
+		public Action<IEnumerable< FileSystemInfo> > DeleteAction {
 			get { return this._deleteAction; }
 			set {
 				if( this._deleteAction != value ) {

@@ -6,7 +6,7 @@
 			 xmlns:fb="clr-namespace:Lemur.Windows.Controls"
 			 xmlns:controls="clr-namespace:TorboFile.View.Controls"
 			 mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="640">
 	<UserControl.Resources>
 		<ResourceDictionary Source="/TorboFile;component/assets/CustomSearchDictionary.xaml"/>
 	</UserControl.Resources>
@@ -17,15 +17,15 @@
 			<RowDefinition Height="95*"/>
 		</Grid.RowDefinitions>
 
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition MaxWidth="4" />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+
 		<StackPanel Name="btnPanel" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
 			<Button Name="btnEdit" Style="{StaticResource textButton}" Content="EDIT SEARCH" FontSize="14" Command="{Binding CmdEditSearch}">
 
-			</Button>
-			<Button Name="btnRunSearch" Style="{StaticResource textButton}" MaxHeight="42" FontSize="14" Command="{Binding RunSearchVM.CmdRunSearch}">RUN SEARCH
-			</Button>
-			<Button Name="btnRunActions" Style="{StaticResource textButton}" MaxHeight="42" FontSize="14"
-									Command="{Binding RunSearchVM.CmdRunActions}" Visibility="{Binding Path=ResultsList, Converter={StaticResource NonNullToVisible}}">
-				APPLY ACTIONS
 			</Button>
 
 		</StackPanel>
@@ -33,22 +33,42 @@
 		<DockPanel Grid.Row="1" Name="runSearchPanel"
 							   DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.RunSearchVM}">
 
-			<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+			<StackPanel Orientation="Vertical" DockPanel.Dock="Top">
 
 				<StackPanel Name="pickFolderPanel" Orientation="Horizontal" DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext}">
 					<Button x:Name="BtnDirectory" Style="{StaticResource BtnPickFolder}" Command="{Binding CmdPickDirectory}"/>
-					<TextBox Style="{StaticResource TextInputTemplate}" Name="fldDirectory"
+					<TextBox Style="{StaticResource TextInputTemplate}" Name="fldDirectory" MaxHeight="24"
 									 Text="{Binding SearchDirectory, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+
+
+					<Button Name="btnRunSearch" Style="{StaticResource BtnSearch}" FontSize="14" MaxHeight="32" MaxWidth="32"
+						Command="{Binding RunSearchVM.CmdRunSearch}" />
+
+					
+					
 				</StackPanel>
 
-
+				
 			</StackPanel>
 
 			<controls:ProgressControl Margin="4,0,4,0" DockPanel.Dock="Top"
-                                  DataContext="{Binding CurrentProgress}"
-                                  Visibility="{Binding Path=IsRunning, Converter={StaticResource BoolVisibility}}" />
+								DataContext="{Binding CurrentProgress}"
+								MaxWidth="400"
+								HorizontalAlignment="Stretch"
+								Visibility="{Binding Path=IsRunning, Converter={StaticResource BoolVisibility}}" />
 
-			<controls:FileList DataContext="{Binding RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=DockPanel}, Path=DataContext.ResultsList}" Visibility="{Binding Converter={StaticResource NonNullToVisible}}">
+			
+
+			<fb:FeedbackList x:Name="FeedbackList"
+							 DockPanel.Dock="Bottom"
+							 Current="{Binding Output}" ErrorBrush="{StaticResource ErrorBrush}"
+								   DefaultBrush="{StaticResource SuccessBrush}" />
+
+			<controls:FileList DockPanel.Dock="Top"
+				DataContext="{Binding RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=DockPanel}, Path=DataContext.ResultsList}"
+				Visibility="{Binding Converter={StaticResource NonNullToVisible}}"
+				MinWidth="300">
+
 				<controls:FileList.Buttons>
 
 					<Button Style="{StaticResource BtnOpenExternal}" Margin="2,0,2,2"
@@ -61,20 +81,24 @@
 							Command="{Binding CmdDelete}" 
 							Visibility="{Binding ShowDeleteCmd, Converter={StaticResource BoolVisibility}}" />
 
-					<Button Style="{StaticResource StdButton}"
-                MinHeight="32" MinWidth="32" Margin="2,0,2,2"
+					<Button Style="{StaticResource BtnRun}"
+                MaxHeight="32" MaxWidth="32" Margin="2,0,2,2"
                 ToolTip="Run Actions" Command="{Binding ElementName=runSearchPanel, Path=DataContext.CmdRunActions}"
-                VerticalAlignment="Bottom" HorizontalAlignment="Right">
-						<Image Source="/TorboFile;component/assets/images/image_start.png" MaxHeight="28" MaxWidth="28" />
-					</Button>
+                VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
 
 				</controls:FileList.Buttons>
 			</controls:FileList>
 
-			<fb:FeedbackList x:Name="FeedbackList" Current="{Binding Output}" ErrorBrush="{StaticResource ErrorBrush}"
-								   DefaultBrush="{StaticResource SuccessBrush}" />
-
 		</DockPanel>
 
+		<GridSplitter Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource StdGridSplitter}" />
+		
+		<!-- PREVIEW PANE -->
+		<ContentControl x:Name="SelectionPreview" Grid.Column="2" Grid.RowSpan="2" Margin="0,4,4,4" VerticalAlignment="Center"
+                    HorizontalAlignment="Center"  HorizontalContentAlignment="Center"
+                    Visibility="{Binding Path=FilePath, Converter={StaticResource NonNullToVisible}}"
+                    DataContext="{Binding Path=DataContext.RunSearchVM.FilePreview, RelativeSource={RelativeSource AncestorType=Control, Mode=FindAncestor}}"
+                    Style="{StaticResource PreviewSelector}"/>
+		
 	</Grid>
 </UserControl>

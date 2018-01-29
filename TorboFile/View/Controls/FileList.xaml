@@ -29,9 +29,17 @@
 				<controls:LMGridView AllowsColumnReorder="True" AutoColumnMenu="True">
 					<GridViewColumn Width="Auto" controls:LMGridView.ColumnName="chkColumn"
 									controls:LMGridView.Visible="{Binding ShowCheckBox}">
+						<GridViewColumn.Header>
+							<GridViewColumnHeader MinWidth="20">
+								<CheckBox Name="chkCheckAll" IsChecked="false"
+										  Command="{Binding CmdToggleCheckAll}"
+										  CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}">
+								</CheckBox>
+							</GridViewColumnHeader>
+						</GridViewColumn.Header>
 						<GridViewColumn.CellTemplate>
 							<DataTemplate>
-								<CheckBox IsChecked="{Binding Path=IsChecked}"></CheckBox>
+								<CheckBox IsChecked="{Binding Path=IsChecked}" />
 							</DataTemplate>
 						</GridViewColumn.CellTemplate>
 					</GridViewColumn>

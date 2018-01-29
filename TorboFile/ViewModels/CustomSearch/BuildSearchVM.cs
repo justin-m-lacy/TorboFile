@@ -8,6 +8,7 @@ using System.Linq;
 using TorboFile.Properties;
 using TorboFile.Model;
 using TorboFile.Operations;
+using System.Diagnostics;
 
 namespace TorboFile.ViewModels {
 
@@ -31,6 +32,19 @@ namespace TorboFile.ViewModels {
 	/// This ViewModel does not actually represent running the search.
 	/// </summary>
 	public class BuildSearchVM : ViewModelBase {
+
+		#region DEBUG
+
+		~BuildSearchVM() {
+			DebugDestructor();
+		}
+		[Conditional( "DEBUG" )]
+		void DebugDestructor() {
+			Console.WriteLine( "BuildSearchVM destroyed." );
+		}
+
+
+		#endregion
 
 		#region COMMANDs
 		#endregion
@@ -229,6 +243,8 @@ namespace TorboFile.ViewModels {
 		}
 
 		public BuildSearchVM( IServiceProvider provider ) : base( provider ) {
+
+			Console.WriteLine( "BuildSearchVM Created." );
 
 			this.matchBuilder = new MatchBuilder( provider );
 			this.actionBuilder = new ActionBuilder( provider );
