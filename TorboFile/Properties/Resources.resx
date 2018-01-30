@@ -160,6 +160,9 @@
     <value>tsrch</value>
     <comment>File extension for saving custom searches.</comment>
   </data>
+  <data name="SEARCH_TIP" xml:space="preserve">
+    <value>Run Search</value>
+  </data>
   <data name="SETTINGS_TOOLTIP" xml:space="preserve">
     <value>Settings</value>
   </data>

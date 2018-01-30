@@ -158,7 +158,7 @@
     <value>Min Size:</value>
   </data>
   <data name="CLEAN_DIRS_MSG" xml:space="preserve">
-    <value>Select a folder to delete all empty sub-folders. If recursive is checked, folders containing only other folders, or unwanted files, are also removed.</value>
+    <value>Select a folder to remove empty folders, and any files which match the criteria. If recursive is checked, subfolders are also cleaned.</value>
   </data>
   <data name="CLEAN_DIRS_RECURSIVE_OPT" xml:space="preserve">
     <value>Recursive Clean</value>

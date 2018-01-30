@@ -278,6 +278,8 @@ namespace TorboFile.ViewModels {
 
 			DuplicateFilesVM checkList = new DuplicateFilesVM();
 			checkList.DeleteAction = this.DeleteCheckedAsync;
+			checkList.ShowCheckBox = true;
+			checkList.ShowOpenCmd = checkList.ShowOpenLocationCmd = checkList.ShowDeleteCmd = true;
 
 			/// Listen for selected item to set the FilePreviewModel current preview.
 			checkList.PropertyChanged += CheckList_PropertyChanged;

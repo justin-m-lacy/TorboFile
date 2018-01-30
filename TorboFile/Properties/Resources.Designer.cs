@@ -187,6 +187,15 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run Search.
+        /// </summary>
+        public static string SEARCH_TIP {
+            get {
+                return ResourceManager.GetString("SEARCH_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Delete.
         /// </summary>
         public static string SET_DELETE_HEADER {

@@ -33,7 +33,7 @@
 			<DataTemplate x:Key="conditionPicker" DataType="{x:Type matchmodel:ConditionPickerVM}">
 
 				<StackPanel Orientation="Horizontal">
-					<ComboBox Name="matchTypesDropDown" MinWidth="64" Margin="2"  PreviewMouseLeftButtonDown="ComboBox_PreviewMouseDown"
+					<ComboBox Name="matchTypesDropDown" Style="{StaticResource StdComboBox}" MinWidth="64" Margin="2"  PreviewMouseLeftButtonDown="ComboBox_PreviewMouseDown"
 						ItemsSource="{Binding AvailableTypes}" SelectedItem="{Binding CreateType}">
 
 						<ComboBox.ItemTemplate>
@@ -55,7 +55,7 @@
 			<DataTemplate x:Key="actionPicker" DataType="{x:Type matchmodel:ActionPickerVM}">
 
 				<StackPanel Orientation="Horizontal">
-					<ComboBox Name="matchTypesDropDown" MinWidth="64" Margin="2" PreviewMouseLeftButtonDown="ComboBox_PreviewMouseDown"
+					<ComboBox Name="matchTypesDropDown"  Style="{StaticResource StdComboBox}" MinWidth="64" Margin="2" PreviewMouseLeftButtonDown="ComboBox_PreviewMouseDown"
 						ItemsSource="{Binding AvailableTypes}" SelectedItem="{Binding CreateType}">
 						<ComboBox.ItemTemplate>
 							<DataTemplate DataType="{x:Type types:TypeDescription}">
@@ -171,8 +171,6 @@
 			<Button Name="btnSave" Style="{StaticResource textButton}" Content="SAVE SEARCH" Command="{Binding CmdSaveOperation}"/>
 			<Button Name="btnLoad" Style="{StaticResource textButton}" Content="LOAD SEARCH" Command="{Binding CmdLoadOperation}">
 			</Button>
-			<Button Name="btnRun" Style="{StaticResource textButton}" Content="RUN SEARCH" Command="{Binding CmdSearchMode}">
-			</Button>
 		</StackPanel>
 
 		<StackPanel Name="searchSettingsPanel" DockPanel.Dock="Top" Orientation="Vertical">
@@ -191,6 +189,9 @@
 				<Button x:Name="BtnDirectory" Style="{StaticResource BtnPickFolder}" Command="{Binding CmdPickDirectory}" />
 				<TextBox Style="{StaticResource TextInputTemplate}" Name="fldDirectory"
 									 Text="{Binding SearchDirectory, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+				<Button Name="btnRun" Style="{StaticResource BtnSearch}"
+						ToolTip="{x:Static r:Resources.SEARCH_TIP }"
+						Command="{Binding CmdSearchMode}"/>
 			</StackPanel>
 
 		</StackPanel>

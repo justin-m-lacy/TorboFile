@@ -72,6 +72,7 @@ namespace TorboFile.ViewModels {
 
 			this.CheckedSize = curSize;
 
+
 			this.CmdOpenChecked.RaiseCanExecuteChanged();
 			this.CmdShowLocation.RaiseCanExecuteChanged();
 

@@ -198,18 +198,18 @@ namespace TorboFile.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only directories will be included in the search results..
         /// </summary>
-        public static string is_file_exclude {
+        public static string IS_FILE_EXCLUDE {
             get {
-                return ResourceManager.GetString("is_file_exclude", resourceCulture);
+                return ResourceManager.GetString("IS_FILE_EXCLUDE", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Directories will be excluded from the search results..
         /// </summary>
-        public static string is_file_include {
+        public static string IS_FILE_INCLUDE {
             get {
-                return ResourceManager.GetString("is_file_include", resourceCulture);
+                return ResourceManager.GetString("IS_FILE_INCLUDE", resourceCulture);
             }
         }
         
@@ -223,6 +223,24 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Directories with the given number of sub-files will be excluded from search results..
+        /// </summary>
+        public static string MATCH_COUNT_EXCLUDE {
+            get {
+                return ResourceManager.GetString("MATCH_COUNT_EXCLUDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directories with the given number of sub-files will be included in search results..
+        /// </summary>
+        public static string MATCH_COUNT_INCLUDE {
+            get {
+                return ResourceManager.GetString("MATCH_COUNT_INCLUDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Files:.
         /// </summary>
         public static string match_count_max_prompt {
@@ -232,7 +250,7 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Directories containing more files will not be matched.&quot;.
+        ///   Looks up a localized string similar to Directories containing more files will not be matched..
         /// </summary>
         public static string match_count_max_tip {
             get {
@@ -259,7 +277,7 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Match directories which contain a given number of sub-files. Files are also matched, unless a Directory-Only condition is added..
+        ///   Looks up a localized string similar to Match directories which contain a given number of sub-files. Files are also included in the search, unless a Directory-Only condition is added..
         /// </summary>
         public static string match_count_prompt {
             get {
@@ -304,6 +322,24 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Files with these extensions will not be included in the search..
+        /// </summary>
+        public static string MATCH_EXT_EXCLUDE {
+            get {
+                return ResourceManager.GetString("MATCH_EXT_EXCLUDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files with these extensions will be included in the search. Directories are also allowed..
+        /// </summary>
+        public static string MATCH_EXT_INCLUDE {
+            get {
+                return ResourceManager.GetString("MATCH_EXT_INCLUDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allowed File Extensions:.
         /// </summary>
         public static string match_ext_prompt {
@@ -318,6 +354,15 @@ namespace TorboFile.Properties {
         public static string match_ext_tip {
             get {
                 return ResourceManager.GetString("match_ext_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files and directories with names containing the given string will be excluded from the search..
+        /// </summary>
+        public static string MATCH_NAME_EXCLUDE {
+            get {
+                return ResourceManager.GetString("MATCH_NAME_EXCLUDE", resourceCulture);
             }
         }
         
@@ -340,11 +385,38 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Files and directories with names containing the given string will be included in the search..
+        /// </summary>
+        public static string MATCH_NAME_INCLUDE {
+            get {
+                return ResourceManager.GetString("MATCH_NAME_INCLUDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File/Dictory Name contains:.
         /// </summary>
         public static string match_name_prompt {
             get {
                 return ResourceManager.GetString("match_name_prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files and directories matching the regular expression will be excluded from search results..
+        /// </summary>
+        public static string MATCH_REG_EXCLUDE {
+            get {
+                return ResourceManager.GetString("MATCH_REG_EXCLUDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only files and directories matching the regular expression will be included in the search..
+        /// </summary>
+        public static string MATCH_REG_INCLUDE {
+            get {
+                return ResourceManager.GetString("MATCH_REG_INCLUDE", resourceCulture);
             }
         }
         
@@ -363,6 +435,24 @@ namespace TorboFile.Properties {
         public static string match_reg_prompt {
             get {
                 return ResourceManager.GetString("match_reg_prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excludes any files in the given size range. Directories are also matched unless a File-Only condition is added..
+        /// </summary>
+        public static string MATCH_SIZE_EXCLUDE {
+            get {
+                return ResourceManager.GetString("MATCH_SIZE_EXCLUDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Limits the search to files in the given size range. Directories are also matched unless a File-Only condition is added..
+        /// </summary>
+        public static string MATCH_SIZE_INCLUDE {
+            get {
+                return ResourceManager.GetString("MATCH_SIZE_INCLUDE", resourceCulture);
             }
         }
         

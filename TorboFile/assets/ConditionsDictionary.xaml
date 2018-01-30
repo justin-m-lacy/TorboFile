@@ -22,26 +22,19 @@
 
 		<StackPanel>
 
-		<!--<mvvm:StringSetter x:Name="TestName" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="EMPTY DIRECTORIES INCLUDED IN SEARCH" />
-			<mvvm:StringSetter x:Name="AnotherTest" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="EMPTY DIRECTORIES EXCLUDED FROM SEARCH" />
--->
-			
-			<TextBlock x:Name="fldText"
-				   Text="{x:Static r:CustomSearchStrings.match_empty_dir_include}" />
-
+			<mvvm:StringSetter x:Name="IncludeSetter" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.match_empty_dir_include}" />
+			<mvvm:StringSetter x:Name="ExcluderSetter" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.match_empty_dir_exclude}" />
 
 		</StackPanel>
-		<DataTemplate.Triggers>
-			<DataTrigger Binding="{Binding Path=Exclude}" Value="true">
-				<Setter TargetName="fldText" Property="Text"
-						Value="{x:Static r:CustomSearchStrings.match_empty_dir_exclude}">
-				</Setter>
-			</DataTrigger>
-		</DataTemplate.Triggers>
+
 	</DataTemplate>
 
 	<DataTemplate x:Key="extensionTestTemplate" DataType="{x:Type models:FileTestVM}">
 		<StackPanel>
+
+			<mvvm:StringSetter x:Name="IncludeSetter" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_EXT_INCLUDE}" />
+			<mvvm:StringSetter x:Name="ExcluderSetter" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_EXT_EXCLUDE}" />
+
 			<TextBlock Style="{StaticResource infoText}" Text="{x:Static r:CustomSearchStrings.match_ext_prompt}" ToolTip="{x:Static r:CustomSearchStrings.match_ext_tip}" />
 			<TextBox x:Name="fldExtensionList" Style="{StaticResource SimpleTextInput}">
 				<TextBox.Text>
@@ -58,6 +51,9 @@
 	<DataTemplate x:Key="fileCountTemplate" DataType="models:FileTestVM">
 
 		<StackPanel>
+
+			<mvvm:StringSetter x:Name="IncludeSetter" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_COUNT_INCLUDE}" />
+			<mvvm:StringSetter x:Name="ExcluderSetter" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_COUNT_EXCLUDE}" />
 
 			<TextBlock Style="{StaticResource infoText}"
 					   Text="{x:Static r:CustomSearchStrings.match_count_prompt}" />
@@ -100,24 +96,22 @@
 
 	<DataTemplate x:Key="isFileTemplate" DataType="{x:Type models:FileTestVM}">
 
-		<TextBlock Name="fldInfo" Text="{x:Static r:CustomSearchStrings.is_file_include}"/>
-
-		<DataTemplate.Triggers>
-			<DataTrigger Binding="{Binding Exclude}" Value="true">
-				<Setter TargetName="fldInfo" Property="Text" Value="{x:Static r:CustomSearchStrings.is_file_exclude}"/>
-			</DataTrigger>
-		</DataTemplate.Triggers>
+		<StackPanel>
+			<mvvm:StringSetter x:Name="IncludeSetter" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.IS_FILE_INCLUDE}" />
+			<mvvm:StringSetter x:Name="ExcluderSetter" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.IS_FILE_EXCLUDE}" />
+		</StackPanel>
+		
 	</DataTemplate>
 
 	<DataTemplate x:Key="isDirectoryTemplate" DataType="models:FileTestVM">
 
 		<StackPanel Orientation="Horizontal">
-			<TextBlock Name="lblInfo" Text="{x:Static r:CustomSearchStrings.is_file_exclude}"/>
+			<TextBlock Name="lblInfo" Text="{x:Static r:CustomSearchStrings.IS_FILE_EXCLUDE}"/>
 		</StackPanel>
 
 		<DataTemplate.Triggers>
 			<DataTrigger Binding="{Binding Exclude}" Value="true">
-				<Setter TargetName="lblInfo" Property="Text" Value="{x:Static r:CustomSearchStrings.is_file_include}" />
+				<Setter TargetName="lblInfo" Property="Text" Value="{x:Static r:CustomSearchStrings.IS_FILE_INCLUDE}" />
 			</DataTrigger>
 		</DataTemplate.Triggers>
 	</DataTemplate>
@@ -126,6 +120,9 @@
 
 		<StackPanel>
 
+			<mvvm:StringSetter x:Name="IncludeSetter" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_NAME_INCLUDE}" />
+			<mvvm:StringSetter x:Name="ExcluderSetter" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_NAME_EXCLUDE}" />
+			
 			<CheckBox Name="chkFullPath" Content="{x:Static r:CustomSearchStrings.match_name_full_opt}" IsChecked="{Binding Data.FullPath}"
 						  ToolTip="{x:Static r:CustomSearchStrings.match_name_full_tip}"/>
 			<StackPanel Orientation="Horizontal">
@@ -142,6 +139,9 @@
 	<DataTemplate x:Key="regexTestTemplate" DataType="{x:Type models:FileTestVM}">
 
 		<StackPanel>
+
+			<mvvm:StringSetter x:Name="IncludeSetter" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_REG_INCLUDE}" />
+			<mvvm:StringSetter x:Name="ExcluderSetter" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_REG_EXCLUDE}" />
 
 			<StackPanel Orientation="Horizontal">
 				<TextBlock Text="{x:Static r:CustomSearchStrings.match_reg_mode_opt}" Style="{StaticResource infoText}" />
@@ -162,6 +162,9 @@
 	<DataTemplate x:Key="sizeMatchTemplate" DataType="{x:Type models:FileTestVM}">
 
 		<StackPanel>
+
+			<mvvm:StringSetter x:Name="IncludeSetter" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_SIZE_INCLUDE}" />
+			<mvvm:StringSetter x:Name="ExcluderSetter" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_SIZE_EXCLUDE}" />
 
 			<StackPanel x:Name="ContentSizeRange" Orientation="Horizontal" Margin="16,4,0,8">
                 <StackPanel x:Name="MinSizePanel">
@@ -230,6 +233,7 @@
 
 			<CheckBox x:Name="chkExclude" Style="{StaticResource chkOption}" Content="{x:Static r:CustomSearchStrings.exclude_option}" IsChecked="{Binding Exclude}"
                   ToolTip="{x:Static r:CustomSearchStrings.exclude_tip}"/>
+
 			<TextBlock x:Name="fldIncludeText" Text="{Binding Path=IncludeText}"/>
 
 				<ContentPresenter Content="{Binding}" ContentTemplateSelector="{StaticResource matchTemplateSelector}"/>

@@ -178,7 +178,7 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a folder to delete all empty sub-folders. If recursive is checked, folders containing only other folders, or unwanted files, are also removed..
+        ///   Looks up a localized string similar to Select a folder to remove empty folders, and any files which match the criteria. If recursive is checked, subfolders are also cleaned..
         /// </summary>
         public static string CLEAN_DIRS_MSG {
             get {
