@@ -76,23 +76,23 @@ namespace TorboFile.ViewModels {
 
 		}
 
-		private RelayCommand<string> _cmdChangeActiveSet;
+		private RelayCommand<CategorySetInfo> _cmdChangeActiveSet;
 		/// <summary>
 		/// Change the currently active CategorySet.
 		/// </summary>
-		public RelayCommand<string> CmdChangeActiveSet {
+		public RelayCommand<CategorySetInfo> CmdChangeActiveSet {
 
 			get {
-				return this._cmdChangeActiveSet ?? ( this._cmdChangeActiveSet = new RelayCommand<string>(
+				return this._cmdChangeActiveSet ?? ( this._cmdChangeActiveSet = new RelayCommand<CategorySetInfo>(
 
-			  ( select_name ) => {
+			  ( info ) => {
 				  //string name = this.FocusedSet;
-				  if( !string.IsNullOrEmpty( select_name ) && this.CategoryManager.Contains( select_name ) ) {
+				  if( info != null && this.CategoryManager.Contains( info ) ) {
 
-					bool success = this.CategoryManager.TrySetCurrent( select_name );
-					  if( !success ) {
-						  // do something.
-					  }
+					bool success = this.CategoryManager.TryActivate( info );
+					if( !success ) {
+						// do something.
+					}
 
 				  }
 

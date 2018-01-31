@@ -11,81 +11,9 @@ using System.Collections.Specialized;
 using System.Collections;
 using TorboFile.Properties;
 using System.Runtime.CompilerServices;
+using Lemur.Windows.MVVM;
 
 namespace TorboFile.Categories {
-
-	/// <summary>
-	/// Information about a non-loaded CategorySet?
-	/// </summary>
-	public class CategorySetInfo : INotifyPropertyChanged {
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public CategorySetInfo( string path, string name, CategorySource source ) {
-
-			this.Path = path;
-			this.Name = name;
-			this.Source = source;
-
-		}
-
-		private bool _loaded;
-		public bool IsLoaded {
-			get { return this._loaded; }
-			internal set {
-				if( this._loaded != value ) {
-					this._loaded = value;
-					this.NotifyPropertyChanged();
-				}
-
-			}
-
-		}
-
-		public void NotifyPropertyChanged( [CallerMemberName] string propName=null ) {
-
-			PropertyChangedEventHandler handler = this.PropertyChanged;
-			if( handler != null ) {
-				handler( this, new PropertyChangedEventArgs( propName ) );
-			}
-
-		}
-
-		private string _path;
-		public string Path {
-			get { return this._path; }
-			set {
-				if( this._path != value ) {
-					this._path = value;
-					this.NotifyPropertyChanged();
-				}
-			}
-
-		}
-
-		private string _name;
-		public string Name {
-			get { return this._name; }
-			set {
-				if( this._name != value ) {
-					this._name = value;
-					this.NotifyPropertyChanged();
-				}
-			}
-			}
-
-		private CategorySource _source;
-		public CategorySource Source {
-			get { return this._source; }
-			set {
-				if( this._source != value ) {
-					this._source = value;
-					this.NotifyPropertyChanged();
-				}
-			}
-		}
-
-	}
 
 	/// <summary>
 	/// Stores and Loads CategorySet objects.
@@ -93,7 +21,7 @@ namespace TorboFile.Categories {
 	/// NOTE: The static functions indicate operations apart from all notifcations, collection functions.
 	/// might place these in a different class entirely.
 	/// </summary>
-	public class CategoryManager : ICollection< CategorySetInfo >, INotifyCollectionChanged, INotifyPropertyChanged {
+	public class CategoryManager : ViewModelLite, ICollection< CategorySetInfo >, INotifyCollectionChanged, INotifyPropertyChanged {
 
 		static private CategoryManager _instance;
 		static public CategoryManager Instance {
@@ -103,7 +31,6 @@ namespace TorboFile.Categories {
 		private const string StorageDirectory = "categories";
 		private const string DefaultSetName = "New Category Set";
 
-		public event PropertyChangedEventHandler PropertyChanged;
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
 
 		/// <summary>
@@ -125,38 +52,50 @@ namespace TorboFile.Categories {
 
 		}
 
-
-		private CategorySet _current;
-
 		/// <summary>
 		/// Property string for watching CurrentSet property updates.
 		/// </summary>
 		public const string CurrentSetPropName = "Current";
 
 		/// <summary>
-		/// Active CategorySet.
+		/// Information about the currently active set
 		/// </summary>
-		public CategorySet Current {
-			get { return this._current; }
-			private set {
+		private CategorySetInfo ActiveInfo {
+			get => this._active;
+			set {
 
-				if( this._current != value ) {
+				if (this._active != value ) {
 
-					this._current = value;
-					if( value == null ) {
-						Console.WriteLine( "CategoryManager.Current: CATEGORY NULL" );
+					if( this._active != null ) {
+						this.Deactivate( this._active );
+					}
+					this._active = value;
+
+					if( value != null ) {
+						this.Activate( this._active );
 					}
 
-					this.ActivateSet( this._current );
-
-					if( PropertyChanged != null ) {
-						PropertyChangedEventHandler handler = this.PropertyChanged;
-						handler( this, new PropertyChangedEventArgs( CurrentSetPropName ) );
-					}
+					this.NotifyPropertyChanged();
+					this.NotifyPropertyChanged( "Current" );
 
 				}
 
-			} // set()
+			} // set
+
+		}
+		private CategorySetInfo _active;
+
+		/// <summary>
+		/// Active CategorySet.
+		/// </summary>
+		public CategorySet Current {
+			get {
+				if( this._active == null ) {
+					return null;
+				}
+				return this._active.Set;
+			}
+
 		}
 
 		public int Count => this.availableSets.Count;
@@ -166,48 +105,10 @@ namespace TorboFile.Categories {
 		private CategoryManager() {
 
 			this.AvailableSets = new List<CategorySetInfo >( CategoryManager.GetIsolatedSets() );
-			//Console.WriteLine( "CategoryManager.cs : #CATEGORY SETS: " + this.availableSets.Count );
 
 			this.RestoreLastSet();
 
 		} //
-
-		/*private void NotifyCollectionChanged( string changedSetName ) {
-
-			if( this.CollectionChanged == null ) {
-				return;
-			}
-			
-			NotifyCollectionChangedEventHandler handler = this.CollectionChanged;
-			if( handler != null ) {
-				handler( this, new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Add ) );
-			}
-
-		}*/
-
-		/// <summary>
-		/// Return a categorySet name not listed in the available sets.
-		/// </summary>
-		/// <param name="recommended"></param>
-		/// <returns></returns>
-		public string GetUniqueName( string recommended = null ) {
-
-			string testName = recommended ?? DefaultSetName;
-
-			if( !this.availableSets.Any( c => c.Name == testName )) {
-				return testName;
-			}
-
-			int num = 1;
-			string curName = testName + num;
-
-			while( this.availableSets.Any( c => c.Name == curName ) ) {
-				curName = testName + ++num;
-			}
-
-			return curName;
-
-		}
 
 		/// <summary>
 		/// Predicate to tell if a given string has been used as a Category name.
@@ -228,29 +129,23 @@ namespace TorboFile.Categories {
 
 		}
 
-		private void ActivateSet( CategorySet set ) {
+		private void Deactivate( CategorySetInfo info ) {
 
-			if( set == null ) return;
-			SortingSettings.Default.lastSortingSet = this._current.Name;
-			CategorySetInfo info = this.GetSetInfo( set.Name );
-			if ( info != null ) {
-				info.IsLoaded = true;
-				Console.WriteLine( "CategoryManager : Activating Set: " + set.Name );
+			if( info.Set != null ) {
+				this.SaveSet( info.Set );
 			}
+			info.IsActive = false;
+			info.Set = null;
 
-		} //
+		}
 
-		private void DeactivateSet( CategorySet set ) {
+		private void Activate( CategorySetInfo info ) {
 
-			if( set == null ) {
-				return;
+			SortingSettings.Default.lastSortingSet = info.Name;
+			if( info.Set == null ) {
+				info.Set = ReadIsolated( info.Name );
 			}
-			this.SaveSet( set );
-
-			CategorySetInfo info = this.GetSetInfo( set.Name );
-			if( info != null ) {
-				info.IsLoaded = false;
-			}
+			info.IsActive = true;
 
 		}
 
@@ -282,26 +177,33 @@ namespace TorboFile.Categories {
 		/// </summary>
 		/// <param name="setName"></param>
 		/// <returns></returns>
-		public bool TrySetCurrent( string categoryName ) {
+		private bool TryActivate( string categoryName ) {
 
-			CategorySet set = CategoryManager.ReadIsolated( categoryName );
-			return TrySetCurrent( set );
+			if( string.IsNullOrEmpty( categoryName ) ) {
+				return false;
+			}
+
+			CategorySetInfo info = this.GetInfo( categoryName );
+			if( info != null ) {
+				return TryActivate( info );
+			}
+
+			return false;
 	
 		} // TrySetCurrent()
 
-		/// <summary>
-		/// Attempts to set the currently active set to the given category set.
-		/// </summary>
-		/// <param name="set"></param>
-		/// <returns></returns>
-		public bool TrySetCurrent( CategorySet set ) {
+		public bool TryActivate( CategorySetInfo info ) {
 
-			if( set == null ) {
-				return false;
+			if( info.Set == null ) {
+
+				info.Set = CategoryManager.ReadIsolated( info.Name );
+				if( info.Set == null ) {
+					return false;
+				}
+
 			}
-			this.DeactivateSet( this._current );
 
-			this.Current = set;
+			this.ActiveInfo = info;
 
 			return true;
 
@@ -313,7 +215,7 @@ namespace TorboFile.Categories {
 		private void RestoreLastSet() {
 
 			string last_name = TorboFile.Properties.SortingSettings.Default.lastSortingSet;
-			if( TrySetCurrent( last_name ) ) {
+			if( TryActivate( last_name ) ) {
 				return;
 			}
 
@@ -322,38 +224,31 @@ namespace TorboFile.Categories {
 			// no last-set defined. pick first on list. NOTE: maybe don't do this in case of privacy?
 			if( this.availableSets != null && availableSets.Count > 0 ) {
 
-				if( this.TrySetCurrent( this.availableSets[0].Name ) ) {
+				if( this.TryActivate( this.availableSets[0] ) ) {
+					Console.WriteLine( "No last Set. Picking first." );
 					return;
 				}
 
 			}
 
-			this.Current = this.CreateDefaultSet();
-	
+			this.ActiveInfo = this.CreateDefaultSet();
+
 		}
 
 		public bool RenameCategorySet( string old_name, string new_name ) {
 
-			if( RenameIsolated( old_name, new_name ) ) {
+			if( CategoryManager.RenameIsolated( old_name, new_name ) ) {
 
-				int changedIndex = this.GetSetIndex( old_name );
+				CategorySetInfo info = this.GetInfo( old_name );
 
-				if( changedIndex >= 0 ) {
+				if( info != null ) {
 
+					Console.WriteLine( "CategoryManager: Changing Set Name" );
+					info.Name = new_name;
+					UpdateSetData( info );
 
-					this.availableSets[changedIndex].Name = new_name;
-					/*if( this.CollectionChanged != null ) {
-						NotifyCollectionChangedEventHandler handler = this.CollectionChanged;
-						handler(
-							this, new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Replace, new_name, old_name, changedIndex ) );
-					}*/
-
-				}
-
-				/// check if loaded set needs to be renamed.
-				/// TODO: make this better.
-				if( Current != null && Current.Name == old_name ) {
-					Current.Name = new_name;
+				} else {
+					Console.WriteLine( "CategoryManager: Cannot find renamed set index" );
 				}
 
 				return true;
@@ -364,20 +259,30 @@ namespace TorboFile.Categories {
 
 		}
 
-		private bool RenameCategorySet( CategorySet set, string new_name ) {
+		/// <summary>
+		/// Update CategorySet information that was changed in the set info,
+		/// such as for a rename.
+		/// </summary>
+		/// <param name="info"></param>
+		/// <returns></returns>
+		private bool UpdateSetData( CategorySetInfo info ) {
 
-			if( this.RenameCategorySet( set.Name, new_name ) ) {
-	
-				set.Name = new_name;
-
-				return true;
-
+			CategorySet set = info.Set;
+			if( set == null ) {
+				set = CategoryManager.ReadIsolated( info.Name );
+				if( set == null ) {
+					return false;
+				}
 			}
 
-			return false;
+			set.Name = info.Name;
+			set.SavePath = info.Path;
 
-		} //
+			this.SaveSet( set );
 
+			return true;
+
+		}
 
 		private CategorySetInfo GetSetInfo( string setName ) {
 
@@ -390,74 +295,47 @@ namespace TorboFile.Categories {
 
 		}
 
-		private int GetSetIndex( string name ) {
+		private CategorySetInfo CreateDefaultSet() {
 
-			for( int i = this.availableSets.Count - 1; i >= 0; i-- ) {
-				if( this.availableSets[i].Name == name ) {
-					return i;
-				}
+			CategorySetInfo info = new CategorySetInfo( new CategorySet( DefaultSetName ), CategorySource.Isolated );
+			this.Add( info );
+			return info;
+
+		}
+
+		public void Add( CategorySetInfo info ) {
+
+			if( info.Set != null ) {
+				CategoryManager.WriteIsolated( info.Set );
 			}
-			return -1;
 
-		}
+			this.availableSets.Add( info );
+			this.CollectionChanged?.Invoke( this, new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Add, info ) );
 
-		private CategorySet CreateDefaultSet() {
-
-			CategorySet set = new CategorySet( DefaultSetName );
-			this.Add( set );
-
-			return set;
-		}
-
-		static private string GetIsolatedPath( string set_name ) {
-			return StorageDirectory + "/" + set_name;
 		}
 
 		/// <summary>
 		/// </summary>
 		/// <param name="set"></param>
 		public void Add( CategorySet set ) {
-
-			if( CategoryManager.WriteIsolated( set ) ) {
-				Console.WriteLine( "new set stored." );
-			} else {
-				Console.WriteLine( "Could not store set." );
-			}
-
-			CategorySetInfo info = new CategorySetInfo( set.SavePath, set.Name, CategorySource.Isolated );
-			this.availableSets.Add( info );
-
-			if( this.CollectionChanged != null ) {
-				this.CollectionChanged( this,
-					new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Add, info ) );
-			}
-
+			this.Add( new CategorySetInfo( set, set.Source ) );
 		} //
 
-		public void Add( CategorySetInfo info ) {
-			this.Add( new CategorySet( info.Name ) );
-		}
 
 		/// <summary>
 		/// Add a new CategorySet with the given name.
 		/// </summary>
 		/// <param name="set_name">The name of the group to add.</param>
 		public void Add( string set_name ) {
-
-			/// Add( CategorySet ) notifies collection changed.
-			this.Add( new CategorySet( set_name ) );
-
+			this.Add( new CategorySetInfo( new CategorySet( set_name ), CategorySource.Isolated ) );
 		}
 
 		public void Clear() {
 
 			this.availableSets.Clear();
-			if( this.CollectionChanged != null ) {
-				this.CollectionChanged( this,
-					new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Reset ) );
-			}
+			this.CollectionChanged?.Invoke( this, new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Reset ) );
 
-			this.Current = null;
+			this.ActiveInfo = null;
 
 			CategoryManager.DeleteAllIsolated();
 
@@ -475,11 +353,11 @@ namespace TorboFile.Categories {
 
 					if( storage.DirectoryExists( StorageDirectory ) ) {
 
-						string[] files = storage.GetFileNames( StorageDirectory + "/*" );
+						string[] files = storage.GetFileNames( StorageDirectory + Path.DirectorySeparatorChar + "*" );
 						CategorySetInfo[] sets = new CategorySetInfo[files.Length];
 						for( int i = files.Length - 1; i >= 0; i-- ) {
 							sets[i] =
-								new CategorySetInfo( StorageDirectory + "/" + files[i], files[i], CategorySource.Isolated );
+								new CategorySetInfo( StorageDirectory + Path.DirectorySeparatorChar + files[i], files[i], CategorySource.Isolated );
 						} // for-loop.
 
 						return sets;
@@ -527,7 +405,10 @@ namespace TorboFile.Categories {
 		/// <returns></returns>
 		static private bool RenameIsolated( string old_name, string new_name ) {
 
-			if( !IsolatedStorageFile.IsEnabled ) { return false; }
+			if( !IsolatedStorageFile.IsEnabled ) {
+				Console.WriteLine( "CategoryManager: Cannot rename Set: IsolatedStorage not enabled." );
+				return false;
+			}
 
 			try {
 
@@ -535,6 +416,7 @@ namespace TorboFile.Categories {
 
 					if( !storage.DirectoryExists( StorageDirectory ) ) {
 						// if the directory doesn't exist, the first set can't exist to begin with.
+						Console.WriteLine( "CategoryManager: Cannot rename Set: Directory does not exist." );
 						return false;
 					}
 
@@ -627,7 +509,7 @@ namespace TorboFile.Categories {
 			using( IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForAssembly() ) {
 
 				if( storage.DirectoryExists( StorageDirectory ) ) {
-					string[] files = storage.GetFileNames( StorageDirectory + "/*" );
+					string[] files = storage.GetFileNames( StorageDirectory + Path.DirectorySeparatorChar + "*" );
 					foreach( string file in files ) {
 						string deletePath = GetIsolatedPath( file );
 						Console.WriteLine( "DELETING CategorySet: " + deletePath );
@@ -642,6 +524,10 @@ namespace TorboFile.Categories {
 
 			}
 
+		}
+
+		static private string GetIsolatedPath( string set_name ) {
+			return StorageDirectory + Path.DirectorySeparatorChar + set_name;
 		}
 
 		public bool Contains( CategorySetInfo info ) {
@@ -666,21 +552,18 @@ namespace TorboFile.Categories {
 
 			if( CategoryManager.DeleteIsolated( setName ) ) {
 
-				int changedIndex = this.GetSetIndex( setName );
+				int changedIndex = this.GetInfoIndex( setName );
 
 				if( changedIndex >= 0 ) {
 
 					CategorySetInfo removed = this.availableSets[changedIndex];
 					this.availableSets.RemoveAt( changedIndex );
 
-					if( this.CollectionChanged != null ) {
-						Console.WriteLine( "NOTIFYING COLLECTION CHANGED" );
-						NotifyCollectionChangedEventHandler handler = this.CollectionChanged;
-						handler( this,
+					this.CollectionChanged?.Invoke( this,
 						new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Remove, removed, changedIndex ) );
-					}
-					if( this.Current.Name == setName ) {
-						this.Current = null;
+
+					if( this.ActiveInfo.Name == setName ) {
+						this.ActiveInfo = null;
 					}
 
 					return true;
@@ -691,6 +574,56 @@ namespace TorboFile.Categories {
 			}
 
 			return false;
+
+		}
+
+		/// <summary>
+		/// Return a categorySet name not listed in the available sets.
+		/// </summary>
+		/// <param name="recommended"></param>
+		/// <returns></returns>
+		public string GetUniqueName( string recommended = null ) {
+
+			string testName = recommended ?? DefaultSetName;
+
+			if( !this.availableSets.Any( c => c.Name == testName ) ) {
+				return testName;
+			}
+
+			int num = 1;
+			string curName = testName + num;
+
+			while( this.availableSets.Any( c => c.Name == curName ) ) {
+				curName = testName + ++num;
+			}
+
+			return curName;
+
+		}
+
+		private CategorySetInfo GetInfo( string set_name ) {
+
+			CategorySetInfo info;
+			for( int i = this.availableSets.Count - 1; i >= 0; i-- ) {
+	
+				info = this.availableSets[i];
+
+				if( info.Name == set_name ) {
+					return info;
+				}
+			}
+			return null;
+
+		}
+
+		private int GetInfoIndex( string name ) {
+
+			for( int i = this.availableSets.Count - 1; i >= 0; i-- ) {
+				if( this.availableSets[i].Name == name ) {
+					return i;
+				}
+			}
+			return -1;
 
 		}
 

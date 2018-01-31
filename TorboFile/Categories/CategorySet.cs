@@ -39,6 +39,8 @@ namespace TorboFile.Categories {
 		[field: NonSerialized]
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		#region PROPERTIES
+
 		/// <summary>
 		/// Marks whether the Set has unsaved changes.
 		/// </summary>
@@ -61,7 +63,6 @@ namespace TorboFile.Categories {
 
 		}
 
-		private string _name;
 		/// <summary>
 		/// Name of the Category Set.
 		/// </summary>
@@ -71,11 +72,12 @@ namespace TorboFile.Categories {
 			set {
 				if( value != this._name ) {
 					this._name = value;
-					this.DispatchPropChange();
+					this.NotifyPropertyChange();
 				}
 			}
 
 		}
+		private string _name;
 
 		[NonSerialized]
 		private string _savePath;
@@ -87,7 +89,7 @@ namespace TorboFile.Categories {
 			set {
 				if( value != this._savePath ) {
 					this._savePath = value;
-					this.DispatchPropChange();
+					this.NotifyPropertyChange();
 				}
 			}
 		}
@@ -103,10 +105,6 @@ namespace TorboFile.Categories {
 
 		}
 
-		public bool IsActive {
-			get { return CategoryManager.Instance.Current == this; }
-		}
-
 		private string _passHash;
 		/// <summary>
 		/// Hash of password for saving the set.
@@ -116,7 +114,7 @@ namespace TorboFile.Categories {
 			set {
 				if( this._passHash != value ) {
 					this._passHash = value;
-					this.DispatchPropChange();
+					this.NotifyPropertyChange();
 				}
 			}
 
@@ -126,6 +124,8 @@ namespace TorboFile.Categories {
 
 		public bool IsReadOnly => false;
 
+		#endregion
+
 		public CategorySet( string name ) : this() {
 
 			this.Name = name;
@@ -134,7 +134,6 @@ namespace TorboFile.Categories {
 
 		public CategorySet() {
 
-			//this.categories = new Dictionary<string, FileCategory>();
 			this.categories = new List<FileCategory>();
 
 		} //
@@ -177,7 +176,7 @@ namespace TorboFile.Categories {
 
 				}
 
-			}
+			} // foreach
 
 			return bindings;
 
@@ -193,13 +192,10 @@ namespace TorboFile.Categories {
 			this.categories.Add( category );
 
 			this.Dirty = true;
-			if( this.CollectionChanged != null ) {
-				this.CollectionChanged( this,
-					new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Add, category )
-					);
-			}
+			this.CollectionChanged?.Invoke( this,
+				new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Add, category ) );
 
-		}
+		} // Add()
 
 		/// <summary>
 		/// Remove a FileCategory from the set.
@@ -226,21 +222,6 @@ namespace TorboFile.Categories {
 				}
 
 			}
-
-			/*if( this.categories.TryGetValue( itemName, out setItem ) ) {
-
-				if( setItem.Name == itemName && setItem.DirectoryPath == item.DirectoryPath ) {
-
-					if( this.categories.Remove( itemName ) ) {
-						Console.WriteLine( "item found: " + itemName );
-						this.DispatchRemove( setItem );
-						return true;
-					}
-
-				}
-
-			} //*/
-
 			Console.WriteLine( "item not found: " + item.Name );
 			return false;
 
@@ -254,9 +235,7 @@ namespace TorboFile.Categories {
 			this.categories.Clear();
 
 			this.Dirty = true;
-			if( this.CollectionChanged != null ) {
-				this.CollectionChanged( this, new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Reset ) );
-			}
+			this.CollectionChanged?.Invoke( this, new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Reset ) );
 
 		}
 
@@ -264,12 +243,10 @@ namespace TorboFile.Categories {
 			return this.categories.IndexOf( category );
 		}
 
-		private void DispatchPropChange( [CallerMemberName] string propName = "" ) {
+		private void NotifyPropertyChange( [CallerMemberName] string propName = "" ) {
 
 			this.Dirty = true;
-			if( this.PropertyChanged != null ) {
-				this.PropertyChanged( this, new PropertyChangedEventArgs( propName ) );
-			}
+			this.PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propName ) );
 
 		}
 
@@ -295,7 +272,7 @@ namespace TorboFile.Categories {
 
 			this.Dirty = true;
 			if( this.CollectionChanged != null ) {
-				Console.WriteLine( "category changed: " + category.Name );
+				Console.WriteLine( "Category Changed: " + category.Name );
 				this.CollectionChanged( this,
 					new NotifyCollectionChangedEventArgs(
 						NotifyCollectionChangedAction.Replace, category, previous, index ) );
@@ -306,10 +283,8 @@ namespace TorboFile.Categories {
 		private void DispatchRemove( FileCategory category, int index ) {
 
 			this.Dirty = true;
-			if( this.CollectionChanged != null ) {
-				this.CollectionChanged( this,
-					new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Remove, category, index ) );
-			}
+			this.CollectionChanged?.Invoke( this,
+				new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Remove, category, index ) );
 
 		}
 
@@ -350,18 +325,7 @@ namespace TorboFile.Categories {
 		} //
 
 		public void CopyTo( FileCategory[] array, int arrayIndex ) {
-
 			this.categories.CopyTo( array, arrayIndex );
-
-			/*if ( array == null ) { throw new ArgumentNullException(); }
-			if( arrayIndex + this.categories.Count > array.Length ) {
-				throw new ArgumentException();
-			}
-
-			foreach( KeyValuePair<string,FileCategory> pair in this.categories ) {
-				array[arrayIndex++] = pair.Value;
-			}*/
-
 		} // CopyTo()
 
 		public IEnumerator<FileCategory> GetEnumerator() {

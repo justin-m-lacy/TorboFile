@@ -80,6 +80,7 @@ namespace TorboFile.ViewModels {
 
 					  } else {
 
+						  Console.WriteLine( @"EditCategorySetVM: No editing set. Adding category: " + this._name );
 						  this.CategoryManager.Add( new CategorySet( this._name ) );
 
 					  }

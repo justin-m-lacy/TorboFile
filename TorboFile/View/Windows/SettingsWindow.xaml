@@ -9,7 +9,7 @@
         xmlns:convert="clr-namespace:Lemur.Windows.Converters"
 
         mc:Ignorable="d" Background="{StaticResource BackDarkBrush}"
-        Title="Settings" Height="400" MinHeight="128" MinWidth="128" Width="512">
+        Title="Settings" Height="400" Width="512" MinWidth="200" MinHeight="200">
 
 	<Window.Resources>
 

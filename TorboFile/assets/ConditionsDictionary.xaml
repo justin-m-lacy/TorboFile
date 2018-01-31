@@ -55,9 +55,6 @@
 			<mvvm:StringSetter x:Name="IncludeSetter" Binding="{Binding IncludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_COUNT_INCLUDE}" />
 			<mvvm:StringSetter x:Name="ExcluderSetter" Binding="{Binding ExcludeText, Mode=OneWayToSource}" Value="{x:Static r:CustomSearchStrings.MATCH_COUNT_EXCLUDE}" />
 
-			<TextBlock Style="{StaticResource infoText}"
-					   Text="{x:Static r:CustomSearchStrings.match_count_prompt}" />
-
 			<CheckBox Name="chkIncludeDirs" Style="{StaticResource chkOption}" Content="{x:Static r:CustomSearchStrings.match_count_subdir_opt}" IsChecked="{Binding Data.CountSubDirs}"/>
 
 			<StackPanel Orientation="Horizontal">
@@ -234,9 +231,9 @@
 			<CheckBox x:Name="chkExclude" Style="{StaticResource chkOption}" Content="{x:Static r:CustomSearchStrings.exclude_option}" IsChecked="{Binding Exclude}"
                   ToolTip="{x:Static r:CustomSearchStrings.exclude_tip}"/>
 
-			<TextBlock x:Name="fldIncludeText" Text="{Binding Path=IncludeText}"/>
+			<TextBlock x:Name="fldIncludeText" Style="{StaticResource infoText}" Text="{Binding Path=IncludeText}"/>
 
-				<ContentPresenter Content="{Binding}" ContentTemplateSelector="{StaticResource matchTemplateSelector}"/>
+				<ContentPresenter Margin="8" Content="{Binding}" ContentTemplateSelector="{StaticResource matchTemplateSelector}"/>
 
 			</StackPanel>
 

@@ -49,24 +49,24 @@
                 </ListView.Resources>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn>
+                        <GridViewColumn Width="Auto">
 
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate DataType="{x:Type categories:CategorySetInfo}">
 
                                     <Button Style="{StaticResource StdButton}" Content="Activate"
-                                     Visibility="{Binding IsLoaded, Converter={StaticResource InvertBool}}"
+                                     Visibility="{Binding IsActive, Converter={StaticResource InvertBool}}"
                                             
                                 Command="{Binding Path=DataContext.CmdChangeActiveSet,
                                 Source={x:Reference SetListBox} }"
-                                CommandParameter="{Binding Path=Name}"/>
+                                CommandParameter="{Binding}"/>
 
                                 </DataTemplate>
 
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="{x:Static r:MainStrings.SET_NAME_HEADER}" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Width="Auto" Header="{x:Static r:MainStrings.SET_NAME_HEADER}" DisplayMemberBinding="{Binding Name}" />
                     </GridView>
                 </ListView.View>
             </ListView>
