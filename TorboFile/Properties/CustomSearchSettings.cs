@@ -29,6 +29,29 @@ namespace TorboFile.Properties {
 		}
 
 		/// <summary>
+		/// Only stored to the backing setting if saveLastDirectory is true.
+		/// Events don't make the LastDirectory property unnecessary, since the setting still needs
+		/// to remember the value for the running application, even if the backing setting isn't
+		/// changed.
+		/// </summary>
+		private string _lastDirectory;
+		public string LastDirectory {
+			get => this._lastDirectory;
+			set {
+
+				if( this._lastDirectory != value ) {
+
+					this._lastDirectory = value;
+					if( this.saveLastDirectory ) {
+						this.lastDirectory = value;
+					}
+					this.OnPropertyChanged( this, new System.ComponentModel.PropertyChangedEventArgs( "LastDirectory" ) );
+				}
+
+			}
+		}
+
+		/// <summary>
 		/// Used PropertyChanged instead of SettingsSaving() so the changes go through even if the program or computer
 		/// crashes before the settings have saved.
 		/// </summary>
@@ -49,18 +72,19 @@ namespace TorboFile.Properties {
 
 		}
 
-		private void CustomSearchSettings_SettingsSaving( object sender, System.ComponentModel.CancelEventArgs e ) {
+		/*private void CustomSearchSettings_SettingsSaving( object sender, System.ComponentModel.CancelEventArgs e ) {
 
 			if( this.saveLastSearch ) {
 			}
 
 			if( this.saveLastDirectory ) {
+				Console.WriteLine( "SAVING LAST DIRECTORY" );
 				this.lastDirectory = this._lastDirectory;
 			} else {
 				this.lastDirectory = null;
 			}
 
-		}
+		}*/
 
 		/// <summary>
 		/// Saves the last search into isolated storage.
@@ -120,27 +144,6 @@ namespace TorboFile.Properties {
 			return null;
 
 		}
-
-		/// <summary>
-		/// Only stored to the backing setting if saveLastDirectory is true.
-		/// Events don't make the LastDirectory property unnecessary, since the setting still needs
-		/// to remember the value for the running application, even if the backing setting isn't
-		/// changed.
-		/// </summary>
-		private string _lastDirectory;
-		public string LastDirectory {
-			get => this._lastDirectory;
-			set {
-	
-				if( this._lastDirectory != value ) {
-
-					this._lastDirectory = value;
-					this.OnPropertyChanged( this, new System.ComponentModel.PropertyChangedEventArgs( "LastDirectory" ) );
-				}
-
-			}
-		}
-
 
 		private void CustomSearchSettings_SettingsLoaded( object sender, System.Configuration.SettingsLoadedEventArgs e ) {
 

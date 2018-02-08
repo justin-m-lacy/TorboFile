@@ -112,13 +112,15 @@
 
                 <StackPanel DockPanel.Dock="Top" Margin="0,4,0,4">
 
-                    <TextBlock x:Name="LblInclude" Text="{x:Static r:MainStrings.COPIES_INCLUDE_PROMPT}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332"/>
+                    <TextBlock x:Name="LblInclude" Style="{StaticResource minorText}"
+							   Text="{x:Static r:MainStrings.COPIES_INCLUDE_PROMPT}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332"/>
                     <TextBox x:Name="FldInclude" Height="23" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"
                          Text="{Binding IncludeExtensions}"
                          TextWrapping="NoWrap" Width="332" ToolTip="{x:Static r:MainStrings.COPIES_EXT_TIP}">
                     </TextBox>
 
-					<Label x:Name="LblExclude" Content="{x:Static r:MainStrings.COPIES_EXCLUDE_PROMPT}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332"/>
+					<TextBlock x:Name="LblExclude" Style="{StaticResource minorText}"
+						   Text="{x:Static r:MainStrings.COPIES_EXCLUDE_PROMPT}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="332"/>
                     <TextBox x:Name="FldExclude" Height="23" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"
                          Text="{Binding ExcludeExtensions}"
                          TextWrapping="Wrap" Width="332" ToolTip="{x:Static r:MainStrings.COPIES_EXT_TIP}">

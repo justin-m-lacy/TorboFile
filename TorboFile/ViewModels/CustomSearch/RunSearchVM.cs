@@ -148,7 +148,7 @@ namespace TorboFile.ViewModels.Main {
 
 				try {
 
-					await Task.Run( () => { operation.Run(); } );
+					await Task.Run( () => { operation.Run(); }, operation.GetToken() );
 
 				} catch( Exception e ) {
 
@@ -162,6 +162,8 @@ namespace TorboFile.ViewModels.Main {
 					Console.WriteLine( e.ToString() );
 					this.Output = new TextString( e.Message, "error" );
 				}
+
+				this.CurrentProgress.Operation = null;
 
 			} // using
 
@@ -196,8 +198,10 @@ namespace TorboFile.ViewModels.Main {
 					this.Output = new TextString( "No matches found." );
 				}
 
+				this.CurrentProgress.Operation = null;
 				SearchDone( operation );
-			}
+
+			} //
 
 
 		} //

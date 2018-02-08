@@ -70,7 +70,7 @@ namespace TorboFile {
 		/// <returns></returns>
 		private bool TryCloseView( ViewModelBase model ) {
 
-			FrameworkElement element = model.ViewElement;
+			FrameworkElement element = model.ViewElement as FrameworkElement;
 			if( element != null ) {
 
 				if( element is Window ) {
@@ -209,7 +209,7 @@ namespace TorboFile {
 
 			Window topWindow;
 			if( parentModel != null && view is Window ) {
-				topWindow = Window.GetWindow( parentModel.ViewElement );
+				topWindow = Window.GetWindow( parentModel.ViewElement as DependencyObject );
 			} else {
 				topWindow = this.MainWindow;
 			}
@@ -354,6 +354,8 @@ namespace TorboFile {
 
 			/// Attempt to save any changes to the current CategorySet.
 			this.SaveCurCategory();
+
+			//Console.WriteLine( "SAVING SETTINGS ON EXIT" );
 
 			// save changes to settings.
 			Settings.Default.Save();

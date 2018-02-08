@@ -119,7 +119,7 @@
 
 				<TextBlock Style="{StaticResource TextSettingHeader}" Text="Save Search"/>
 				<CheckBox x:Name="chkSaveSearch" Style="{StaticResource SettingControl}" Content="Save Last Search"
-						  IsChecked="{Binding saveLastDirectory}" ToolTip="Save the last custom search built."/>
+						  IsChecked="{Binding saveLastSearch}" ToolTip="Save the last custom search built."/>
 	
 				<TextBlock Style="{StaticResource TextSettingHeader}" Text="Remember Directory"/>
 				<CheckBox x:Name="chkCustomSaveDir" Style="{StaticResource SettingControl}" Content="Remember last directory searched" IsChecked="{Binding saveLastDirectory}" ToolTip="Remember search directory between program runs."/>

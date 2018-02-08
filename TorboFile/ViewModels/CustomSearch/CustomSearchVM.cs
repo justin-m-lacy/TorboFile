@@ -270,17 +270,16 @@ namespace TorboFile.ViewModels {
 			CustomSearchData searchData;
 
 			if( settings.saveLastSearch ) {
-
 				Console.WriteLine( "LOADING PREVIOUS SEARCH" );
 				searchData = CustomSearchSettings.LoadLastSearch() ?? NewSearchData();
-
 			} else {
-
 				searchData = NewSearchData();
-
 			}
-
 			this.CustomSearch = searchData;
+
+			if( settings.saveLastDirectory ) {
+				this.SearchDirectory = settings.lastDirectory;
+			}
 
 		} // CustomSearchVM()
 

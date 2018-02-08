@@ -11,8 +11,13 @@ namespace TorboFile.ViewModels {
 
 	/// <summary>
 	/// Links an Operation in progress for display in UI.
+	/// On Completion or Cancel, the ProgressVM will cancel, but not dispose the operation.
 	/// </summary>
 	public class ProgressVM : ViewModelBase {
+
+		~ProgressVM() {
+			Console.WriteLine( "ProgressVM Destructor called" );
+		}
 
 		#region PROPERTIES
 
@@ -128,9 +133,13 @@ namespace TorboFile.ViewModels {
 		private void Cancel() {
 
 			if( this._operation != null ) {
-				this._operation.Cancel();
-			}
 
+				ProgressOperation op = this._operation;
+				this.Operation = null;
+
+				op.Cancel();
+
+			}
 		}
 
 		private bool CanCancel() {
@@ -139,10 +148,7 @@ namespace TorboFile.ViewModels {
 
 
 		private void Operation_Complete() {
-
-			this.Operation.Dispose();
 			this.Operation = null;
-
 		}
 
 		private void Operation_ProgressChanged( object sender, ProgressInformation e ) {
@@ -152,6 +158,7 @@ namespace TorboFile.ViewModels {
 			this.MaxProgress = e.MaxProgress;
 
 			if( e.IsComplete ) {
+				Console.WriteLine( "ProgressVM: Operation complete." );
 				this.Operation_Complete();
 			}
 

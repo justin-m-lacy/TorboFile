@@ -13,6 +13,22 @@
 	</ResourceDictionary.MergedDictionaries>
 
 	<convert:StringToRegex x:Key="RegexConverter" />
+
+	<DataTemplate x:Key="UploadFileTemplate" DataType="{x:Type mvvm:DataObjectVM}">
+
+		<StackPanel>
+
+			<TextBlock Style="{StaticResource infoText}" Text="Upload matched files to a web URI." />
+
+			<TextBlock Style="{StaticResource minorText}" Text="Upload URI:"/>
+			<TextBox Style="{StaticResource TextInputTemplate}" Text="{Binding Data.Uri}" />
+
+			<TextBlock Style="{StaticResource minorText}" Text="Method (optional):"/>
+			<TextBox Style="{StaticResource TextInputTemplate}" Text="{Binding Data.Method}" />
+	
+		</StackPanel>
+
+	</DataTemplate>
 	
 	<DataTemplate x:Key="fileDeleteTemplate" DataType="{x:Type mvvm:DataObjectVM}">
 
@@ -92,6 +108,7 @@
 		<mvvm:TemplateSelector.Templates>
 
 			<collections:Hashtable>
+				<system:String x:Key="{x:Type actions:UploadFile}">UploadFileTemplate</system:String>
 				<system:String x:Key="{x:Type actions:FileDeleteAction}">fileDeleteTemplate</system:String>
 				<system:String x:Key="{x:Type actions:RecycleAction}">recycleTemplate</system:String>
 

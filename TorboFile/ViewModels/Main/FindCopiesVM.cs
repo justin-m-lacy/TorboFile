@@ -192,45 +192,47 @@ namespace TorboFile.ViewModels {
 		/// <returns></returns>
 		private async Task FindCopiesAsync( string path ) {
 
-			FileMatchFinder matchFinder = this.BuildMatchOperation( path );
+			using( FileMatchFinder matchFinder = this.BuildMatchOperation( path ) ) {
 
-			/// Displays progress.
-			this.CurrentSearch = new ProgressVM( matchFinder );
+				/// Displays progress.
+				this.CurrentSearch = new ProgressVM( matchFinder );
 
-			MatchCollection matchGroups = matchFinder.Matches;
+				MatchCollection matchGroups = matchFinder.Matches;
 
+				// NOTE: This isn't needed because the results are Dispatched to the UI Dispatcher.
+				// The collection is locked during the CollectionChanged events, and the results are copied into a new list.
+				// If the MatchCollection itself was displayed, this line would probably be necessary.
+				//BindingOperations.EnableCollectionSynchronization( matchGroups, groupLock );
 
-			// NOTE: This isn't needed because the results are Dispatched to the UI Dispatcher.
-			// The collection is locked during the CollectionChanged events, and the results are copied into a new list.
-			// If the MatchCollection itself was displayed, this line would probably be necessary.
-			//BindingOperations.EnableCollectionSynchronization( matchGroups, groupLock );
-			
-	
-			// Receive updates as matches are found.
-			matchGroups.CollectionChanged += this.Matches_CollectionChanged;
-	
-			// Ensure the ResultsModel exists for displaying results.
-			this.CreateResultsList();
+				// Receive updates as matches are found.
+				matchGroups.CollectionChanged += this.Matches_CollectionChanged;
 
-			try {
+				// Ensure the ResultsModel exists for displaying results.
+				this.CreateResultsList();
 
-				object groupLock = new object();
-				await
-					Task.Run( () => { matchFinder.Run( groupLock ); } );
+				try {
 
-			} catch( Exception e ) {
-				Console.WriteLine( "ERROR: " + e.ToString() );
+					object groupLock = new object();
+					await
+						Task.Run( () => { matchFinder.Run( groupLock ); }, matchFinder.GetToken() );
+
+				} catch( Exception e ) {
+					Console.WriteLine( "ERROR: " + e.ToString() );
+				}
+
+				if( this.ResultsList.Items.Count == 0 ) {
+					// report no results found.
+					this.Output = new TextString( Properties.Resources.NO_MATCHES_FOUND );
+				}
+
+				matchGroups.CollectionChanged -= this.Matches_CollectionChanged;
+				this.CurrentSearch = null;
+
 			}
 
-			if( this.ResultsList.Items.Count == 0 ) {
-				// report no results found.
-				this.Output = new TextString( Properties.Resources.NO_MATCHES_FOUND );
-			}
-
-			matchGroups.CollectionChanged -= this.Matches_CollectionChanged;
+			GC.Collect();
 
 			Console.WriteLine( "nulling search" );
-			this.CurrentSearch = null;
 
 		} //
 

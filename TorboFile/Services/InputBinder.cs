@@ -50,7 +50,7 @@ namespace TorboFile.Services {
 		/// <param name="new_binding"></param>
 		public void ReplaceBinding( ViewModelBase model, InputGesture gesture, InputBinding new_binding ) {
 
-			FrameworkElement element = model.ViewElement;
+			FrameworkElement element = model.ViewElement as FrameworkElement;
 			if( element == null ) {
 				return;
 			}
@@ -85,7 +85,7 @@ namespace TorboFile.Services {
 
 		public void ReplaceBinding( ViewModelBase model, InputBinding old_binding, InputBinding new_binding ) {
 
-			FrameworkElement element = model.ViewElement;
+			FrameworkElement element = model.ViewElement as FrameworkElement;
 			if( element == null ) {
 				return;
 			}
@@ -140,7 +140,13 @@ namespace TorboFile.Services {
 				return;
 			}
 
-			InputBindingCollection elementBindings = viewModel.ViewElement.InputBindings;
+			FrameworkElement elm = viewModel.ViewElement as FrameworkElement;
+			if( elm == null ) {
+				Console.WriteLine( "!!! InputBinder Error: framework element is null" );
+				return;
+			}
+
+			InputBindingCollection elementBindings = elm.InputBindings;
 
 			foreach( InputBinding b in new_bindings ) {
 				Console.WriteLine( "adding binding: " + b.Gesture.ToString() );
@@ -153,7 +159,7 @@ namespace TorboFile.Services {
 
 		public void AddBinding( ViewModelBase model, InputBinding binding ) {
 
-			FrameworkElement element = model.ViewElement;
+			FrameworkElement element = model.ViewElement as FrameworkElement;
 			if( element == null ) {
 				return;
 			}
@@ -170,7 +176,7 @@ namespace TorboFile.Services {
 		/// <param name="gesture"></param>
 		public void RemoveBinding( ViewModelBase model, InputGesture gesture ) {
 
-			FrameworkElement element = model.ViewElement;
+			FrameworkElement element = model.ViewElement as FrameworkElement;
 			if( element == null ) {
 				return;
 			}
@@ -195,7 +201,7 @@ namespace TorboFile.Services {
 
 		public void RemoveBinding( ViewModelBase model, InputBinding binding ) {
 
-			FrameworkElement element = model.ViewElement;
+			FrameworkElement element = model.ViewElement as FrameworkElement;
 			if( element == null ) {
 				return;
 			}
@@ -223,7 +229,7 @@ namespace TorboFile.Services {
 		/// <param name="model"></param>
 		public void RemoveBindings( ViewModelBase model ) {
 
-			FrameworkElement element = model.ViewElement;
+			FrameworkElement element = model.ViewElement as FrameworkElement;
 			if( element == null ) {
 				return;
 			}

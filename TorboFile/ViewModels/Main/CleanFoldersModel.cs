@@ -186,39 +186,35 @@ namespace TorboFile.ViewModels {
 
 			FolderCleanSettings appSettings = FolderCleanSettings.Default;
 			string path = appSettings.LastDirectory;
+			FileMatchSettings settings = new FileMatchSettings {
+				UseSizeRange = appSettings.hasDeleteRange,
+				SizeRange = appSettings.deleteRange, Recursive = appSettings.recursive,
+				DeleteEmptyFiles = appSettings.deleteEmptyFiles, MoveToTrash = appSettings.moveToTrash
+			};
 
+			using( FolderClean clean = new FolderClean( path,settings ) ) {
 
-			FolderClean clean = new FolderClean( path,
-				new FileMatchSettings {
-					UseSizeRange = appSettings.hasDeleteRange,
-					SizeRange = appSettings.deleteRange, Recursive = appSettings.recursive,
-					DeleteEmptyFiles = appSettings.deleteEmptyFiles, MoveToTrash = appSettings.moveToTrash
-				} );
-			
-			try {
+				try {
 
-				await Task.Run(
-					()=> {
+					await Task.Run(
+						() => {
 
-						clean.Run( this.FolderDeleted );
-				
+							clean.Run( this.FolderDeleted );
+
+						}
+					);
+
+					if( clean.DeletedList.Length == 0 && clean.ErrorList.Length == 0 ) {
+
+						this.Output = new TextString( "Nothing found to delete.", TextString.Message );
 					}
-				);
 
-				if( clean.DeletedList.Length == 0 && clean.ErrorList.Length == 0 ) {
-					
-					this.Output = new TextString( "Nothing found to delete.", TextString.Message );
+				} catch( Exception e ) {
+
+					this.Output = new TextString( e.Message, TextString.Error );
+					Console.WriteLine( e.ToString() );
+
 				}
-
-			} catch( Exception e ) {
-
-				this.Output = new TextString( e.Message, TextString.Error );
-				Console.WriteLine( e.ToString() );
-
-			} finally {
-
-				this.Output = new TextString( "Clean complete." );
-				clean.Dispose();
 
 			}
 
