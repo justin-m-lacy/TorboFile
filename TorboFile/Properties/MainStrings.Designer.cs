@@ -160,6 +160,24 @@ namespace TorboFile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove Empty Folders.
+        /// </summary>
+        public static string CLEAN_DIRS_FOLDERS_OPT {
+            get {
+                return ResourceManager.GetString("CLEAN_DIRS_FOLDERS_OPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove any empty folders found in the search..
+        /// </summary>
+        public static string CLEAN_DIRS_FOLDERS_TIP {
+            get {
+                return ResourceManager.GetString("CLEAN_DIRS_FOLDERS_TIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Size:.
         /// </summary>
         public static string CLEAN_DIRS_MAX_MSG {

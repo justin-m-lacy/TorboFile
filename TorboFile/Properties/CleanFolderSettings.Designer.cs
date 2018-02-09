@@ -13,11 +13,11 @@ namespace TorboFile.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
-    internal sealed partial class FolderCleanSettings : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class CleanFolderSettings : global::System.Configuration.ApplicationSettingsBase {
         
-        private static FolderCleanSettings defaultInstance = ((FolderCleanSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new FolderCleanSettings())));
+        private static CleanFolderSettings defaultInstance = ((CleanFolderSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new CleanFolderSettings())));
         
-        public static FolderCleanSettings Default {
+        public static CleanFolderSettings Default {
             get {
                 return defaultInstance;
             }
@@ -138,6 +138,18 @@ namespace TorboFile.Properties {
             }
             set {
                 this["deleteEmptyFiles"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool deleteEmptyFolders {
+            get {
+                return ((bool)(this["deleteEmptyFolders"]));
+            }
+            set {
+                this["deleteEmptyFolders"] = value;
             }
         }
     }

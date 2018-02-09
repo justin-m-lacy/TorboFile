@@ -73,7 +73,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type categories:FileCategory}">
                                 <Button Style="{StaticResource StdButton}" MaxHeight="28" MaxWidth="28"
-                                        HorizontalAlignment="Left" MinHeight="20" MinWidth="20" ToolTip=""
+                                        HorizontalAlignment="Left" MinHeight="20" MinWidth="20" ToolTip="{x:Static r:MainStrings.SORT_BROWSE_TIP}"
                             Command="{Binding ElementName=CategoryList, Path=DataContext.CmdSetDirectory, Mode=OneWay}"
                             CommandParameter="{Binding Path=DirectoryPath}">
 

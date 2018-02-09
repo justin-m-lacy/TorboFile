@@ -15,7 +15,7 @@ namespace TorboFile.Services {
 		void InitFindCopiesView( FindCopiesVM model );
 		void InitSortView( FileSortVM model );
 		void InitCustomSearchView( CustomSearchVM model );
-		void InitCleanFoldersView( CleanFoldersModel model );
+		void InitCleanFoldersView( CleanFoldersVM model );
 
     } // class
 

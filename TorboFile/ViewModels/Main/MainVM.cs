@@ -61,7 +61,7 @@ namespace TorboFile.ViewModels {
 
 		public FileSortVM FileSortVM { get => fileSortVM; set => fileSortVM = value; }
 		public CustomSearchVM CustomSearchVM { get => customSearchVM; set => customSearchVM = value; }
-		public CleanFoldersModel CleanFoldersVM { get => cleanFoldersVM; set => cleanFoldersVM = value; }
+		public CleanFoldersVM CleanFoldersVM { get => cleanFoldersVM; set => cleanFoldersVM = value; }
 		public FindCopiesVM FindCopiesVM { get => findCopiesVM; set => findCopiesVM = value; }
 
 		#endregion
@@ -70,7 +70,7 @@ namespace TorboFile.ViewModels {
 
 		private FileSortVM fileSortVM;
 		private CustomSearchVM customSearchVM;
-		private CleanFoldersModel cleanFoldersVM;
+		private CleanFoldersVM cleanFoldersVM;
 		private FindCopiesVM findCopiesVM;
 
 

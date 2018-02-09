@@ -21,6 +21,8 @@ namespace TorboFile.ViewModels {
 
 	public class FindCopiesVM : ViewModelBase {
 
+		#region DEBUG
+
 		~FindCopiesVM() {
 			DebugDestructor();
 		}
@@ -28,6 +30,8 @@ namespace TorboFile.ViewModels {
 		void DebugDestructor() {
 			Console.WriteLine( "FIND DUPLICATES MODEL DESTRUCTOR" );
 		}
+
+		#endregion
 
 		#region COMMANDS
 
@@ -51,10 +55,9 @@ namespace TorboFile.ViewModels {
 
 		#region PROPERTIES
 
-		private TextString _output;
-		public TextString Output {
+		private readonly OutputVM _output = new OutputVM();
+		public OutputVM Output {
 			get => this._output;
-			set => this.SetProperty( ref this._output, value );
 		}
 
 		/// <summary>
@@ -192,6 +195,8 @@ namespace TorboFile.ViewModels {
 		/// <returns></returns>
 		private async Task FindCopiesAsync( string path ) {
 
+			this.Output.Clear();
+
 			using( FileMatchFinder matchFinder = this.BuildMatchOperation( path ) ) {
 
 				/// Displays progress.
@@ -222,7 +227,8 @@ namespace TorboFile.ViewModels {
 
 				if( this.ResultsList.Items.Count == 0 ) {
 					// report no results found.
-					this.Output = new TextString( Properties.Resources.NO_MATCHES_FOUND );
+					Console.WriteLine( "NO MATCHES FOUND" );
+					this.Output.Add( new TextString( Properties.Resources.NO_MATCHES_FOUND ));
 				}
 
 				matchGroups.CollectionChanged -= this.Matches_CollectionChanged;

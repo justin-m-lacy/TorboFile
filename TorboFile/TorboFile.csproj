@@ -150,7 +150,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CustomSearchStrings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\FolderCleanSettings.cs" />
+    <Compile Include="Properties\CleanFolderSettings.cs" />
     <Compile Include="Properties\MainStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -174,7 +174,7 @@
     <Compile Include="ViewModels\CustomSearch\BuildSearchVM.cs" />
     <Compile Include="ViewModels\CustomSearch\CustomSearchVM.cs" />
     <Compile Include="ViewModels\Categories\EditCategorySetVM.cs" />
-    <Compile Include="ViewModels\Main\CleanFoldersModel.cs" />
+    <Compile Include="ViewModels\Main\CleanFoldersVM.cs" />
     <Compile Include="ViewModels\FileDetailsVM.cs" />
     <Compile Include="ViewModels\DuplicateFilesVM.cs" />
     <Compile Include="ViewModels\Main\FindCopiesVM.cs" />
@@ -194,6 +194,7 @@
     <Compile Include="View\Controls\MainViews\CustomSearch.xaml.cs">
       <DependentUpon>CustomSearch.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\MessageBox.xaml.cs" />
     <Compile Include="View\Controls\PreviewViews\MediaKitPreview.xaml.cs">
       <DependentUpon>MediaKitPreview.xaml</DependentUpon>
     </Compile>
@@ -222,12 +223,6 @@
     <Compile Include="View\Controls\MainViews\FindCopiesView.xaml.cs">
       <DependentUpon>FindCopiesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\MessageBox.xaml.cs">
-      <DependentUpon>MessageBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Controls\MessageLabel.xaml.cs">
-      <DependentUpon>MessageLabel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Controls\PreviewViews\PreviewControl.cs" />
     <Compile Include="View\Controls\PreviewViews\ViewImageControl.xaml.cs">
       <DependentUpon>ViewImageControl.xaml</DependentUpon>
@@ -253,10 +248,10 @@
       <DependentUpon>CategoryManagerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DirectoryVisitor.cs" />
-    <Compile Include="Properties\FolderCleanSettings.Designer.cs">
+    <Compile Include="Properties\CleanFolderSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>FolderCleanSettings.settings</DependentUpon>
+      <DependentUpon>CleanFolderSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="Properties\SortingSettings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -330,6 +325,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Controls\MessageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Controls\PreviewViews\MediaKitPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -370,10 +369,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\MessageBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Controls\PreviewViews\ViewImageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -389,9 +384,6 @@
     <Page Include="View\Controls\PreviewViews\ViewUnknownControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Controls\MessageLabel.xaml">
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Controls\ProgressControl.xaml">
       <SubType>Designer</SubType>
@@ -486,9 +478,9 @@
       <LastGenOutput>FindCopiesSettings.Designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="Properties\FolderCleanSettings.settings">
+    <None Include="Properties\CleanFolderSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>FolderCleanSettings.Designer.cs</LastGenOutput>
+      <LastGenOutput>CleanFolderSettings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PreviewSettings.settings">

@@ -148,7 +148,7 @@
                                   DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.CurrentSearch}"
                                   Visibility="{Binding Converter={StaticResource NonNullToVisible}}" />
 
-			<lmrcontrols:FeedbackList DockPanel.Dock="Bottom" x:Name="FeedbackList" Current="{Binding Output}" ErrorBrush="{StaticResource ErrorBrush}"
+			<lmrcontrols:FeedbackList DockPanel.Dock="Bottom" x:Name="FeedbackList" Feedback="{Binding Output.Strings}" ErrorBrush="{StaticResource ErrorBrush}"
 								   DefaultBrush="{StaticResource SuccessBrush}" />
 
 			<DockPanel DockPanel.Dock="Top">

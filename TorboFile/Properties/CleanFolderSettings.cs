@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TorboFile.Properties {
 
-	internal sealed partial class FolderCleanSettings {
+	internal sealed partial class CleanFolderSettings {
 
 		private string _lastDirectory;
 		public string LastDirectory {
@@ -23,7 +23,10 @@ namespace TorboFile.Properties {
 			}
 		}
 
-		public FolderCleanSettings() {
+		public CleanFolderSettings() {
+
+			this.deleteRange = new Lemur.Types.DataRange();
+			this.preserveRange = new Lemur.Types.DataRange();
 
 			this.SettingsLoaded += FindEmpty_SettingsLoaded;
 			this.SettingChanging += FolderCleanSettings_SettingChanging;

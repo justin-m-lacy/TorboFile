@@ -142,7 +142,7 @@ namespace TorboFile {
 
 			this.InitView( main.FindCopiesView, new FindCopiesVM() );
 			this.InitView( main.SortFilesView, new FileSortVM( this.services, this.CategoryManager ) );
-			this.InitView( main.CleanFoldersView, new CleanFoldersModel() );
+			this.InitView( main.CleanFoldersView, new CleanFoldersVM() );
 			this.InitView( main.CustomSearchView, new CustomSearchVM( this.services ) );
 
 			this.MainWindow = main;
@@ -186,7 +186,7 @@ namespace TorboFile {
 		public void InitSortView( FileSortVM model ) {
 			this.InitView( ( this.MainWindow as MainWindow ).SortFilesView, model );
 		}
-		public void InitCleanFoldersView( CleanFoldersModel model ) {
+		public void InitCleanFoldersView( CleanFoldersVM model ) {
 			this.InitView( ( this.MainWindow as MainWindow ).CleanFoldersView, model );
 		}
 
@@ -360,7 +360,7 @@ namespace TorboFile {
 			// save changes to settings.
 			Settings.Default.Save();
 			FindCopiesSettings.Default.Save();
-			FolderCleanSettings.Default.Save();
+			CleanFolderSettings.Default.Save();
 			SortingSettings.Default.Save();
 			CustomSearchSettings.Default.Save();
 

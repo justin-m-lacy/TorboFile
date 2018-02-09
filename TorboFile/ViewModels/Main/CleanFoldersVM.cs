@@ -21,9 +21,11 @@ using Lemur.Windows.Services;
 
 namespace TorboFile.ViewModels {
 
-	public class CleanFoldersModel : ViewModelBase {
+	public class CleanFoldersVM : ViewModelBase {
 
-		~CleanFoldersModel() {
+		#region DEBUG
+
+		~CleanFoldersVM() {
 			DebugDestructor();
 		}
 		[Conditional( "DEBUG" )]
@@ -31,6 +33,8 @@ namespace TorboFile.ViewModels {
 			Console.WriteLine( @"CLEAN FOLDERS MODEL DESTRUCTOR" );
 		}
 
+		#endregion
+	
 		#region COMMANDS
 
 		private RelayCommand _cmdBeginSearch;
@@ -68,13 +72,13 @@ namespace TorboFile.ViewModels {
 
 		public string SearchDirectory {
 			get {
-				return Properties.FolderCleanSettings.Default.LastDirectory;
+				return Properties.CleanFolderSettings.Default.LastDirectory;
 			}
 			set {
 
-				if( value != Properties.FolderCleanSettings.Default.LastDirectory ) {
+				if( value != Properties.CleanFolderSettings.Default.LastDirectory ) {
 
-					Properties.FolderCleanSettings.Default.LastDirectory = value;
+					Properties.CleanFolderSettings.Default.LastDirectory = value;
 					this.NotifyPropertyChanged();
 					this._cmdBeginSearch.RaiseCanExecuteChanged();
 
@@ -89,14 +93,24 @@ namespace TorboFile.ViewModels {
 
 		} // SearchDirectory
 
+		public bool DeleteEmptyFolders {
+			get => Properties.CleanFolderSettings.Default.deleteEmptyFolders;
+			set {
+				if( value != this.DeleteEmptyFolders ) {
+					Properties.CleanFolderSettings.Default.deleteEmptyFolders = value;
+					this.NotifyPropertyChanged();
+				}
+			}
+		}
+
 		/// <summary>
 		/// Whether to remove files of size zero.
 		/// </summary>
 		public bool DeleteEmptyFiles {
-			get { return Properties.FolderCleanSettings.Default.deleteEmptyFiles; }
+			get { return Properties.CleanFolderSettings.Default.deleteEmptyFiles; }
 			set {
 				if( value != this.DeleteEmptyFiles ) {
-					Properties.FolderCleanSettings.Default.deleteEmptyFiles = value;
+					Properties.CleanFolderSettings.Default.deleteEmptyFiles = value;
 					this.NotifyPropertyChanged();
 				}
 			} // set
@@ -106,10 +120,10 @@ namespace TorboFile.ViewModels {
 		/// Whether to remove files in a given file size range.
 		/// </summary>
 		public bool UseSizeRange {
-			get { return Properties.FolderCleanSettings.Default.hasDeleteRange; }
+			get { return Properties.CleanFolderSettings.Default.hasDeleteRange; }
 			set {
 				if( value != this.UseSizeRange ) {
-					Properties.FolderCleanSettings.Default.hasDeleteRange = value;
+					Properties.CleanFolderSettings.Default.hasDeleteRange = value;
 					this.NotifyPropertyChanged();
 				}
 			} // set
@@ -117,7 +131,14 @@ namespace TorboFile.ViewModels {
 
 		public string MinSize {
 
-			get { return FolderCleanSettings.Default.deleteRange.MinSize.ToString(); }
+			get {
+
+				DataRange range = CleanFolderSettings.Default.deleteRange;
+				if( range != null ) {
+					return range.MinSize.ToString();
+				}
+				return string.Empty;
+			}
 
 			set {
 
@@ -137,7 +158,7 @@ namespace TorboFile.ViewModels {
 		}
 
 		public string MaxSize {
-			get { return FolderCleanSettings.Default.deleteRange.MaxSize.ToString(); }
+			get { return CleanFolderSettings.Default.deleteRange.MaxSize.ToString(); }
 			set {
 
 				DataSize newSize;
@@ -155,25 +176,20 @@ namespace TorboFile.ViewModels {
 		}
 
 		private DataRange CleanSizeRange {
-			get { return FolderCleanSettings.Default.deleteRange; }
-			set { FolderCleanSettings.Default.deleteRange = value; }
+			get { return CleanFolderSettings.Default.deleteRange; }
+			set { CleanFolderSettings.Default.deleteRange = value; }
 		}
 
-		private TextString _output;
-		public TextString Output {
+		private readonly OutputVM _output = new OutputVM();
+		public OutputVM Output {
 
 			get { return this._output; }
-			set {
-				/// Never check for changes, because the same output can be repeated.
-				this._output = value;
-				this.NotifyPropertyChanged();
-			}
 
 		}
 
 		#endregion
 
-		public CleanFoldersModel() {
+		public CleanFoldersVM() {
 		}
 
 		/// <summary>
@@ -184,7 +200,7 @@ namespace TorboFile.ViewModels {
 		/// <returns></returns>
 		private async Task FolderCleanAsync() {
 
-			FolderCleanSettings appSettings = FolderCleanSettings.Default;
+			CleanFolderSettings appSettings = CleanFolderSettings.Default;
 			string path = appSettings.LastDirectory;
 			FileMatchSettings settings = new FileMatchSettings {
 				UseSizeRange = appSettings.hasDeleteRange,
@@ -192,7 +208,11 @@ namespace TorboFile.ViewModels {
 				DeleteEmptyFiles = appSettings.deleteEmptyFiles, MoveToTrash = appSettings.moveToTrash
 			};
 
+			this.Output.Clear();
+
 			using( FolderClean clean = new FolderClean( path,settings ) ) {
+
+				clean.DeleteEmptyFolders = this.DeleteEmptyFolders;
 
 				try {
 
@@ -206,12 +226,12 @@ namespace TorboFile.ViewModels {
 
 					if( clean.DeletedList.Length == 0 && clean.ErrorList.Length == 0 ) {
 
-						this.Output = new TextString( "Nothing found to delete.", TextString.Message );
+						this.Output.Add( new TextString( "Nothing found to delete.", TextString.Message ) );
 					}
 
 				} catch( Exception e ) {
 
-					this.Output = new TextString( e.Message, TextString.Error );
+					this.Output.Add( new TextString( e.Message, TextString.Error ) );
 					Console.WriteLine( e.ToString() );
 
 				}
@@ -231,11 +251,11 @@ namespace TorboFile.ViewModels {
 
 		} //
 		public void AddSuccessLine( string path ) {
-			this.Output = new TextString( "Deleted: " + path + Environment.NewLine );
+			this.Output.Add( new TextString( "Deleted: " + path + Environment.NewLine ) );
 		}
 
 		public void AddFailLine( string path ) {
-			this.Output = ( new TextString( "Could not delete: " + path + Environment.NewLine, TextString.Error ) );
+			this.Output.Add( new TextString( "Could not delete: " + path + Environment.NewLine, TextString.Error ) );
 		}
 
 		private void PickFolder() {

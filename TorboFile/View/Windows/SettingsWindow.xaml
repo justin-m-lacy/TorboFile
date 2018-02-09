@@ -94,8 +94,8 @@
 						  ToolTip="Remember file extensions used in searches." Content="Remember File Extensions"/>
 			</StackPanel>
             </TabItem>
-        
-        <TabItem x:Name="CleanFoldersTab" DataContext="{x:Static settings:FolderCleanSettings.Default}" Header="Clean Folders" Style="{StaticResource SettingsTab}">
+
+		<TabItem x:Name="CleanFoldersTab" DataContext="{x:Static settings:CleanFolderSettings.Default}" Header="Clean Folders" Style="{StaticResource SettingsTab}">
             <StackPanel Style="{StaticResource SettingsContent}">
 
 				<TextBlock Style="{StaticResource TextSettingHeader}" Text="Deleted Files:"/>

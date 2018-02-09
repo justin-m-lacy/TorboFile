@@ -151,6 +151,12 @@
   <data name="CLEAN_DIRS_EMPTY_TIP" xml:space="preserve">
     <value>Remove any files of Size 0. (File contains no data)</value>
   </data>
+  <data name="CLEAN_DIRS_FOLDERS_OPT" xml:space="preserve">
+    <value>Remove Empty Folders</value>
+  </data>
+  <data name="CLEAN_DIRS_FOLDERS_TIP" xml:space="preserve">
+    <value>Remove any empty folders found in the search.</value>
+  </data>
   <data name="CLEAN_DIRS_MAX_MSG" xml:space="preserve">
     <value>Max Size:</value>
   </data>
