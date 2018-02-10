@@ -21,13 +21,14 @@ namespace TorboFile.View.Controls {
     /// </summary>
     public partial class FileList : UserControl {
 
-		public static readonly DependencyProperty ButtonsProperty = DependencyProperty.Register( "Buttons", typeof( ObservableCollection<Control> ), typeof( FileList ) );
+		public static readonly DependencyProperty ButtonsProperty =
+			DependencyProperty.Register( "Buttons", typeof( ObservableCollection<FrameworkElement> ), typeof( FileList ) );
 
-		public ObservableCollection<Control> Buttons {
+		public ObservableCollection<FrameworkElement> Buttons {
 			get {
-				ObservableCollection<Control> controls = (ObservableCollection<Control>)this.GetValue( ButtonsProperty );
+				ObservableCollection<FrameworkElement> controls = (ObservableCollection<FrameworkElement>)this.GetValue( ButtonsProperty );
 				if( controls == null ) {
-					controls = new ObservableCollection<Control>();
+					controls = new ObservableCollection<FrameworkElement>();
 					this.SetValue( ButtonsProperty, controls );
 				}
 				return controls;
@@ -37,7 +38,7 @@ namespace TorboFile.View.Controls {
 
 		public FileList() {
 
-			this.Buttons = new ObservableCollection<Control>();
+			this.Buttons = new ObservableCollection<FrameworkElement>();
 
 			//this.Buttons.CollectionChanged += Buttons_CollectionChanged;
 
